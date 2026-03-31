@@ -532,6 +532,34 @@ select.form-control { cursor: pointer; }
 .award-badge strong { display: block; font-weight: 700; letter-spacing: 0.03em; }
 .award-badge small { color: rgba(255,255,255,0.65); font-size: 0.74rem; }
 
+/* ---------- Awards Grid (About) ---------- */
+.award-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; max-width: 980px; margin: 0 auto; }
+.award-year-card {
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 22px 24px;
+}
+.award-year-label {
+  font-family: 'Lato', sans-serif;
+  font-size: 0.7rem; letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold); font-weight: 700; margin-bottom: 14px;
+}
+.award-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.award-item { display: flex; gap: 12px; align-items: flex-start; }
+.award-icon { width: 32px; height: 32px; flex-shrink: 0; object-fit: contain; }
+.award-text { font-family: 'Lato', sans-serif; font-size: 0.84rem; color: rgba(255,255,255,0.88); line-height: 1.5; }
+.award-text strong { color: #fff; }
+.award-source { display: block; color: rgba(255,255,255,0.48); font-size: 0.76rem; margin-top: 2px; }
+.award-stats-card {
+  background: var(--gold); border-radius: 8px; padding: 22px 24px;
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; text-align: center; gap: 12px;
+}
+.award-stat-num { font-family: 'Playfair Display', serif; font-size: 2.8rem; color: #fff; font-weight: 700; line-height: 1; }
+.award-stat-label { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+.award-stat-divider { width: 28px; height: 1px; background: rgba(255,255,255,0.35); }
+
 /* ---------- Timeline (About) ---------- */
 .timeline { position: relative; padding-left: 32px; }
 .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: rgba(62,174,224,0.45); }
