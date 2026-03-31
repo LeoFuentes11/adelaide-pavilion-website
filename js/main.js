@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const formSuccess = document.getElementById('formSuccess');
   enquiryForm?.addEventListener('submit', (e) => {
     e.preventDefault();
-    // Simple validation
+    // Validation
     const required = enquiryForm.querySelectorAll('[required]');
     let valid = true;
     required.forEach(field => {
@@ -146,10 +146,17 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
     if (!valid) return;
-    // Show success (in real deployment, send to Netlify Forms / EmailJS etc.)
-    enquiryForm.style.display = 'none';
-    formSuccess?.classList.add('visible');
-    window.scrollTo({ top: formSuccess.offsetTop - 100, behavior: 'smooth' });
+    // Submit to Netlify Forms via fetch
+    const data = new FormData(enquiryForm);
+    fetch('/', { method: 'POST', body: data })
+      .then(() => {
+        enquiryForm.style.display = 'none';
+        formSuccess?.classList.add('visible');
+        window.scrollTo({ top: formSuccess.offsetTop - 100, behavior: 'smooth' });
+      })
+      .catch(() => {
+        alert('Something went wrong. Please call us on 08 8212 7444 or try again.');
+      });
   });
 
   /* ---------- Smooth Scroll for anchor links ---------- */

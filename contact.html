@@ -62,12 +62,9 @@
         </div>
 
         <!-- Enquiry Form -->
-        <!--
-          DEPLOYMENT NOTE:
-          For Netlify: add name="contact" to the form tag, and add <input type="hidden" name="form-name" value="contact" />
-          For Vercel/custom: connect to EmailJS, Formspree, or your own backend API
-        -->
-        <form id="enquiryForm" novalidate>
+        <form id="enquiryForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
+          <input type="hidden" name="form-name" value="contact" />
+          <input type="hidden" name="bot-field" />
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label" for="firstName">First Name <span style="color:#e57373;">*</span></label>
