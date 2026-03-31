@@ -1,0 +1,12 @@
+# Claude Code local settings
+.claude/
+
+# Original PDFs (large files, not needed on GitHub)
+additonal info/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/settings.json
