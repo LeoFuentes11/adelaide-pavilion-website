@@ -516,16 +516,21 @@ select.form-control { cursor: pointer; }
 .testimonial-stars { color: var(--gold); font-size: 0.9rem; margin-bottom: 12px; }
 
 /* ---------- Awards ---------- */
-.awards-bar { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
-.award-badge {
-  display: flex; align-items: center; gap: 10px;
-  padding: 14px 20px;
-  border: 1px solid rgba(62,174,224,0.4);
-  border-radius: 6px;
-  font-family: 'Lato', sans-serif; font-size: 0.8rem;
-  color: var(--charcoal); background: var(--white);
+.awards-bar {
+  display: flex; flex-wrap: nowrap; gap: 16px;
+  justify-content: center; align-items: stretch;
 }
-.award-badge-icon { color: var(--gold); font-size: 1.4rem; }
+.award-badge {
+  flex: 1; min-width: 0;
+  padding: 16px 20px;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 6px;
+  font-family: 'Lato', sans-serif; font-size: 0.82rem;
+  color: var(--white); background: rgba(255,255,255,0.10);
+  text-align: center; line-height: 1.5;
+}
+.award-badge strong { display: block; font-weight: 700; letter-spacing: 0.03em; }
+.award-badge small { color: rgba(255,255,255,0.65); font-size: 0.74rem; }
 
 /* ---------- Timeline (About) ---------- */
 .timeline { position: relative; padding-left: 32px; }
