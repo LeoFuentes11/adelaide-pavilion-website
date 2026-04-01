@@ -32,6 +32,16 @@
     # Allows: self, Google Fonts, Cloudflare Turnstile, Netlify Identity, inline styles
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://identity.netlify.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com https://identity.netlify.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self';"
 
+# ── Relaxed CSP for /admin — Decap CMS requires unsafe-eval ──
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://identity.netlify.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https: blob:; connect-src 'self' https://api.github.com https://identity.netlify.com https://unpkg.com https://cdn.jsdelivr.net; frame-src 'self'; object-src 'none';"
+
 # ── Netlify function routes — enforce HTTPS ──────────────────
 [[redirects]]
   from = "http://*"
