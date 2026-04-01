@@ -154,6 +154,37 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Validate email format
+  function isValidEmail(val) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val);
+  }
+
+  // Validate Australian phone: 04xx xxx xxx, 08xx xxxx xxxx, +61 4xx etc.
+  function isValidAustralianPhone(val) {
+    const stripped = val.replace(/[\s\-()]/g, '');
+    return /^(\+?61|0)[2-9]\d{8}$/.test(stripped);
+  }
+
+  // Live phone formatting & validation feedback
+  const phoneField = document.getElementById('phone');
+  phoneField?.addEventListener('blur', () => {
+    const val = phoneField.value.trim();
+    if (!val) { phoneField.style.borderColor = ''; return; }
+    phoneField.style.borderColor = isValidAustralianPhone(val) ? '' : '#e57373';
+  });
+  phoneField?.addEventListener('input', () => {
+    // Only allow digits, spaces, +, -, (, )
+    phoneField.value = phoneField.value.replace(/[^\d\s\+\-\(\)]/g, '');
+  });
+
+  // Live email validation feedback
+  const emailField = document.getElementById('email');
+  emailField?.addEventListener('blur', () => {
+    const val = emailField.value.trim();
+    if (!val) { emailField.style.borderColor = ''; return; }
+    emailField.style.borderColor = isValidEmail(val) ? '' : '#e57373';
+  });
+
   enquiryForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearError();
@@ -169,8 +200,23 @@ document.addEventListener('DOMContentLoaded', () => {
         field.style.borderColor = '';
       }
     });
+
+    // --- Email format check ---
+    const emailVal = emailField?.value.trim();
+    if (emailVal && !isValidEmail(emailVal)) {
+      if (emailField) emailField.style.borderColor = '#e57373';
+      valid = false;
+    }
+
+    // --- Phone format check (only if filled in) ---
+    const phoneVal = phoneField?.value.trim();
+    if (phoneVal && !isValidAustralianPhone(phoneVal)) {
+      if (phoneField) phoneField.style.borderColor = '#e57373';
+      valid = false;
+    }
+
     if (!valid) {
-      showError('Please fill in all required fields before submitting.');
+      showError('Please check the highlighted fields — email must be valid, phone must be an Australian number (e.g. 0400 000 000).');
       return;
     }
 
