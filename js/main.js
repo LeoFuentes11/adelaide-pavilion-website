@@ -236,7 +236,6 @@ document.addEventListener('DOMContentLoaded', () => {
       eventType:  enquiryForm.querySelector('#eventType')?.value,
       eventDate:  enquiryForm.querySelector('#eventDate')?.value,
       guestCount: enquiryForm.querySelector('#guestCount')?.value,
-      room:       enquiryForm.querySelector('#room')?.value,
       message:    enquiryForm.querySelector('#message')?.value.trim(),
       newsletter: enquiryForm.querySelector('#newsletter')?.checked,
       // Cloudflare Turnstile token (auto-inserted by the widget)
@@ -264,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
           fd.append('eventType',  payload.eventType  || '');
           fd.append('eventDate',  payload.eventDate  || '');
           fd.append('guestCount', payload.guestCount || '');
-          fd.append('room',       payload.room       || '');
           fd.append('message',    payload.message    || '');
           await fetch('/', { method: 'POST', body: fd });
         } catch (_) { /* non-critical — security function already succeeded */ }
