@@ -143,6 +143,45 @@ collections:
           - { label: "Children — Menu 2 (pp)", name: "children_menu2", widget: "number" }
           - { label: "Children — Cocktail (pp)", name: "children_cocktail", widget: "number" }
 
+      # Full Menus
+      - label: "Full Menus"
+        name: "menus"
+        file: "_data/menus.json"
+        format: json
+        fields:
+          - label: "Entrée Selections"
+            name: "entrees"
+            widget: "list"
+            fields:
+              - { label: "Dish Name", name: "name", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+              - { label: "Surcharge (leave blank if none)", name: "surcharge", widget: "string", required: false }
+          - label: "Main Selections"
+            name: "mains"
+            widget: "list"
+            fields:
+              - { label: "Dish Name", name: "name", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+              - { label: "Surcharge (leave blank if none)", name: "surcharge", widget: "string", required: false }
+          - label: "Dessert Selections"
+            name: "desserts"
+            widget: "list"
+            fields:
+              - { label: "Dish Name", name: "name", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+          - label: "Hot Canapés"
+            name: "canapes_hot"
+            widget: "list"
+            fields:
+              - { label: "Dish Name", name: "name", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+          - label: "Cold Canapés"
+            name: "canapes_cold"
+            widget: "list"
+            fields:
+              - { label: "Dish Name", name: "name", widget: "string" }
+              - { label: "Description", name: "desc", widget: "string" }
+
       # Contact Info
       - label: "Contact Information"
         name: "contact"

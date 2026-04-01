@@ -37,6 +37,40 @@
     }
   }
 
+  // Render array-based menu sections into [data-menu] containers
+  function renderMenus(data) {
+    if (!data || typeof data !== 'object') return;
+    document.querySelectorAll('[data-menu]').forEach(container => {
+      const key = container.dataset.menu;
+      const items = data[key];
+      if (!Array.isArray(items)) return;
+      container.innerHTML = '';
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'menu-item';
+
+        const nameEl = document.createElement('div');
+        nameEl.className = 'menu-item-name';
+        nameEl.textContent = item.name || '';
+
+        const descEl = document.createElement('div');
+        descEl.className = 'menu-item-desc';
+        descEl.textContent = item.desc || '';
+
+        if (item.surcharge) {
+          const s = document.createElement('span');
+          s.className = 'menu-item-surcharge';
+          s.textContent = ' ' + item.surcharge;
+          descEl.appendChild(s);
+        }
+
+        div.appendChild(nameEl);
+        div.appendChild(descEl);
+        container.appendChild(div);
+      });
+    });
+  }
+
   function applyData(data) {
     if (!data || typeof data !== 'object') return;
 
@@ -75,6 +109,12 @@
     if (pageKey && PAGE_MAP[pageKey]) {
       const pageData = await fetchJSON(PAGE_MAP[pageKey]);
       if (pageData) applyData(pageData);
+    }
+
+    // Load menu data if any [data-menu] containers exist on this page
+    if (document.querySelector('[data-menu]')) {
+      const menus = await fetchJSON('_data/menus.json');
+      if (menus) renderMenus(menus);
     }
   }
 

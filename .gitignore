@@ -13,3 +13,17 @@ Thumbs.db
 
 # Netlify Functions dependencies (if any are added later)
 netlify/functions/node_modules/
+
+# ── Secrets & credentials (NEVER commit these) ──────────────
+.env
+.env.*
+*.env
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+*secrets*
+*credentials*
+.npmrc
+.netrc

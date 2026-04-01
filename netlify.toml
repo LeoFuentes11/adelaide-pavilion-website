@@ -4,3 +4,37 @@
 
 [functions]
   node_bundler = "esbuild"
+
+# ── HTTP Security Headers ────────────────────────────────────
+# Applied to every page response.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Prevent browsers from MIME-sniffing
+    X-Content-Type-Options = "nosniff"
+
+    # Block clickjacking
+    X-Frame-Options = "DENY"
+
+    # Enable XSS filter in older browsers
+    X-XSS-Protection = "1; mode=block"
+
+    # Control referrer info sent to third parties
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Restrict powerful browser features
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+
+    # HSTS — force HTTPS for 1 year, include subdomains
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
+
+    # Content Security Policy
+    # Allows: self, Google Fonts, Cloudflare Turnstile, Netlify Identity, inline styles
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' https://challenges.cloudflare.com https://identity.netlify.com https://unpkg.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://api.resend.com https://challenges.cloudflare.com https://identity.netlify.com; frame-src https://challenges.cloudflare.com; object-src 'none'; base-uri 'self'; form-action 'self';"
+
+# ── Netlify function routes — enforce HTTPS ──────────────────
+[[redirects]]
+  from = "http://*"
+  to = "https://:splat"
+  status = 301
+  force = true

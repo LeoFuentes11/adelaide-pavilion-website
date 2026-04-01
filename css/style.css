@@ -201,6 +201,7 @@ h1,h2,h3,h4,h5 {
 .hero {
   position: relative;
   min-height: 100vh;
+  padding-top: 80px; /* clear fixed navbar */
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   background: var(--green);
@@ -238,6 +239,7 @@ h1,h2,h3,h4,h5 {
 /* Hero sub (inner pages) */
 .hero-sub {
   position: relative;
+  padding-top: 80px; /* clear fixed navbar */
   min-height: 55vh;
   display: flex; align-items: flex-end;
   overflow: hidden;

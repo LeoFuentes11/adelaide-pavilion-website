@@ -253,6 +253,22 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
+        // Also record in Netlify Forms dashboard (guaranteed delivery + email notification)
+        try {
+          const fd = new FormData();
+          fd.append('form-name', 'enquiry');
+          fd.append('firstName',  payload.firstName  || '');
+          fd.append('lastName',   payload.lastName   || '');
+          fd.append('email',      payload.email      || '');
+          fd.append('phone',      payload.phone      || '');
+          fd.append('eventType',  payload.eventType  || '');
+          fd.append('eventDate',  payload.eventDate  || '');
+          fd.append('guestCount', payload.guestCount || '');
+          fd.append('room',       payload.room       || '');
+          fd.append('message',    payload.message    || '');
+          await fetch('/', { method: 'POST', body: fd });
+        } catch (_) { /* non-critical — security function already succeeded */ }
+
         // Success — show confirmation, hide form
         enquiryForm.style.display = 'none';
         if (formSuccess) {
