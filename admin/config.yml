@@ -1,0 +1,70 @@
+backend:
+  name: git-gateway
+  branch: master
+
+# Editorial workflow — changes go to draft before publishing
+publish_mode: editorial_workflow
+
+# Where uploaded images are stored
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+
+  # ── Testimonials ──────────────────────────────────────────
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "_data/testimonials"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - { label: "Guest Name", name: "name", widget: "string", hint: "e.g. Emma & James" }
+      - { label: "Event Type", name: "event", widget: "string", hint: "e.g. Wedding 2024" }
+      - { label: "Star Rating", name: "stars", widget: "number", default: 5, min: 1, max: 5 }
+      - { label: "Quote", name: "quote", widget: "text" }
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  # ── Gallery Images ────────────────────────────────────────
+  - name: "gallery"
+    label: "Gallery"
+    folder: "_data/gallery"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Caption", name: "caption", widget: "string" }
+      - { label: "Image", name: "image", widget: "image" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options: ["all", "weddings", "corporate", "social", "food", "rooms", "garden"]
+      - { label: "Published", name: "published", widget: "boolean", default: true }
+
+  # ── Packages & Pricing ────────────────────────────────────
+  - name: "settings"
+    label: "Site Settings"
+    files:
+
+      - label: "Wedding Packages"
+        name: "wedding_packages"
+        file: "_data/wedding_packages.yml"
+        fields:
+          - label: "Packages"
+            name: "packages"
+            widget: "list"
+            fields:
+              - { label: "Package Name", name: "name", widget: "string" }
+              - { label: "Price 2026 (pp)", name: "price_2026", widget: "number" }
+              - { label: "Price 2027 (pp)", name: "price_2027", widget: "number" }
+              - { label: "Price 2028 (pp)", name: "price_2028", widget: "number" }
+              - { label: "Description", name: "description", widget: "text" }
+
+      - label: "Contact Info"
+        name: "contact"
+        file: "_data/contact.yml"
+        fields:
+          - { label: "Phone", name: "phone", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address Line 1", name: "address1", widget: "string" }
+          - { label: "Address Line 2", name: "address2", widget: "string" }
+          - { label: "Facebook URL", name: "facebook", widget: "string" }
+          - { label: "Instagram URL", name: "instagram", widget: "string" }
