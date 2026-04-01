@@ -10,3 +10,6 @@ Thumbs.db
 
 # Editor files
 .vscode/settings.json
+
+# Netlify Functions dependencies (if any are added later)
+netlify/functions/node_modules/

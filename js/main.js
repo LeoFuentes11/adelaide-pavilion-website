@@ -132,9 +132,33 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Enquiry Form ---------- */
   const enquiryForm = document.getElementById('enquiryForm');
   const formSuccess = document.getElementById('formSuccess');
-  enquiryForm?.addEventListener('submit', (e) => {
+  const formError   = document.getElementById('formError');
+  const submitBtn   = document.getElementById('submitBtn');
+
+  function showError(msg) {
+    if (!formError) return;
+    formError.textContent = msg;
+    formError.style.display = 'block';
+    formError.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function clearError() {
+    if (formError) { formError.textContent = ''; formError.style.display = 'none'; }
+  }
+
+  // Highlight fields that failed server-side validation
+  function markServerErrors(fieldNames) {
+    fieldNames.forEach(name => {
+      const el = enquiryForm.querySelector(`[name="${name}"]`);
+      if (el) el.style.borderColor = '#e57373';
+    });
+  }
+
+  enquiryForm?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    // Validation
+    clearError();
+
+    // --- Client-side required-field check ---
     const required = enquiryForm.querySelectorAll('[required]');
     let valid = true;
     required.forEach(field => {
@@ -145,18 +169,65 @@ document.addEventListener('DOMContentLoaded', () => {
         field.style.borderColor = '';
       }
     });
-    if (!valid) return;
-    // Submit to Netlify Forms via fetch
-    const data = new FormData(enquiryForm);
-    fetch('/', { method: 'POST', body: data })
-      .then(() => {
-        enquiryForm.style.display = 'none';
-        formSuccess?.classList.add('visible');
-        window.scrollTo({ top: formSuccess.offsetTop - 100, behavior: 'smooth' });
-      })
-      .catch(() => {
-        alert('Something went wrong. Please call us on 08 8212 7444 or try again.');
+    if (!valid) {
+      showError('Please fill in all required fields before submitting.');
+      return;
+    }
+
+    // --- Honeypot check (bots fill hidden field) ---
+    const honeypot = enquiryForm.querySelector('[name="bot-field"]');
+    if (honeypot && honeypot.value) return; // silently drop
+
+    // --- Disable button to prevent double-submit ---
+    if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+
+    // --- Collect form data as JSON ---
+    const payload = {
+      firstName:  enquiryForm.querySelector('#firstName')?.value.trim(),
+      lastName:   enquiryForm.querySelector('#lastName')?.value.trim(),
+      email:      enquiryForm.querySelector('#email')?.value.trim(),
+      phone:      enquiryForm.querySelector('#phone')?.value.trim(),
+      eventType:  enquiryForm.querySelector('#eventType')?.value,
+      eventDate:  enquiryForm.querySelector('#eventDate')?.value,
+      guestCount: enquiryForm.querySelector('#guestCount')?.value,
+      room:       enquiryForm.querySelector('#room')?.value,
+      message:    enquiryForm.querySelector('#message')?.value.trim(),
+      newsletter: enquiryForm.querySelector('#newsletter')?.checked,
+      // Cloudflare Turnstile token (auto-inserted by the widget)
+      'cf-turnstile-response': enquiryForm.querySelector('[name="cf-turnstile-response"]')?.value || '',
+    };
+
+    try {
+      const res = await fetch('/.netlify/functions/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
+
+      const data = await res.json();
+
+      if (res.ok && data.success) {
+        // Success — show confirmation, hide form
+        enquiryForm.style.display = 'none';
+        if (formSuccess) {
+          formSuccess.classList.add('visible');
+          window.scrollTo({ top: formSuccess.offsetTop - 100, behavior: 'smooth' });
+        }
+      } else if (res.status === 429) {
+        // Rate limited
+        showError(data.error || 'Too many submissions. Please try again later or call 08 8212 7444.');
+      } else if (res.status === 422 && data.fields) {
+        // Validation errors — highlight specific fields
+        markServerErrors(data.fields);
+        showError(data.error || 'Please check the highlighted fields and try again.');
+      } else {
+        showError(data.error || 'Something went wrong. Please call us on 08 8212 7444.');
+      }
+    } catch {
+      showError('Unable to send your enquiry. Please check your connection or call 08 8212 7444.');
+    } finally {
+      if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Enquiry →'; }
+    }
   });
 
   /* ---------- Smooth Scroll for anchor links ---------- */

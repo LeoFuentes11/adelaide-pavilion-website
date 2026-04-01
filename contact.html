@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <!-- Cloudflare Turnstile — anti-spam widget -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 
@@ -61,10 +63,10 @@
           <p style="font-family:'Lato',sans-serif;font-size:0.95rem;color:#555;line-height:1.8;">Thank you for your enquiry. One of our event coordinators will be in touch within one business day.<br><br>In the meantime, feel free to call us on <a href="tel:0882127444" style="color:var(--green);font-weight:600;">08 8212 7444</a>.</p>
         </div>
 
-        <!-- Enquiry Form -->
-        <form id="enquiryForm" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" novalidate>
-          <input type="hidden" name="form-name" value="contact" />
-          <input type="hidden" name="bot-field" />
+        <!-- Enquiry Form — submissions handled by /.netlify/functions/contact -->
+        <form id="enquiryForm" novalidate>
+          <!-- Honeypot: bots fill this, humans don't -->
+          <input type="text" name="bot-field" style="display:none;" tabindex="-1" autocomplete="off" />
           <div class="form-grid">
             <div class="form-group">
               <label class="form-label" for="firstName">First Name <span style="color:#e57373;">*</span></label>
@@ -138,12 +140,26 @@
           </div>
           <div class="form-group">
             <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;">
-              <input type="checkbox" name="newsletter" style="margin-top:3px;accent-color:var(--green);" />
+              <input type="checkbox" id="newsletter" name="newsletter" style="margin-top:3px;accent-color:var(--green);" />
               <span style="font-family:'Lato',sans-serif;font-size:0.85rem;color:#666;line-height:1.6;">I'd like to receive special offers and updates from Adelaide Pavilion</span>
             </label>
           </div>
-          <button type="submit" class="btn btn-green" style="width:100%;font-size:0.88rem;padding:16px;">Send Enquiry →</button>
-          <p style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#aaa;text-align:center;margin-top:12px;">We respond within 1 business day. Your information is kept private.</p>
+
+          <!-- Cloudflare Turnstile anti-spam widget -->
+          <!-- Replace data-sitekey with your real key from dash.cloudflare.com/turnstile -->
+          <!-- Test key (always passes): 1x00000000000000000000AA -->
+          <div class="form-group">
+            <div class="cf-turnstile" data-sitekey="0x4AAAAAACyriY73UOg5Es11" data-theme="light"></div>
+          </div>
+
+          <!-- Server-side error message -->
+          <div id="formError" style="display:none;background:#fef2f2;border:1px solid #fca5a5;border-radius:4px;padding:12px 16px;margin-bottom:16px;font-family:'Lato',sans-serif;font-size:0.88rem;color:#b91c1c;"></div>
+
+          <button type="submit" id="submitBtn" class="btn btn-green" style="width:100%;font-size:0.88rem;padding:16px;">Send Enquiry →</button>
+          <p style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#aaa;text-align:center;margin-top:12px;">
+            We respond within 1 business day. Your information is kept private and never shared.
+            <a href="privacy.html" style="color:var(--green);">Privacy Policy</a>
+          </p>
         </form>
       </div>
 
