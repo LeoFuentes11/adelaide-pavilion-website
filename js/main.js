@@ -109,6 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Activate tab from URL hash (e.g. packages.html#menus)
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    const matchBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
+    if (matchBtn) matchBtn.click();
+  }
+
   /* ---------- Accordion ---------- */
   document.querySelectorAll('.accordion-header').forEach(header => {
     header.addEventListener('click', () => {
