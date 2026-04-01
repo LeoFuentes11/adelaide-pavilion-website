@@ -2,10 +2,8 @@ backend:
   name: git-gateway
   branch: master
 
-# Editorial workflow — changes go to draft before publishing
 publish_mode: editorial_workflow
 
-# Where uploaded images are stored
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 
@@ -39,32 +37,123 @@ collections:
         options: ["all", "weddings", "corporate", "social", "food", "rooms", "garden"]
       - { label: "Published", name: "published", widget: "boolean", default: true }
 
-  # ── Packages & Pricing ────────────────────────────────────
-  - name: "settings"
-    label: "Site Settings"
+  # ── Page Content ──────────────────────────────────────────
+  - name: "pages"
+    label: "Page Content"
     files:
 
-      - label: "Wedding Packages"
-        name: "wedding_packages"
-        file: "_data/wedding_packages.yml"
+      # Home Page
+      - label: "Home Page"
+        name: "homepage"
+        file: "_data/homepage.json"
+        format: json
         fields:
-          - label: "Packages"
-            name: "packages"
-            widget: "list"
-            fields:
-              - { label: "Package Name", name: "name", widget: "string" }
-              - { label: "Price 2026 (pp)", name: "price_2026", widget: "number" }
-              - { label: "Price 2027 (pp)", name: "price_2027", widget: "number" }
-              - { label: "Price 2028 (pp)", name: "price_2028", widget: "number" }
-              - { label: "Description", name: "description", widget: "text" }
+          - { label: "Hero Script (italic cursive line)", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Hero Description", name: "hero_desc", widget: "text" }
+          - { label: "Welcome Section Subtitle", name: "welcome_subtitle", widget: "string" }
+          - { label: "Welcome Section Title", name: "welcome_title", widget: "string" }
+          - { label: "Welcome Paragraph 1", name: "welcome_para1", widget: "text" }
+          - { label: "Welcome Paragraph 2", name: "welcome_para2", widget: "text" }
 
-      - label: "Contact Info"
-        name: "contact"
-        file: "_data/contact.yml"
+      # About Page
+      - label: "About Page"
+        name: "about"
+        file: "_data/about.json"
+        format: json
         fields:
-          - { label: "Phone", name: "phone", widget: "string" }
-          - { label: "Email", name: "email", widget: "string" }
-          - { label: "Address Line 1", name: "address1", widget: "string" }
-          - { label: "Address Line 2", name: "address2", widget: "string" }
-          - { label: "Facebook URL", name: "facebook", widget: "string" }
-          - { label: "Instagram URL", name: "instagram", widget: "string" }
+          - { label: "Hero Script", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "History Section Label", name: "history_subtitle", widget: "string" }
+          - { label: "History Section Title", name: "history_title", widget: "string" }
+          - { label: "History Paragraph 1", name: "history_para1", widget: "text" }
+          - { label: "History Paragraph 2", name: "history_para2", widget: "text" }
+          - { label: "History Paragraph 3", name: "history_para3", widget: "text" }
+          - { label: "History Paragraph 4 (Gardens)", name: "history_para4", widget: "text" }
+          - { label: "Legacy Paragraph (Est. section)", name: "legacy_para", widget: "text" }
+
+      # Weddings Page
+      - label: "Weddings Page"
+        name: "weddings"
+        file: "_data/weddings.json"
+        format: json
+        fields:
+          - { label: "Hero Script", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Hero Description", name: "hero_desc", widget: "text" }
+          - { label: "Intro Paragraph 1", name: "intro_para1", widget: "text" }
+          - { label: "Intro Paragraph 2", name: "intro_para2", widget: "text" }
+
+      # Corporate Page
+      - label: "Corporate Page"
+        name: "corporate"
+        file: "_data/corporate.json"
+        format: json
+        fields:
+          - { label: "Hero Script", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Intro Paragraph 1", name: "intro_para1", widget: "text" }
+          - { label: "Intro Paragraph 2", name: "intro_para2", widget: "text" }
+
+      # Social Events Page
+      - label: "Social Events Page"
+        name: "social"
+        file: "_data/social.json"
+        format: json
+        fields:
+          - { label: "Hero Script", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Intro Paragraph 1", name: "intro_para1", widget: "text" }
+          - { label: "Intro Paragraph 2", name: "intro_para2", widget: "text" }
+
+      # Packages & Pricing
+      - label: "Packages & Pricing"
+        name: "packages"
+        file: "_data/packages.json"
+        format: json
+        fields:
+          - { label: "Hero Script", name: "hero_script", widget: "string" }
+          - { label: "Hero Title", name: "hero_title", widget: "string" }
+          - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
+          - { label: "Wedding Signature — Price 2026 (pp)", name: "wedding_signature_price_2026", widget: "number" }
+          - { label: "Wedding Signature — Price 2027 (pp)", name: "wedding_signature_price_2027", widget: "number" }
+          - { label: "Wedding Signature — Price 2028 (pp)", name: "wedding_signature_price_2028", widget: "number" }
+          - { label: "Wedding Signature — Price Label", name: "wedding_signature_price_label", widget: "string", hint: "e.g. per person · 2026  |  $150pp 2027  |  $160pp 2028" }
+          - { label: "Wedding Pavilion — Price 2026 (pp)", name: "wedding_pavilion_price_2026", widget: "number" }
+          - { label: "Wedding Pavilion — Price 2027 (pp)", name: "wedding_pavilion_price_2027", widget: "number" }
+          - { label: "Wedding Pavilion — Price 2028 (pp)", name: "wedding_pavilion_price_2028", widget: "number" }
+          - { label: "Wedding Pavilion — Price Label", name: "wedding_pavilion_price_label", widget: "string", hint: "e.g. per person · 2026  |  $160pp 2027  |  $170pp 2028" }
+          - { label: "Wedding Cocktail — Price (pp)", name: "wedding_cocktail_price", widget: "number" }
+          - { label: "Social — 2 Course Main+Dessert (pp)", name: "social_two_course_main_dessert", widget: "number" }
+          - { label: "Social — 2 Course Entrée+Main (pp)", name: "social_two_course_entree_main", widget: "number" }
+          - { label: "Social — 3 Course Set (pp)", name: "social_three_course_set", widget: "number" }
+          - { label: "Social — 3 Course Alternate (pp)", name: "social_three_course_alternate", widget: "number" }
+          - { label: "Social — Cocktail (pp)", name: "social_cocktail", widget: "number" }
+          - { label: "Social — Street Eats (pp)", name: "social_street_eats", widget: "number" }
+          - { label: "Corporate — Continental Breakfast (pp)", name: "corporate_breakfast_continental", widget: "number" }
+          - { label: "Corporate — Hot Breakfast (pp)", name: "corporate_breakfast_hot", widget: "number" }
+          - { label: "Corporate — Networking (pp)", name: "corporate_networking", widget: "number" }
+          - { label: "Corporate — Cocktail (pp)", name: "corporate_cocktail", widget: "number" }
+          - { label: "Children — Menu 1 (pp)", name: "children_menu1", widget: "number" }
+          - { label: "Children — Menu 2 (pp)", name: "children_menu2", widget: "number" }
+          - { label: "Children — Cocktail (pp)", name: "children_cocktail", widget: "number" }
+
+      # Contact Info
+      - label: "Contact Information"
+        name: "contact"
+        file: "_data/contact.json"
+        format: json
+        fields:
+          - { label: "Phone (display)", name: "phone_display", widget: "string", hint: "e.g. 08 8212 7444" }
+          - { label: "Phone (tel: link)", name: "phone_tel", widget: "string", hint: "e.g. tel:0882127444" }
+          - { label: "Email Address", name: "email", widget: "string" }
+          - { label: "Email (mailto: link)", name: "email_href", widget: "string", hint: "e.g. mailto:contact@adelaidepavilion.com.au" }
+          - { label: "Footer Address (HTML)", name: "address_footer", widget: "text", hint: "Use <br> for line breaks" }
+          - { label: "Facebook URL", name: "facebook_url", widget: "string" }
+          - { label: "Instagram URL", name: "instagram_url", widget: "string" }
+          - { label: "Google Maps URL", name: "maps_url", widget: "string" }

@@ -26,7 +26,7 @@
     .addon-table .addon-price { font-weight:700; color:var(--green); white-space:nowrap; text-align:right; }
   </style>
 </head>
-<body>
+<body data-page="packages">
 
 <!-- NAVBAR -->
 <nav id="navbar">
@@ -59,9 +59,9 @@
   <div class="hero-bg" style="background-image:url('images/packages-hero.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-sub-content">
-    <div class="hero-script">Tailored to Perfection</div>
-    <h1 class="hero-title">Packages &amp; Pricing</h1>
-    <p style="font-family:'Lato',sans-serif;font-size:1rem;color:rgba(255,255,255,0.8);letter-spacing:0.08em;margin-top:8px;">Complete menus, beverage options &amp; transparent pricing</p>
+    <div class="hero-script" data-cms="hero_script">Tailored to Perfection</div>
+    <h1 class="hero-title" data-cms="hero_title">Packages &amp; Pricing</h1>
+    <p style="font-family:'Lato',sans-serif;font-size:1rem;color:rgba(255,255,255,0.8);letter-spacing:0.08em;margin-top:8px;" data-cms="hero_subtitle">Complete menus, beverage options &amp; transparent pricing</p>
   </div>
 </header>
 
@@ -100,8 +100,8 @@
               <div class="pkg-name">Signature</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">5-Hour Package</div>
               <div class="pkg-price-wrap">
-                <div class="pkg-price"><sup>$</sup>140</div>
-                <div class="pkg-price-label">per person · 2026 &nbsp;|&nbsp; $150pp 2027 &nbsp;|&nbsp; $160pp 2028</div>
+                <div class="pkg-price"><sup>$</sup><span data-cms="wedding_signature_price_2026">140</span></div>
+                <div class="pkg-price-label" data-cms="wedding_signature_price_label">per person · 2026 &nbsp;|&nbsp; $150pp 2027 &nbsp;|&nbsp; $160pp 2028</div>
               </div>
             </div>
             <div class="pkg-body">
@@ -145,8 +145,8 @@
               <div class="pkg-name">Pavilion</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">5-Hour Package</div>
               <div class="pkg-price-wrap">
-                <div class="pkg-price"><sup>$</sup>150</div>
-                <div class="pkg-price-label">per person · 2026 &nbsp;|&nbsp; $160pp 2027 &nbsp;|&nbsp; $170pp 2028</div>
+                <div class="pkg-price"><sup>$</sup><span data-cms="wedding_pavilion_price_2026">150</span></div>
+                <div class="pkg-price-label" data-cms="wedding_pavilion_price_label">per person · 2026 &nbsp;|&nbsp; $160pp 2027 &nbsp;|&nbsp; $170pp 2028</div>
               </div>
             </div>
             <div class="pkg-body">
@@ -183,7 +183,7 @@
               <div class="pkg-name">Cocktail Celebration</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">5-Hour Package</div>
               <div class="pkg-price-wrap">
-                <div class="pkg-price"><sup>$</sup>102</div>
+                <div class="pkg-price"><sup>$</sup><span data-cms="wedding_cocktail_price">102</span></div>
                 <div class="pkg-price-label">per person · includes beverages</div>
               </div>
             </div>
@@ -275,7 +275,7 @@
                 <div class="pkg-tag">Banquet Option 1</div>
                 <div class="pkg-name">Two Course</div>
                 <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Main + Dessert</div>
-                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>50</div><div class="pkg-price-label">per person · food only</div></div>
+                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_two_course_main_dessert">50</span></div><div class="pkg-price-label">per person · food only</div></div>
               </div>
               <div class="pkg-body">
                 <ul class="pkg-list">
@@ -291,7 +291,7 @@
                 <div class="pkg-tag">Banquet Option 2</div>
                 <div class="pkg-name">Two Course</div>
                 <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Entrée + Main</div>
-                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>55</div><div class="pkg-price-label">per person · food only</div></div>
+                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_two_course_entree_main">55</span></div><div class="pkg-price-label">per person · food only</div></div>
               </div>
               <div class="pkg-body">
                 <ul class="pkg-list">
@@ -307,7 +307,7 @@
                 <div class="pkg-tag">Banquet Option 3</div>
                 <div class="pkg-name">Three Course Set</div>
                 <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Entrée + Main + Dessert</div>
-                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>63</div><div class="pkg-price-label">per person · food only</div></div>
+                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_three_course_set">63</span></div><div class="pkg-price-label">per person · food only</div></div>
               </div>
               <div class="pkg-body">
                 <ul class="pkg-list">
@@ -326,7 +326,7 @@
                 <div class="pkg-tag">Banquet Option 4</div>
                 <div class="pkg-name">Three Course Alternate</div>
                 <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Choice of Two per Course</div>
-                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>73</div><div class="pkg-price-label">per person · food only</div></div>
+                <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_three_course_alternate">73</span></div><div class="pkg-price-label">per person · food only</div></div>
               </div>
               <div class="pkg-body">
                 <ul class="pkg-list">
@@ -350,7 +350,7 @@
               <div class="pkg-tag">Cocktail Package</div>
               <div class="pkg-name">Cocktail Celebration</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">2-Hour Canapé Service</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>45</div><div class="pkg-price-label">per person · plus beverages</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_cocktail">45</span></div><div class="pkg-price-label">per person · plus beverages</div></div>
             </div>
             <div class="pkg-body">
               <ul class="pkg-list">
@@ -367,7 +367,7 @@
               <div class="pkg-tag">Casual Dining</div>
               <div class="pkg-name">Street Eats</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">2-Hour Service</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>48.50</div><div class="pkg-price-label">per person · plus beverages</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="social_street_eats">48</span></div><div class="pkg-price-label">per person · plus beverages</div></div>
             </div>
             <div class="pkg-body">
               <ul class="pkg-list">
@@ -403,7 +403,7 @@
             <div class="pkg-header">
               <div class="pkg-tag">Breakfast</div><div class="pkg-name">Continental</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Buffet Style</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>30</div><div class="pkg-price-label">per person · incl. 2hr beverages</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="corporate_breakfast_continental">30</span></div><div class="pkg-price-label">per person · incl. 2hr beverages</div></div>
             </div>
             <div class="pkg-body">
               <ul class="pkg-list">
@@ -419,7 +419,7 @@
             <div class="pkg-header">
               <div class="pkg-tag">Breakfast</div><div class="pkg-name">Hot Plated</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">Individual Serve</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>32</div><div class="pkg-price-label">per person · incl. 2hr beverages</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="corporate_breakfast_hot">32</span></div><div class="pkg-price-label">per person · incl. 2hr beverages</div></div>
             </div>
             <div class="pkg-body">
               <div style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#888;margin-bottom:8px;">Choose one of:</div>
@@ -479,7 +479,7 @@
             <div class="pkg-header">
               <div class="pkg-tag">Add-On Package</div><div class="pkg-name">Networking</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">1-Hour Post-Presentation</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>38</div><div class="pkg-price-label">per person · min. 30 guests</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="corporate_networking">38</span></div><div class="pkg-price-label">per person · min. 30 guests</div></div>
             </div>
             <div class="pkg-body">
               <ul class="pkg-list">
@@ -494,7 +494,7 @@
             <div class="pkg-header">
               <div class="pkg-tag">Full Corporate Cocktail</div><div class="pkg-name">Cocktail Package</div>
               <div style="font-family:'Lato',sans-serif;font-size:0.82rem;color:rgba(255,255,255,0.7);">5-Hour Event Package</div>
-              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup>83</div><div class="pkg-price-label">per person · all-inclusive</div></div>
+              <div class="pkg-price-wrap"><div class="pkg-price"><sup>$</sup><span data-cms="corporate_cocktail">83</span></div><div class="pkg-price-label">per person · all-inclusive</div></div>
             </div>
             <div class="pkg-body">
               <ul class="pkg-list">
@@ -901,8 +901,8 @@
       <div>
         <div class="footer-col-title">Contact Us</div>
         <div class="footer-contact-item"><span class="footer-contact-icon">📍</span><div class="footer-contact-text">Veale Gardens, Cnr South Terrace &amp; Peacock Road, Adelaide SA 5000</div></div>
-        <div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444">08 8212 7444</a></div></div>
-        <div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au">contact@adelaidepavilion.com.au</a></div></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444" data-cms-href="phone_tel" data-cms="phone_display">08 8212 7444</a></div></div>
+        <div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au" data-cms-href="email_href" data-cms="email">contact@adelaidepavilion.com.au</a></div></div>
       </div>
     </div>
     <div class="footer-bottom">
@@ -913,6 +913,7 @@
 </footer>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
 </body>
 </html>

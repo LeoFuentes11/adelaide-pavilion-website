@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body data-page="corporate">
 
 <nav id="navbar">
   <div class="nav-inner">
@@ -36,9 +36,9 @@
   <div class="hero-bg" style="background-image:url('images/corporate-hero.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-sub-content">
-    <div class="hero-script">Elevate Your Business Events</div>
-    <h1 class="hero-title">Corporate Functions</h1>
-    <p style="font-family:'Lato',sans-serif;font-size:1rem;color:rgba(255,255,255,0.8);margin-top:8px;letter-spacing:0.08em;">Conferences · Award Nights · Gala Dinners · Workshops · Product Launches</p>
+    <div class="hero-script" data-cms="hero_script">Elevate Your Business Events</div>
+    <h1 class="hero-title" data-cms="hero_title">Corporate Functions</h1>
+    <p style="font-family:'Lato',sans-serif;font-size:1rem;color:rgba(255,255,255,0.8);margin-top:8px;letter-spacing:0.08em;" data-cms="hero_subtitle">Conferences · Award Nights · Gala Dinners · Workshops · Product Launches</p>
   </div>
 </header>
 
@@ -50,8 +50,8 @@
         <div class="section-subtitle">Corporate Excellence</div>
         <h2 class="section-title">Where Business Meets Elegance</h2>
         <div class="section-divider-left"></div>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:18px;">Adelaide Pavilion provides an exceptional backdrop for corporate events of all sizes and types. Our two elegantly appointed function rooms, professional AV infrastructure, and outstanding catering combine to create events that impress clients, reward teams, and leave a lasting impression.</p>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:24px;">From intimate boardroom meetings to large-scale gala dinners and conferences for 250+ delegates, our experienced team handles every detail with the professionalism your organisation deserves.</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:18px;" data-cms="intro_para1">Adelaide Pavilion provides an exceptional backdrop for corporate events of all sizes and types. Our two elegantly appointed function rooms, professional AV infrastructure, and outstanding catering combine to create events that impress clients, reward teams, and leave a lasting impression.</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:24px;" data-cms="intro_para2">From intimate boardroom meetings to large-scale gala dinners and conferences for 250+ delegates, our experienced team handles every detail with the professionalism your organisation deserves.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
           <a href="packages.html#corporate" class="btn btn-green">View Corporate Packages</a>
           <a href="contact.html" class="btn btn-outline-green">Enquire Now</a>
@@ -196,12 +196,13 @@
       <div><div class="footer-brand-logo">Adelaide Pavilion</div><div class="footer-brand-tagline">Veale Gardens, Adelaide</div><p class="footer-brand-desc">An iconic garden venue in the heart of Adelaide since 1963.</p><div class="footer-social"><a href="https://www.facebook.com/adelaidepavilion" target="_blank" rel="noopener">f</a><a href="https://www.instagram.com/adelaidepavilion" target="_blank" rel="noopener">in</a></div></div>
       <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="social.html">Social Events</a></li><li><a href="packages.html">Packages</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div><div class="footer-col-title">Corporate</div><ul class="footer-links"><li><a href="packages.html#corporate">Breakfast Packages</a></li><li><a href="packages.html#corporate">Lunch Options</a></li><li><a href="packages.html#corporate">Networking Package</a></li><li><a href="packages.html#corporate">Cocktail Package</a></li><li><a href="packages.html#corporate">Banquet Packages</a></li></ul></div>
-      <div><div class="footer-col-title">Contact Us</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><div class="footer-contact-text">Veale Gardens, Cnr South Terrace &amp; Peacock Road, Adelaide SA 5000</div></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444">08 8212 7444</a></div></div><div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au">contact@adelaidepavilion.com.au</a></div></div></div>
+      <div><div class="footer-col-title">Contact Us</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><div class="footer-contact-text">Veale Gardens, Cnr South Terrace &amp; Peacock Road, Adelaide SA 5000</div></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444" data-cms-href="phone_tel" data-cms="phone_display">08 8212 7444</a></div></div><div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au" data-cms-href="email_href" data-cms="email">contact@adelaidepavilion.com.au</a></div></div></div>
     </div>
     <div class="footer-bottom"><div class="footer-copy">© <span class="js-year"></span> Adelaide Pavilion. All rights reserved.</div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div></div>
   </div>
 </footer>
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
 </body>
 </html>

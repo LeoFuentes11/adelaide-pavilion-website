@@ -10,7 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body data-page="weddings">
 
 <!-- NAVBAR -->
 <nav id="navbar">
@@ -38,11 +38,11 @@
   <div class="hero-bg" style="background-image:url('images/weddings-hero.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content fade-in">
-    <div class="hero-script">Begin Your Forever</div>
-    <h1 class="hero-title">Your Dream Wedding</h1>
-    <p class="hero-subtitle">Adelaide's Most Romantic Garden Venue</p>
+    <div class="hero-script" data-cms="hero_script">Begin Your Forever</div>
+    <h1 class="hero-title" data-cms="hero_title">Your Dream Wedding</h1>
+    <p class="hero-subtitle" data-cms="hero_subtitle">Adelaide's Most Romantic Garden Venue</p>
     <div class="hero-divider"></div>
-    <p class="hero-desc">Celebrate your love story surrounded by lush Veale Gardens, panoramic windows, and the finest French &amp; Mediterranean cuisine. A setting as extraordinary as your love.</p>
+    <p class="hero-desc" data-cms="hero_desc">Celebrate your love story surrounded by lush Veale Gardens, panoramic windows, and the finest French &amp; Mediterranean cuisine. A setting as extraordinary as your love.</p>
     <div class="hero-buttons">
       <a href="packages.html" class="btn btn-gold">View Wedding Packages</a>
       <a href="contact.html" class="btn btn-outline-white">Enquire Now</a>
@@ -59,8 +59,8 @@
         <div class="section-subtitle">Why Choose Adelaide Pavilion</div>
         <h2 class="section-title">A Wedding Venue Unlike Any Other</h2>
         <div class="section-divider-left"></div>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:18px;">Adelaide Pavilion has been the setting for thousands of love stories since 2003. Nestled within the enchanting Veale Gardens, our venue offers an incomparable combination of natural beauty, architectural elegance, and truly personal service.</p>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:24px;">Our award-winning team — led by dedicated Event Coordinators — will guide you through every detail, from your first enquiry to the last dance, ensuring your wedding day unfolds exactly as you've imagined.</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:18px;" data-cms="intro_para1">Adelaide Pavilion has been the setting for thousands of love stories since 2003. Nestled within the enchanting Veale Gardens, our venue offers an incomparable combination of natural beauty, architectural elegance, and truly personal service.</p>
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:24px;" data-cms="intro_para2">Our award-winning team — led by dedicated Event Coordinators — will guide you through every detail, from your first enquiry to the last dance, ensuring your wedding day unfolds exactly as you've imagined.</p>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
           <div style="padding:16px;background:var(--white);border-radius:6px;box-shadow:var(--shadow);">
             <div style="font-size:1.6rem;margin-bottom:6px;">🌿</div>
@@ -264,13 +264,14 @@
       <div><div class="footer-brand-logo">Adelaide Pavilion</div><div class="footer-brand-tagline">Veale Gardens, Adelaide</div><p class="footer-brand-desc">An iconic garden venue in the heart of Adelaide since 2003.</p><div class="footer-social"><a href="https://www.facebook.com/adelaidepavilion" target="_blank" rel="noopener">f</a><a href="https://www.instagram.com/adelaidepavilion" target="_blank" rel="noopener">in</a></div></div>
       <div><div class="footer-col-title">Navigate</div><ul class="footer-links"><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="weddings.html">Weddings</a></li><li><a href="corporate.html">Corporate</a></li><li><a href="social.html">Social Events</a></li><li><a href="packages.html">Packages</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="contact.html">Contact</a></li></ul></div>
       <div><div class="footer-col-title">Weddings</div><ul class="footer-links"><li><a href="packages.html">Signature Package</a></li><li><a href="packages.html">Pavilion Package</a></li><li><a href="packages.html">Cocktail Package</a></li><li><a href="packages.html">Full Menus</a></li><li><a href="packages.html">Beverage Upgrades</a></li></ul></div>
-      <div><div class="footer-col-title">Contact Us</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><div class="footer-contact-text">Veale Gardens, Cnr South Terrace &amp; Peacock Road, Adelaide SA 5000</div></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444">08 8212 7444</a></div></div><div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au">contact@adelaidepavilion.com.au</a></div></div></div>
+      <div><div class="footer-col-title">Contact Us</div><div class="footer-contact-item"><span class="footer-contact-icon">📍</span><div class="footer-contact-text">Veale Gardens, Cnr South Terrace &amp; Peacock Road, Adelaide SA 5000</div></div><div class="footer-contact-item"><span class="footer-contact-icon">📞</span><div class="footer-contact-text"><a href="tel:0882127444" data-cms-href="phone_tel" data-cms="phone_display">08 8212 7444</a></div></div><div class="footer-contact-item"><span class="footer-contact-icon">✉</span><div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au" data-cms-href="email_href" data-cms="email">contact@adelaidepavilion.com.au</a></div></div></div>
     </div>
     <div class="footer-bottom"><div class="footer-copy">© <span class="js-year"></span> Adelaide Pavilion. All rights reserved.</div><div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="#">Terms</a></div></div>
   </div>
 </footer>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
 </body>
 </html>

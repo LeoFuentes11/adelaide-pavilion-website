@@ -18,7 +18,7 @@
   <!-- Styles -->
   <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
+<body data-page="home">
 
 <!-- ===================== NAVBAR ===================== -->
 <nav id="navbar">
@@ -58,11 +58,11 @@
   <div class="hero-bg" style="background-image: url('images/hero-pavilion.jpg');" role="img" aria-label="Adelaide Pavilion exterior surrounded by Veale Gardens"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content fade-in">
-    <div class="hero-script">Moments Made Memorable</div>
-    <h1 class="hero-title">Adelaide Pavilion</h1>
-    <p class="hero-subtitle">Veale Gardens &nbsp;·&nbsp; Adelaide, SA</p>
+    <div class="hero-script" data-cms="hero_script">Moments Made Memorable</div>
+    <h1 class="hero-title" data-cms="hero_title">Adelaide Pavilion</h1>
+    <p class="hero-subtitle" data-cms="hero_subtitle">Veale Gardens &nbsp;·&nbsp; Adelaide, SA</p>
     <div class="hero-divider"></div>
-    <p class="hero-desc">An intimate oasis in the heart of the city — panoramic garden views, French and Mediterranean inspired cuisine, and genuinely personal service for every occasion.</p>
+    <p class="hero-desc" data-cms="hero_desc">An intimate oasis in the heart of the city — panoramic garden views, French and Mediterranean inspired cuisine, and genuinely personal service for every occasion.</p>
     <div class="hero-buttons">
       <a href="packages.html" class="btn btn-outline-white">View Packages & Pricing</a>
     </div>
@@ -102,13 +102,13 @@
   <div class="container">
     <div class="d-grid-2">
       <div class="fade-up">
-        <div class="section-subtitle">Welcome to Adelaide Pavilion</div>
-        <h2 class="section-title">Where Every Event Becomes a Cherished Memory</h2>
+        <div class="section-subtitle" data-cms="welcome_subtitle">Welcome to Adelaide Pavilion</div>
+        <h2 class="section-title" data-cms="welcome_title">Where Every Event Becomes a Cherished Memory</h2>
         <div class="section-divider-left"></div>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:20px;">
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:20px;" data-cms="welcome_para1">
           Nestled within the lush surrounds of Veale Gardens, Adelaide Pavilion has been the city's most beloved private function venue since 2003. Once home to the legendary Alpine Restaurant, today it stands as an upscale venue where floor-to-ceiling panoramic windows frame garden views, and every detail is curated for elegance.
         </p>
-        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:28px;">
+        <p style="font-family:'Lato',sans-serif;font-size:0.97rem;color:#555;line-height:1.85;margin-bottom:28px;" data-cms="welcome_para2">
           Our team of dedicated coordinators ensure a seamless, personalised experience — whether you're celebrating your wedding day, hosting a corporate gala, or gathering family and friends for a milestone celebration.
         </p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;">
@@ -329,8 +329,8 @@
         <div class="footer-brand-tagline">Veale Gardens, Adelaide</div>
         <p class="footer-brand-desc">An iconic garden venue in the heart of Adelaide since 2003. French and Mediterranean inspired cuisine, panoramic views, and unforgettable moments.</p>
         <div class="footer-social">
-          <a href="https://www.facebook.com/adelaidepavilion" target="_blank" rel="noopener" aria-label="Facebook">f</a>
-          <a href="https://www.instagram.com/adelaidepavilion" target="_blank" rel="noopener" aria-label="Instagram">in</a>
+          <a href="https://www.facebook.com/adelaidepavilion" target="_blank" rel="noopener" aria-label="Facebook" data-cms-href="facebook_url">f</a>
+          <a href="https://www.instagram.com/adelaidepavilion" target="_blank" rel="noopener" aria-label="Instagram" data-cms-href="instagram_url">in</a>
         </div>
       </div>
       <div>
@@ -366,11 +366,11 @@
         </div>
         <div class="footer-contact-item">
           <span class="footer-contact-icon">📞</span>
-          <div class="footer-contact-text"><a href="tel:0882127444">08 8212 7444</a></div>
+          <div class="footer-contact-text"><a href="tel:0882127444" data-cms-href="phone_tel" data-cms="phone_display">08 8212 7444</a></div>
         </div>
         <div class="footer-contact-item">
           <span class="footer-contact-icon">✉</span>
-          <div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au">contact@adelaidepavilion.com.au</a></div>
+          <div class="footer-contact-text"><a href="mailto:contact@adelaidepavilion.com.au" data-cms-href="email_href" data-cms="email">contact@adelaidepavilion.com.au</a></div>
         </div>
         <div class="footer-contact-item">
           <span class="footer-contact-icon">🌐</span>
@@ -399,6 +399,7 @@
 </div>
 
 <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+<script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
 </body>
 </html>
