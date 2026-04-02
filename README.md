@@ -29,7 +29,7 @@ site trial/
 
 ## Deployment
 
-### Netlify (Recommended — Free)
+### Netlify
 
 1. Go to [netlify.com](https://netlify.com) and sign in
 2. Click **"Add new site" → "Deploy manually"**
@@ -42,13 +42,7 @@ site trial/
 - Add `<input type="hidden" name="form-name" value="contact" />` inside the form
 - Netlify will automatically detect and handle form submissions (free, up to 100/month)
 
-### Vercel
-
-1. Install Vercel CLI: `npm i -g vercel`
-2. Run `vercel` from the project directory
-3. Follow the prompts — your site deploys in seconds
-
-### Traditional Web Hosting (cPanel, etc.)
+### other option - Traditional Web Hosting (cPanel, etc.)
 
 1. Compress the project folder into a ZIP
 2. Upload via FTP or cPanel File Manager to `public_html`

@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: LeoFuentes11/adelaide-pavilion-website
   branch: master
+  auth_type: pkce
+  app_id: Ov23li8RkjAwPd4yBoxo
 
 publish_mode: editorial_workflow
 
