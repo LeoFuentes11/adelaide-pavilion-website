@@ -16,6 +16,8 @@
 (function () {
   'use strict';
 
+  let initialized = false;
+
   // Map body[data-page] values to their JSON data files
   const PAGE_MAP = {
     home:      '_data/homepage.json',
@@ -43,8 +45,8 @@
     if (!container) return;
     if (container.dataset.loaded) return; // already rendered
     const items = data['testimonials'];
-    if (!Array.isArray(items) || items.length === 0) return;
-    container.innerHTML = '';
+    if (!Array.isArray(items) || items.length === 0) return; // keep static HTML
+    container.innerHTML = ''; // safe to clear — we have data
     items.forEach((item, i) => {
       const div = document.createElement('div');
       div.className = 'testimonial fade-up';
@@ -152,6 +154,9 @@
   }
 
   async function init() {
+    if (initialized) return;
+    initialized = true;
+
     // Always load contact info — used in every footer
     const contact = await fetchJSON('_data/contact.json');
     if (contact) applyData(contact);
