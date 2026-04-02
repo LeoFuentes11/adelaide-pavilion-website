@@ -37,7 +37,7 @@
 
 /* ── Rate limiting ─────────────────────────────────────────── */
 const rateLimitStore = new Map();
-const RATE_LIMIT     = 20;
+const RATE_LIMIT     = 3;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 function isRateLimited(ip) {
