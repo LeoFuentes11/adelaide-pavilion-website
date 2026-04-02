@@ -1,51 +1,71 @@
 /**
  * api/admin-login.js — Adelaide Pavilion
  *
- * Validates the admin password and sets an auth cookie.
- * Environment variable: ADMIN_PASSWORD
+ * Validates the admin password and redirects to /admin or back to login.
+ * Set ADMIN_PASSWORD in Vercel environment variables.
  */
 
 'use strict';
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
-const COOKIE_NAME = 'admin_auth';
-const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
-
-module.exports = async (req, res) => {
+module.exports = async function handler(req, res) {
   res.setHeader('Content-Type', 'text/html');
 
   if (req.method !== 'POST') {
     return res.redirect('/admin-login.html');
   }
 
-  // No password configured
-  if (!ADMIN_PASSWORD) {
-    const redirect = req.body?.redirect || '/admin/';
-    const origin = req.headers.origin || 'https://adelaidepavilion.com.au';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+  const COOKIE_NAME = 'admin_auth';
+  const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
+
+  const origin = req.headers.origin || 'https://adelaidepavilion.com.au';
+  const LOGIN_URL = new URL('/admin-login.html', origin).toString();
+
+  function redirectWithError(redirectPath, error) {
     const url = new URL('/admin-login.html', origin);
-    url.searchParams.set('redirect', String(redirect));
+    url.searchParams.set('redirect', redirectPath);
+    url.searchParams.set('error', error);
     return res.redirect(url.toString());
   }
 
-  let body = req.body || {};
-
-  // Handle JSON body
-  if (typeof body === 'string') {
-    try { body = JSON.parse(body); } catch { body = {}; }
+  // No password configured — allow through
+  if (!ADMIN_PASSWORD) {
+    const body = req.body || {};
+    const redirect = typeof body.redirect === 'string' && body.redirect.startsWith('/')
+      ? body.redirect
+      : '/admin/';
+    return res.redirect(new URL(redirect, origin).toString());
   }
 
-  const password = body.password || '';
-  const rawRedirect = body.redirect || '/admin/';
+  // Parse body — handles both JSON and form-encoded
+  const rawBody = req.body || {};
+  let password = '';
+  let rawRedirect = '/admin/';
+
+  if (typeof rawBody === 'object') {
+    password = rawBody.password || '';
+    rawRedirect = rawBody.redirect || '/admin/';
+  } else if (typeof rawBody === 'string' && rawBody) {
+    try {
+      const parsed = JSON.parse(rawBody);
+      password = parsed.password || '';
+      rawRedirect = parsed.redirect || '/admin/';
+    } catch {
+      // Not JSON — try form-encoded key=value&key=value
+      rawBody.split('&').forEach(pair => {
+        const [k, v] = pair.split('=').map(d => decodeURIComponent(d || ''));
+        if (k === 'password') password = v;
+        if (k === 'redirect') rawRedirect = v;
+      });
+    }
+  }
+
   const safeRedirect = typeof rawRedirect === 'string' && rawRedirect.startsWith('/')
     ? rawRedirect
     : '/admin/';
 
   if (password !== ADMIN_PASSWORD) {
-    const origin = req.headers.origin || 'https://adelaidepavilion.com.au';
-    const url = new URL('/admin-login.html', origin);
-    url.searchParams.set('redirect', safeRedirect);
-    url.searchParams.set('error', 'invalid');
-    return res.redirect(url.toString());
+    return redirectWithError(safeRedirect, 'invalid');
   }
 
   // Success — set cookie and redirect
@@ -54,5 +74,5 @@ module.exports = async (req, res) => {
     `${COOKIE_NAME}=${encodeURIComponent(ADMIN_PASSWORD)}; Path=/; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Lax`
   );
 
-  return res.redirect(safeRedirect);
+  return res.redirect(new URL(safeRedirect, origin).toString());
 };
