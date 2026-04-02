@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (res.ok && data.success) {
         // Send email via Web3Forms directly from browser (avoids server-side Cloudflare block)
         try {
-          await fetch('https://api.web3forms.com/submit', {
+          const w3res = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -278,7 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
               message:     payload.message,
             }),
           });
-        } catch { /* email failure is non-fatal — submission was already validated */ }
+          const w3data = await w3res.json();
+          if (!w3data.success) console.error('[Web3Forms]', w3data);
+        } catch (w3err) { console.error('[Web3Forms] fetch failed:', w3err); }
 
         // Show confirmation, hide form
         enquiryForm.style.display = 'none';
