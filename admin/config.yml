@@ -2,8 +2,8 @@ backend:
   name: github
   repo: LeoFuentes11/adelaide-pavilion-website
   branch: master
-  auth_type: pkce
-  app_id: Ov23li8RkjAwPd4yBoxo
+  base_url: REPLACE_WITH_YOUR_VERCEL_URL
+  auth_endpoint: api/auth
 
 publish_mode: editorial_workflow
 
