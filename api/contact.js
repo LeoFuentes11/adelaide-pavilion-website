@@ -37,7 +37,7 @@
 
 /* ── Rate limiting ─────────────────────────────────────────── */
 const rateLimitStore = new Map();
-const RATE_LIMIT     = 3;
+const RATE_LIMIT     = 20;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 function isRateLimited(ip) {
@@ -141,7 +141,7 @@ async function sendEmail(fields) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      from:     'Adelaide Pavilion Website <noreply@adelaidepavilion.com.au>',
+      from:     'Adelaide Pavilion Website <onboarding@resend.dev>',
       to:       ['contact@adelaidepavilion.com.au', 'leo.emile.fuentes@gmail.com'],
       reply_to: fields.email,
       subject:  `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
