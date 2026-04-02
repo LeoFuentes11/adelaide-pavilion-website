@@ -258,30 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
       const data = await res.json();
 
       if (res.ok && data.success) {
-        // Send email via Web3Forms directly from browser (avoids server-side Cloudflare block)
-        try {
-          const w3res = await fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              access_key:  '36dd0cf7-2431-418d-ad89-f3b7ea53cf84',
-              subject:     `Enquiry: ${payload.eventType} — ${payload.firstName} ${payload.lastName}`,
-              from_name:   'Adelaide Pavilion Website',
-              replyto:     payload.email,
-              name:        `${payload.firstName} ${payload.lastName}`,
-              email:       payload.email,
-              phone:       payload.phone || 'Not provided',
-              event_type:  payload.eventType,
-              event_date:  payload.eventDate || 'Not specified',
-              guests:      payload.guestCount,
-              newsletter:  payload.newsletter ? 'Yes — opted in' : 'No',
-              message:     payload.message,
-            }),
-          });
-          const w3data = await w3res.json();
-          if (!w3data.success) console.error('[Web3Forms]', w3data);
-        } catch (w3err) { console.error('[Web3Forms] fetch failed:', w3err); }
-
         // Show confirmation, hide form
         enquiryForm.style.display = 'none';
         if (formSuccess) {

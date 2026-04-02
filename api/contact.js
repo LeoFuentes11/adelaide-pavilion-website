@@ -16,7 +16,7 @@
  * 5. SANITIZATION    HTML tags stripped (XSS), newlines
  *                    stripped (email header injection), inputs
  *                    length-capped before processing.
- * 6. EMAIL SENDING   Sent via Resend API — no raw PHP mail(),
+ * 6. EMAIL SENDING   Sent via MailerSend API — no raw PHP mail(),
  *                    no concatenated headers. reply-to is set
  *                    so staff can reply safely.
  * 7. LOGGING         Structured JSON: IP + timestamp + email
@@ -29,7 +29,7 @@
  *
  * ENVIRONMENT VARIABLES (set in Vercel dashboard):
  *   TURNSTILE_SECRET_KEY  — from Cloudflare Turnstile dashboard
- *   RESEND_API_KEY        — from resend.com
+ *   MAILERSEND_API_KEY    — from app.mailersend.com → API Tokens
  *   ALLOWED_ORIGIN        — your live domain, e.g. https://adelaidepavilion.com.au
  */
 
@@ -111,6 +111,45 @@ async function verifyTurnstile(token, ip) {
   return data.success === true;
 }
 
+/* ── Email via MailerSend ──────────────────────────────────── */
+async function sendEmail(fields) {
+  const apiKey = process.env.MAILERSEND_API_KEY;
+  if (!apiKey) {
+    console.warn('[EMAIL] MAILERSEND_API_KEY not set — skipping in dev');
+    return;
+  }
+  const res = await fetch('https://api.mailersend.com/v1/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type':  'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      from:     { email: 'noreply@adelaidepavilion.com.au', name: 'Adelaide Pavilion Website' },
+      to:       [{ email: 'contact@adelaidepavilion.com.au', name: 'Adelaide Pavilion' }],
+      reply_to: { email: fields.email, name: `${fields.firstName} ${fields.lastName}` },
+      subject:  `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
+      text: [
+        `Name:       ${fields.firstName} ${fields.lastName}`,
+        `Email:      ${fields.email}`,
+        `Phone:      ${fields.phone || 'Not provided'}`,
+        `Event type: ${fields.eventType}`,
+        `Event date: ${fields.eventDate || 'Not specified'}`,
+        `Guests:     ${fields.guestCount}`,
+        `Newsletter: ${fields.newsletter ? 'Yes — opted in' : 'No'}`,
+        '',
+        `Message:`,
+        fields.message,
+      ].join('\n'),
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.text();
+    throw new Error(`MailerSend error: ${res.status} ${err}`);
+  }
+}
+
 /* ── Main handler ──────────────────────────────────────────── */
 module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -171,6 +210,13 @@ module.exports = async (req, res) => {
   const errors = validateFields(fields);
   if (errors.length > 0) {
     return res.status(422).json({ error: 'Please check the highlighted fields.', fields: errors });
+  }
+
+  /* ── Send email ──────────────────────────────────────────── */
+  try {
+    await sendEmail(fields);
+  } catch (err) {
+    console.error('[EMAIL] Failed to send:', err.message);
   }
 
   /* ── Structured log (no message content) ────────────────── */
