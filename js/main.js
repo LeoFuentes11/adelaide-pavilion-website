@@ -104,6 +104,9 @@ document.addEventListener('DOMContentLoaded', () => {
         tabContainer.querySelectorAll('.tab-content').forEach(c => {
           c.classList.toggle('active', c.dataset.tabContent === target);
         });
+        const navbarHeight = document.getElementById('navbar')?.offsetHeight || 80;
+        const top = tabContainer.getBoundingClientRect().top + window.scrollY - navbarHeight;
+        window.scrollTo({ top, behavior: 'smooth' });
       });
     });
   });
