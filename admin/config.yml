@@ -2,7 +2,7 @@ backend:
   name: github
   repo: LeoFuentes11/adelaide-pavilion-website
   branch: master
-  base_url: adelaide-pavilion-website.vercel.app
+  base_url: https://adelaide-pavilion-website.vercel.app
   auth_endpoint: api/auth
 
 publish_mode: editorial_workflow
