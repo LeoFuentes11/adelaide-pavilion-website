@@ -51,7 +51,7 @@
     container.innerHTML = ''; // safe to clear — we have data
     items.forEach((item, i) => {
       const div = document.createElement('div');
-      div.className = 'testimonial fade-up';
+      div.className = 'testimonial fade-up visible';
       div.setAttribute('data-delay', String(i * 120));
 
       const stars = document.createElement('div');
