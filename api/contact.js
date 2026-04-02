@@ -126,7 +126,7 @@ async function sendEmail(fields) {
     },
     body: JSON.stringify({
       from:     { email: 'noreply@adelaidepavilion.com.au', name: 'Adelaide Pavilion Website' },
-      to:       [{ email: 'contact@adelaidepavilion.com.au', name: 'Adelaide Pavilion' }],
+      to:       [{ email: 'leo.emile.fuentes@gmail.com', name: 'Adelaide Pavilion' }],
       reply_to: { email: fields.email, name: `${fields.firstName} ${fields.lastName}` },
       subject:  `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
       text: [
