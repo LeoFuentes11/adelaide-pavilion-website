@@ -37,6 +37,52 @@
     }
   }
 
+  // Render testimonials array into [data-testimonials] container
+  function renderTestimonials(data) {
+    const container = document.querySelector('[data-testimonials]');
+    if (!container) return;
+    const items = data['testimonials'];
+    if (!Array.isArray(items) || items.length === 0) return;
+    container.innerHTML = '';
+    items.forEach((item, i) => {
+      const div = document.createElement('div');
+      div.className = 'testimonial fade-up';
+      div.setAttribute('data-delay', String(i * 120));
+
+      const stars = document.createElement('div');
+      stars.className = 'testimonial-stars';
+      stars.textContent = '★★★★★';
+
+      const quote = document.createElement('p');
+      quote.className = 'testimonial-text';
+      quote.textContent = '\u201c' + (item.quote || '') + '\u201d';
+
+      const author = document.createElement('div');
+      author.className = 'testimonial-author';
+      author.textContent = '\u2014 ' + (item.author || '') + (item.event ? ', ' + item.event : '');
+
+      div.appendChild(stars);
+      div.appendChild(quote);
+      div.appendChild(author);
+      container.appendChild(div);
+    });
+  }
+
+  // Render string arrays into [data-bev] containers as <li> items
+  function renderBeverages(data) {
+    document.querySelectorAll('[data-bev]').forEach(container => {
+      const key = container.dataset.bev;
+      const items = data[key];
+      if (!Array.isArray(items)) return;
+      container.innerHTML = '';
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        container.appendChild(li);
+      });
+    });
+  }
+
   // Render array-based menu sections into [data-menu] containers
   function renderMenus(data) {
     if (!data || typeof data !== 'object') return;
@@ -108,7 +154,11 @@
     const pageKey = document.body.dataset.page;
     if (pageKey && PAGE_MAP[pageKey]) {
       const pageData = await fetchJSON(PAGE_MAP[pageKey]);
-      if (pageData) applyData(pageData);
+      if (pageData) {
+        applyData(pageData);
+        renderTestimonials(pageData);
+        renderBeverages(pageData);
+      }
     }
 
     // Load menu data if any [data-menu] containers exist on this page

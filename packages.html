@@ -570,13 +570,13 @@
             <div class="bev-card-name">Standard Package</div>
             <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;">Included in all wedding packages</div>
             <table class="addon-table" style="margin-bottom:16px;">
-              <tr><td>2 Hours</td><td class="addon-price">$24pp</td></tr>
-              <tr><td>3 Hours</td><td class="addon-price">$28pp</td></tr>
-              <tr><td>4 Hours</td><td class="addon-price">$33pp</td></tr>
-              <tr><td>5 Hours</td><td class="addon-price">$38pp</td></tr>
+              <tr><td>2 Hours</td><td class="addon-price" data-cms="bev_standard_2hr">$24pp</td></tr>
+              <tr><td>3 Hours</td><td class="addon-price" data-cms="bev_standard_3hr">$28pp</td></tr>
+              <tr><td>4 Hours</td><td class="addon-price" data-cms="bev_standard_4hr">$33pp</td></tr>
+              <tr><td>5 Hours</td><td class="addon-price" data-cms="bev_standard_5hr">$38pp</td></tr>
             </table>
             <div style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#888;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Includes</div>
-            <ul class="pkg-list">
+            <ul class="pkg-list" data-bev="bev_standard_includes">
               <li>House Beer</li><li>Cascade Premium Light</li>
               <li>Svelte Sauvignon Blanc</li><li>Svelte Shiraz</li>
               <li>Willowglen Sparkling Brut (on demand)</li>
@@ -587,21 +587,21 @@
           <div class="bev-card featured fade-up" data-delay="100" style="border:2px solid var(--gold);position:relative;">
             <div style="position:absolute;top:-1px;right:16px;background:var(--gold);color:#fff;font-family:'Lato',sans-serif;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;padding:4px 12px;border-radius:0 0 4px 4px;">Popular Upgrade</div>
             <div class="bev-card-name">Premium Package</div>
-            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;">Standard price + $10pp</div>
+            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;" data-cms="bev_premium_surcharge">Standard price + $10pp</div>
             <div style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#888;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Select One Red + One White</div>
-            <ul class="pkg-list" style="margin-bottom:12px;">
+            <ul class="pkg-list" style="margin-bottom:12px;" data-bev="bev_premium_reds">
               <li><strong>Red:</strong> Hedonist Shiraz (McLaren Vale)</li>
               <li>Barristers Block Tempranillo Cab Shiraz (Adelaide Hills)</li>
               <li>Tomich Hill Cabernet Sauvignon (Coonawarra)</li>
               <li>Hedonist Grenache (McLaren Vale)</li>
             </ul>
-            <ul class="pkg-list" style="margin-bottom:12px;">
+            <ul class="pkg-list" style="margin-bottom:12px;" data-bev="bev_premium_whites">
               <li><strong>White:</strong> Brothers at War Riesling (Barossa Valley)</li>
               <li>Serafino Bellissimo Pinot Grigio (McLaren Vale)</li>
               <li>Clouded Isle Sauvignon Blanc (Marlborough NZ)</li>
               <li>Serafino Chardonnay (McLaren Vale)</li>
             </ul>
-            <ul class="pkg-list">
+            <ul class="pkg-list" data-bev="bev_premium_extras">
               <li>House Beer &amp; Cascade Premium Light</li>
               <li>Hardy's The Riddle Brut Reserve (South/East Australia)</li>
               <li>Assorted Soft Drinks &amp; OJ</li>
@@ -610,19 +610,19 @@
           <!-- Deluxe -->
           <div class="bev-card fade-up" data-delay="200">
             <div class="bev-card-name">Deluxe Package</div>
-            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;">Standard price + $15pp</div>
+            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;" data-cms="bev_deluxe_surcharge">Standard price + $15pp</div>
             <div style="font-family:'Lato',sans-serif;font-size:0.78rem;color:#888;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.1em;">Select One Red + One White</div>
-            <ul class="pkg-list" style="margin-bottom:12px;">
+            <ul class="pkg-list" style="margin-bottom:12px;" data-bev="bev_deluxe_reds">
               <li><strong>Red:</strong> Brothers at War Fist Fight Shiraz (Barossa Valley)</li>
               <li>Barristers Block Pinot Noir (Adelaide Hills)</li>
               <li>Barristers Block Wrattonbully Cabernet Sauv.</li>
             </ul>
-            <ul class="pkg-list" style="margin-bottom:12px;">
+            <ul class="pkg-list" style="margin-bottom:12px;" data-bev="bev_deluxe_whites">
               <li><strong>White:</strong> Barristers Block Sauvignon Blanc (Adelaide Hills)</li>
               <li>Barristers Block Pinot Gris (Adelaide Hills)</li>
               <li>Barristers Block Rosé (Adelaide Hills)</li>
             </ul>
-            <ul class="pkg-list">
+            <ul class="pkg-list" data-bev="bev_deluxe_extras">
               <li>House Beer &amp; Cascade Premium Light</li>
               <li>Tomich Hill Sparkling (Adelaide Hills)</li>
               <li>Assorted Soft Drinks &amp; OJ</li>
@@ -634,8 +634,8 @@
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">
           <div class="bev-card fade-up">
             <div class="bev-card-name">Non-Alcoholic Package</div>
-            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;">$27pp · 4-hour minimum</div>
-            <ul class="pkg-list">
+            <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;" data-cms="bev_nonalcoholic_price">$27pp · 4-hour minimum</div>
+            <ul class="pkg-list" data-bev="bev_nonalcoholic_includes">
               <li>Assorted Soft Drinks</li>
               <li>Orange Juice</li>
               <li>Add Sparkling Grape Juice: +$4.00pp</li>
@@ -646,12 +646,12 @@
             <div class="bev-card-name">Beverage Extras</div>
             <div style="font-family:'Lato',sans-serif;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:12px;">Optional Add-Ons</div>
             <table class="addon-table">
-              <tr><td>Beverage Package Extension</td><td class="addon-price">$6.50pp/hr</td></tr>
-              <tr><td>Bottled Beer Upgrade (replaces house beer)</td><td class="addon-price">from $3.00pp</td></tr>
-              <tr><td>Cider</td><td class="addon-price">$3.00pp</td></tr>
-              <tr><td>Moscato</td><td class="addon-price">$3.00pp</td></tr>
-              <tr><td>Spirits</td><td class="addon-price">POA</td></tr>
-              <tr><td>BYO Spirits (weddings only, max 1 bottle/10 adults)</td><td class="addon-price">No corkage</td></tr>
+              <tr><td>Beverage Package Extension</td><td class="addon-price" data-cms="bev_extension_rate">$6.50pp/hr</td></tr>
+              <tr><td>Bottled Beer Upgrade (replaces house beer)</td><td class="addon-price" data-cms="bev_bottled_beer_rate">from $3.00pp</td></tr>
+              <tr><td>Cider</td><td class="addon-price" data-cms="bev_cider_rate">$3.00pp</td></tr>
+              <tr><td>Moscato</td><td class="addon-price" data-cms="bev_moscato_rate">$3.00pp</td></tr>
+              <tr><td>Spirits</td><td class="addon-price" data-cms="bev_spirits_rate">POA</td></tr>
+              <tr><td data-cms="bev_byo_label">BYO Spirits (weddings only, max 1 bottle/10 adults)</td><td class="addon-price" data-cms="bev_byo_rate">No corkage</td></tr>
             </table>
           </div>
         </div>

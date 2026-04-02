@@ -16,7 +16,9 @@
     .gallery-grid-lg { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
     @media(max-width:768px){ .gallery-grid-lg { grid-template-columns:1fr 1fr; } }
     @media(max-width:480px){ .gallery-grid-lg { grid-template-columns:1fr; } }
-    .gallery-item.hidden { display:none; }
+    .gallery-item { transition: opacity 0.3s ease, transform 0.3s ease; }
+    .gallery-item.hidden { opacity:0; pointer-events:none; transform:scale(0.96); }
+    .gallery-item.hiding { opacity:0; transform:scale(0.96); }
   </style>
 </head>
 <body>
@@ -210,7 +212,7 @@
 <script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
 <script>
-// Gallery filter
+// Gallery filter with smooth transitions
 const filterBtns = document.querySelectorAll('.filter-btn');
 const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
 filterBtns.forEach(btn => {
@@ -219,8 +221,11 @@ filterBtns.forEach(btn => {
     btn.classList.add('active');
     const filter = btn.dataset.filter;
     galleryItems.forEach(item => {
-      if (filter === 'all' || item.dataset.category === filter) {
+      const show = filter === 'all' || item.dataset.category === filter;
+      if (show) {
         item.classList.remove('hidden');
+        // Force reflow so transition fires when removing hidden
+        void item.offsetWidth;
       } else {
         item.classList.add('hidden');
       }

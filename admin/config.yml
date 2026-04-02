@@ -56,6 +56,13 @@ collections:
           - { label: "Welcome Section Title", name: "welcome_title", widget: "string" }
           - { label: "Welcome Paragraph 1", name: "welcome_para1", widget: "text" }
           - { label: "Welcome Paragraph 2", name: "welcome_para2", widget: "text" }
+          - label: "Testimonials (3 cards)"
+            name: "testimonials"
+            widget: "list"
+            fields:
+              - { label: "Quote", name: "quote", widget: "text" }
+              - { label: "Guest Name", name: "author", widget: "string", hint: "e.g. Roanna" }
+              - { label: "Event Type", name: "event", widget: "string", hint: "e.g. Corporate Client" }
 
       # About Page
       - label: "About Page"
@@ -86,6 +93,8 @@ collections:
           - { label: "Hero Description", name: "hero_desc", widget: "text" }
           - { label: "Intro Paragraph 1", name: "intro_para1", widget: "text" }
           - { label: "Intro Paragraph 2", name: "intro_para2", widget: "text" }
+          - { label: "Featured Testimonial Quote", name: "testimonial_quote", widget: "text" }
+          - { label: "Featured Testimonial Attribution", name: "testimonial_author", widget: "string", hint: "e.g. — Emma & James, Wedding Reception 2025" }
 
       # Corporate Page
       - label: "Corporate Page"
@@ -110,6 +119,8 @@ collections:
           - { label: "Hero Subtitle", name: "hero_subtitle", widget: "string" }
           - { label: "Intro Paragraph 1", name: "intro_para1", widget: "text" }
           - { label: "Intro Paragraph 2", name: "intro_para2", widget: "text" }
+          - { label: "Featured Testimonial Quote", name: "testimonial_quote", widget: "text" }
+          - { label: "Featured Testimonial Attribution", name: "testimonial_author", widget: "string", hint: "e.g. — The Henderson Family, Milestone Birthday 2024" }
 
       # Packages & Pricing
       - label: "Packages & Pricing"
@@ -142,6 +153,57 @@ collections:
           - { label: "Children — Menu 1 (pp)", name: "children_menu1", widget: "number" }
           - { label: "Children — Menu 2 (pp)", name: "children_menu2", widget: "number" }
           - { label: "Children — Cocktail (pp)", name: "children_cocktail", widget: "number" }
+
+          - label: "— Beverage Packages —"
+            name: "bev_divider"
+            widget: "hidden"
+            default: ""
+          - { label: "Standard — 2 Hours", name: "bev_standard_2hr", widget: "string", hint: "e.g. $24pp" }
+          - { label: "Standard — 3 Hours", name: "bev_standard_3hr", widget: "string", hint: "e.g. $28pp" }
+          - { label: "Standard — 4 Hours", name: "bev_standard_4hr", widget: "string", hint: "e.g. $33pp" }
+          - { label: "Standard — 5 Hours", name: "bev_standard_5hr", widget: "string", hint: "e.g. $38pp" }
+          - label: "Standard Package — Includes"
+            name: "bev_standard_includes"
+            widget: "list"
+            field: { label: "Item", name: "item", widget: "string" }
+          - { label: "Premium Package — Surcharge Label", name: "bev_premium_surcharge", widget: "string", hint: "e.g. Standard price + $10pp" }
+          - label: "Premium — Red Wine Options"
+            name: "bev_premium_reds"
+            widget: "list"
+            field: { label: "Wine", name: "item", widget: "string" }
+          - label: "Premium — White Wine Options"
+            name: "bev_premium_whites"
+            widget: "list"
+            field: { label: "Wine", name: "item", widget: "string" }
+          - label: "Premium — Beer & Extras"
+            name: "bev_premium_extras"
+            widget: "list"
+            field: { label: "Item", name: "item", widget: "string" }
+          - { label: "Deluxe Package — Surcharge Label", name: "bev_deluxe_surcharge", widget: "string", hint: "e.g. Standard price + $15pp" }
+          - label: "Deluxe — Red Wine Options"
+            name: "bev_deluxe_reds"
+            widget: "list"
+            field: { label: "Wine", name: "item", widget: "string" }
+          - label: "Deluxe — White Wine Options"
+            name: "bev_deluxe_whites"
+            widget: "list"
+            field: { label: "Wine", name: "item", widget: "string" }
+          - label: "Deluxe — Beer & Extras"
+            name: "bev_deluxe_extras"
+            widget: "list"
+            field: { label: "Item", name: "item", widget: "string" }
+          - { label: "Non-Alcoholic Package Price", name: "bev_nonalcoholic_price", widget: "string", hint: "e.g. $27pp · 4-hour minimum" }
+          - label: "Non-Alcoholic Package — Includes"
+            name: "bev_nonalcoholic_includes"
+            widget: "list"
+            field: { label: "Item", name: "item", widget: "string" }
+          - { label: "Extension Rate", name: "bev_extension_rate", widget: "string", hint: "e.g. $6.50pp/hr" }
+          - { label: "Bottled Beer Upgrade Rate", name: "bev_bottled_beer_rate", widget: "string", hint: "e.g. from $3.00pp" }
+          - { label: "Cider Rate", name: "bev_cider_rate", widget: "string", hint: "e.g. $3.00pp" }
+          - { label: "Moscato Rate", name: "bev_moscato_rate", widget: "string", hint: "e.g. $3.00pp" }
+          - { label: "Spirits Rate", name: "bev_spirits_rate", widget: "string", hint: "e.g. POA" }
+          - { label: "BYO Spirits — Label", name: "bev_byo_label", widget: "string" }
+          - { label: "BYO Spirits — Rate", name: "bev_byo_rate", widget: "string", hint: "e.g. No corkage" }
 
       # Full Menus
       - label: "Full Menus"

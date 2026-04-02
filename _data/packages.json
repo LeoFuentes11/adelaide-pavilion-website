@@ -6,12 +6,12 @@
   "wedding_signature_price_2026": 140,
   "wedding_signature_price_2027": 150,
   "wedding_signature_price_2028": 160,
-  "wedding_signature_price_label": "per person \u00b7 2026\u00a0\u00a0|\u00a0\u00a0$150pp 2027\u00a0\u00a0|\u00a0\u00a0$160pp 2028",
+  "wedding_signature_price_label": "per person · 2026  |  $150pp 2027  |  $160pp 2028",
 
   "wedding_pavilion_price_2026": 150,
   "wedding_pavilion_price_2027": 160,
   "wedding_pavilion_price_2028": 170,
-  "wedding_pavilion_price_label": "per person \u00b7 2026\u00a0\u00a0|\u00a0\u00a0$160pp 2027\u00a0\u00a0|\u00a0\u00a0$170pp 2028",
+  "wedding_pavilion_price_label": "per person · 2026  |  $160pp 2027  |  $170pp 2028",
 
   "wedding_cocktail_price": 102,
 
@@ -29,5 +29,68 @@
 
   "children_menu1": 40,
   "children_menu2": 48,
-  "children_cocktail": 35
+  "children_cocktail": 35,
+
+  "bev_standard_2hr": "$24pp",
+  "bev_standard_3hr": "$28pp",
+  "bev_standard_4hr": "$33pp",
+  "bev_standard_5hr": "$38pp",
+  "bev_standard_includes": [
+    "House Beer",
+    "Cascade Premium Light",
+    "Svelte Sauvignon Blanc",
+    "Svelte Shiraz",
+    "Willowglen Sparkling Brut (on demand)",
+    "Assorted Soft Drinks & Orange Juice"
+  ],
+
+  "bev_premium_surcharge": "Standard price + $10pp",
+  "bev_premium_reds": [
+    "Hedonist Shiraz (McLaren Vale)",
+    "Barristers Block Tempranillo Cab Shiraz (Adelaide Hills)",
+    "Tomich Hill Cabernet Sauvignon (Coonawarra)",
+    "Hedonist Grenache (McLaren Vale)"
+  ],
+  "bev_premium_whites": [
+    "Brothers at War Riesling (Barossa Valley)",
+    "Serafino Bellissimo Pinot Grigio (McLaren Vale)",
+    "Clouded Isle Sauvignon Blanc (Marlborough NZ)",
+    "Serafino Chardonnay (McLaren Vale)"
+  ],
+  "bev_premium_extras": [
+    "House Beer & Cascade Premium Light",
+    "Hardy's The Riddle Brut Reserve (South/East Australia)",
+    "Assorted Soft Drinks & OJ"
+  ],
+
+  "bev_deluxe_surcharge": "Standard price + $15pp",
+  "bev_deluxe_reds": [
+    "Brothers at War Fist Fight Shiraz (Barossa Valley)",
+    "Barristers Block Pinot Noir (Adelaide Hills)",
+    "Barristers Block Wrattonbully Cabernet Sauv."
+  ],
+  "bev_deluxe_whites": [
+    "Barristers Block Sauvignon Blanc (Adelaide Hills)",
+    "Barristers Block Pinot Gris (Adelaide Hills)",
+    "Barristers Block Rosé (Adelaide Hills)"
+  ],
+  "bev_deluxe_extras": [
+    "House Beer & Cascade Premium Light",
+    "Tomich Hill Sparkling (Adelaide Hills)",
+    "Assorted Soft Drinks & OJ"
+  ],
+
+  "bev_nonalcoholic_price": "$27pp · 4-hour minimum",
+  "bev_nonalcoholic_includes": [
+    "Assorted Soft Drinks",
+    "Orange Juice",
+    "Add Sparkling Grape Juice: +$4.00pp"
+  ],
+  "bev_extension_rate": "$6.50pp/hr",
+  "bev_bottled_beer_rate": "from $3.00pp",
+  "bev_cider_rate": "$3.00pp",
+  "bev_moscato_rate": "$3.00pp",
+  "bev_spirits_rate": "POA",
+  "bev_byo_label": "BYO Spirits (weddings only, max 1 bottle/10 adults)",
+  "bev_byo_rate": "No corkage"
 }
