@@ -10,15 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&family=Lato:wght@300;400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <style>
-    .gallery-filter { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:32px; }
-    .filter-btn { font-family:'Lato',sans-serif; font-size:0.78rem; letter-spacing:0.12em; text-transform:uppercase; font-weight:600; padding:9px 20px; border:1.5px solid var(--cream); border-radius:3px; background:none; cursor:pointer; color:#888; transition:all 0.2s; }
-    .filter-btn.active, .filter-btn:hover { background:var(--green); color:#fff; border-color:var(--green); }
     .gallery-grid-lg { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
     @media(max-width:768px){ .gallery-grid-lg { grid-template-columns:1fr 1fr; } }
     @media(max-width:480px){ .gallery-grid-lg { grid-template-columns:1fr; } }
-    .gallery-item { transition: opacity 0.3s ease, transform 0.3s ease; }
-    .gallery-item.hidden { opacity:0; pointer-events:none; transform:scale(0.96); }
-    .gallery-item.hiding { opacity:0; transform:scale(0.96); }
   </style>
 </head>
 <body>
@@ -44,7 +38,7 @@
 </nav>
 
 <header class="hero-sub">
-  <div class="hero-bg" style="background-image:url('images/gallery-hero.jpg');"></div>
+  <div class="hero-bg" style="background-image:url('images/weddings-hero.jpg');"></div>
   <div class="hero-overlay"></div>
   <div class="hero-sub-content">
     <div class="hero-script">A Picture Worth a Thousand Words</div>
@@ -62,115 +56,100 @@
       <p style="font-family:'Lato',sans-serif;font-size:0.95rem;color:#555;line-height:1.85;">Explore some of the beautiful events, moments, and spaces that make Adelaide Pavilion so special. Click any image to view in full screen.</p>
     </div>
 
-    <!-- Filter buttons -->
-    <div class="gallery-filter fade-up" id="galleryFilter">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="weddings">Weddings</button>
-      <button class="filter-btn" data-filter="corporate">Corporate</button>
-      <button class="filter-btn" data-filter="social">Social Events</button>
-      <button class="filter-btn" data-filter="venue">Venue &amp; Rooms</button>
-      <button class="filter-btn" data-filter="cuisine">Cuisine</button>
-      <button class="filter-btn" data-filter="gardens">Gardens</button>
-    </div>
-
     <!-- Gallery grid -->
     <div class="gallery-grid-lg" id="galleryGrid">
 
-      <!-- Weddings -->
-      <div class="gallery-item fade-up" data-category="weddings" data-lightbox data-caption="Wedding reception — Parkview Room, candlelit tables">
-        <img src="images/Siana-Siliquini-Wedding-Photography-416.jpg" alt="Wedding reception at Adelaide Pavilion Parkview Room" />
+      <div class="gallery-item fade-up" data-lightbox data-caption="Wedding reception — Parkview Room, candlelit tables">
+        <img src="images/Mia%26James576.jpg" alt="Wedding reception at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="weddings" data-lightbox data-caption="Bride and groom in Veale Gardens">
-        <img src="images/Siana-Siliquini-Wedding-Photography-463.jpg" alt="Bride and groom portrait in Veale Gardens" />
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Bride and groom in Veale Gardens">
+        <img src="images/A%26M(399).jpg" alt="Bride and groom portrait in Veale Gardens" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="weddings" data-lightbox data-caption="Wedding table styling — white linen and florals">
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Wedding table styling — white linen and florals">
         <img src="images/Tables%20%26%20Centrepieces.jpg" alt="Elegant wedding table styling at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-category="weddings" data-lightbox data-caption="Terrace Room wedding — intimate and elegant">
+
+      <div class="gallery-item fade-up" data-lightbox data-caption="Terrace Room wedding — intimate and elegant">
         <img src="images/Siana-Siliquini-Wedding-Photography-524.jpg" alt="Terrace Room wedding reception" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="weddings" data-lightbox data-caption="Wedding cake and dessert presentation">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Wedding cake and dessert presentation">
         <img src="images/B%20%26%20G%20Cut%20Cake.jpg" alt="Wedding cake at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="weddings" data-lightbox data-caption="First dance on the Pavilion parquetry dance floor">
-        <img src="images/Groom%20%26%20Mum%20Dance.JPG" alt="First dance at Adelaide Pavilion wedding" />
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="First dance on the Pavilion parquetry dance floor">
+        <img src="images/Groom%20%26%20Mum%20Dance.jpg" alt="First dance at Adelaide Pavilion wedding" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
 
-      <!-- Venue -->
-      <div class="gallery-item fade-up" data-category="venue" data-lightbox data-caption="The Parkview Room — panoramic garden views">
+      <div class="gallery-item fade-up" data-lightbox data-caption="The Parkview Room — panoramic garden views">
         <img src="images/parkview-room.jpg" alt="The Parkview Room at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="venue" data-lightbox data-caption="The Terrace Room — soaring 6-7m ceilings">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="The Terrace Room — soaring ceilings">
         <img src="images/terrace-room.jpg" alt="The Terrace Room at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="venue" data-lightbox data-caption="Adelaide Pavilion exterior — Veale Gardens setting">
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Adelaide Pavilion exterior — Veale Gardens setting">
         <img src="images/about-venue.jpg" alt="Adelaide Pavilion exterior" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
 
-      <!-- Corporate -->
-      <div class="gallery-item fade-up" data-category="corporate" data-lightbox data-caption="Corporate conference setup — theatre style">
+      <div class="gallery-item fade-up" data-lightbox data-caption="Corporate conference setup — theatre style">
         <img src="images/pavilion-interior.jpg" alt="Corporate conference at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="corporate" data-lightbox data-caption="Corporate awards gala dinner">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Corporate awards gala dinner">
         <img src="images/corporate-gala-1.jpg" alt="Corporate gala dinner at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="corporate" data-lightbox data-caption="Networking cocktail event">
-        <img src="images/Bridal%20Table%20%26%20Party.JPG" alt="Corporate networking event at Adelaide Pavilion" />
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Bridal table and wedding party">
+        <img src="images/Bridal%20Table%20%26%20Party.JPG" alt="Bridal table at Adelaide Pavilion wedding" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
 
-      <!-- Social -->
-      <div class="gallery-item fade-up" data-category="social" data-lightbox data-caption="Milestone birthday celebration">
+      <div class="gallery-item fade-up" data-lightbox data-caption="Milestone birthday celebration">
         <img src="images/social-birthday-1.jpg" alt="Birthday celebration at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="social" data-lightbox data-caption="Anniversary celebration — golden table styling">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Anniversary celebration — golden table styling">
         <img src="images/social-celebration.jpg" alt="Anniversary celebration at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="social" data-lightbox data-caption="Gala dinner — full room glamour">
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Gala dinner — full room glamour">
         <img src="images/social-card.jpg" alt="Gala dinner at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
 
-      <!-- Cuisine -->
-      <div class="gallery-item fade-up" data-category="cuisine" data-lightbox data-caption="Salt & Pepper Calamari — entrée">
+      <div class="gallery-item fade-up" data-lightbox data-caption="Salt &amp; Pepper Calamari — entrée">
         <img src="images/cuisine.jpg" alt="Salt and pepper calamari entrée" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="cuisine" data-lightbox data-caption="Fillet Steak with red wine jus — main course">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Fillet Steak with red wine jus — main course">
         <img src="images/IMG_0597.jpeg" alt="Fillet steak main course" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="cuisine" data-lightbox data-caption="Canapé selection — cocktail event">
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Canapé selection — cocktail event">
         <img src="images/cuisine-canapes-1.jpg" alt="Canapé selection at Adelaide Pavilion" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
 
-      <!-- Gardens -->
-      <div class="gallery-item fade-up" data-category="gardens" data-lightbox data-caption="Veale Gardens — rose garden in bloom">
-        <img src="images/Siana-Siliquini-Wedding-Photography-565.jpg" alt="Veale Gardens rose garden" />
+      <div class="gallery-item fade-up" data-lightbox data-caption="Veale Gardens — couple portrait">
+        <img src="images/A%26M(656).jpg" alt="Couple portrait in Veale Gardens" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="60" data-category="gardens" data-lightbox data-caption="Veale Gardens — ceremony site at water feature">
+      <div class="gallery-item fade-up" data-delay="60" data-lightbox data-caption="Veale Gardens — ceremony site">
         <img src="images/ceremony-garden.jpeg" alt="Veale Gardens ceremony site" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
-      <div class="gallery-item fade-up" data-delay="120" data-category="gardens" data-lightbox data-caption="Wisteria Pergola — romantic ceremony site">
+      <div class="gallery-item fade-up" data-delay="120" data-lightbox data-caption="Wisteria Pergola — romantic ceremony site">
         <img src="images/about-history.jpg" alt="Wisteria Pergola Veale Gardens" />
         <div class="gallery-overlay"><span class="gallery-overlay-icon">+</span></div>
       </div>
+
     </div>
 
   </div>
@@ -210,27 +189,5 @@
 
 <script src="js/cms-loader.js" defer></script>
 <script src="js/main.js"></script>
-<script>
-// Gallery filter with smooth transitions
-const filterBtns = document.querySelectorAll('.filter-btn');
-const galleryItems = document.querySelectorAll('#galleryGrid .gallery-item');
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const filter = btn.dataset.filter;
-    galleryItems.forEach(item => {
-      const show = filter === 'all' || item.dataset.category === filter;
-      if (show) {
-        item.classList.remove('hidden');
-        // Force reflow so transition fires when removing hidden
-        void item.offsetWidth;
-      } else {
-        item.classList.add('hidden');
-      }
-    });
-  });
-});
-</script>
 </body>
 </html>
