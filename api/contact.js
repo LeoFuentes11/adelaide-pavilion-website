@@ -125,8 +125,8 @@ async function sendEmail(fields) {
       'Authorization': `Bearer ${apiKey}`,
     },
     body: JSON.stringify({
-      from:     { email: 'noreply@test-2p0347zjx73lzdrn.mlsender.net', name: 'Adelaide Pavilion Website' },
-      to:       [{ email: 'leo.emile.fuentes@gmail.com', name: 'Adelaide Pavilion' }],
+      from:     { email: 'noreply@adelaidepavilion.com.au', name: 'Adelaide Pavilion Website' },
+      to:       [{ email: 'contact@adelaidepavilion.com.au', name: 'Adelaide Pavilion' }],
       reply_to: { email: fields.email, name: `${fields.firstName} ${fields.lastName}` },
       subject:  `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
       text: [
