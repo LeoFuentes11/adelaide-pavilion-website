@@ -163,7 +163,7 @@ module.exports = async (req, res) => {
   const origin = req.headers['origin'] || req.headers['referer'] || '';
   const allowedOrigin = process.env.ALLOWED_ORIGIN || '';
   const isLocalDev = !allowedOrigin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin === '';
-  const isAllowed  = isLocalDev || origin.startsWith(allowedOrigin) || origin.includes('vercel.app');
+  const isAllowed  = isLocalDev || origin.startsWith(allowedOrigin);
 
   if (!isAllowed) {
     console.warn(`[CSRF] Blocked origin: ${origin}`);
