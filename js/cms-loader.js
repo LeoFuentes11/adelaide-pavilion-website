@@ -41,6 +41,7 @@
   function renderTestimonials(data) {
     const container = document.querySelector('[data-testimonials]');
     if (!container) return;
+    if (container.dataset.loaded) return; // already rendered
     const items = data['testimonials'];
     if (!Array.isArray(items) || items.length === 0) return;
     container.innerHTML = '';
@@ -66,11 +67,13 @@
       div.appendChild(author);
       container.appendChild(div);
     });
+    container.dataset.loaded = 'true';
   }
 
   // Render string arrays into [data-bev] containers as <li> items
   function renderBeverages(data) {
     document.querySelectorAll('[data-bev]').forEach(container => {
+      if (container.dataset.loaded) return;
       const key = container.dataset.bev;
       const items = data[key];
       if (!Array.isArray(items)) return;
@@ -80,6 +83,7 @@
         li.textContent = item;
         container.appendChild(li);
       });
+      container.dataset.loaded = 'true';
     });
   }
 
@@ -87,6 +91,7 @@
   function renderMenus(data) {
     if (!data || typeof data !== 'object') return;
     document.querySelectorAll('[data-menu]').forEach(container => {
+      if (container.dataset.loaded) return;
       const key = container.dataset.menu;
       const items = data[key];
       if (!Array.isArray(items)) return;
@@ -114,6 +119,7 @@
         div.appendChild(descEl);
         container.appendChild(div);
       });
+      container.dataset.loaded = 'true';
     });
   }
 
