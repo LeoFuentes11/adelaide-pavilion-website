@@ -72,7 +72,7 @@ const VALID_EVENT_TYPES = new Set([
 const VALID_GUEST_COUNTS = new Set([
   '10-30','31-60','61-100','101-150','151-200','201-260','260+',
 ]);
-const VALID_ROOMS = new Set(['parkview','terrace','unsure','']);
+const VALID_ROOMS = new Set(['parkview','terrace','unsure','',undefined]);
 
 function validateFields(f) {
   const errors = [];
@@ -111,47 +111,35 @@ async function verifyTurnstile(token, ip) {
   return data.success === true;
 }
 
-/* ── Email via Resend ──────────────────────────────────────── */
+/* ── Email via Web3Forms ───────────────────────────────────── */
 async function sendEmail(fields) {
-  const apiKey = process.env.RESEND_API_KEY;
-  if (!apiKey) {
-    console.warn('[EMAIL] RESEND_API_KEY not set — skipping email in dev');
-    return;
-  }
-  const body = [
-    `New enquiry from adelaidepavilion.com.au`,
-    `─────────────────────────────`,
-    `Name:       ${fields.firstName} ${fields.lastName}`,
-    `Email:      ${fields.email}`,
-    `Phone:      ${fields.phone || 'Not provided'}`,
-    `Event Type: ${fields.eventType}`,
-    `Event Date: ${fields.eventDate || 'Not specified'}`,
-    `Guests:     ${fields.guestCount}`,
-    `Room:       ${fields.room || 'Not specified'}`,
-    `Newsletter: ${fields.newsletter ? 'Yes — opted in' : 'No'}`,
-    `─────────────────────────────`,
-    `Message:`,
-    fields.message,
-  ].join('\n');
-
-  const res = await fetch('https://api.resend.com/emails', {
+  const res = await fetch('https://api.web3forms.com/submit', {
     method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      from:     'Adelaide Pavilion Website <onboarding@resend.dev>',
-      to:       ['leo.emile.fuentes@gmail.com'],
-      reply_to: fields.email,
-      subject:  `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
-      text:     body,
+      access_key:   '36dd0cf7-2431-418d-ad89-f3b7ea53cf84',
+      subject:      `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
+      from_name:    'Adelaide Pavilion Website',
+      replyto:      fields.email,
+      name:         `${fields.firstName} ${fields.lastName}`,
+      email:        fields.email,
+      phone:        fields.phone || 'Not provided',
+      event_type:   fields.eventType,
+      event_date:   fields.eventDate || 'Not specified',
+      guests:       fields.guestCount,
+      newsletter:   fields.newsletter ? 'Yes — opted in' : 'No',
+      message:      fields.message,
     }),
   });
 
   if (!res.ok) {
     const err = await res.text();
-    throw new Error(`Resend API error: ${res.status} ${err}`);
+    throw new Error(`Web3Forms error: ${res.status} ${err}`);
+  }
+
+  const data = await res.json();
+  if (!data.success) {
+    throw new Error(`Web3Forms rejected: ${data.message}`);
   }
 }
 
