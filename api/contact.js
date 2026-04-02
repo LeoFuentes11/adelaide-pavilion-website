@@ -111,38 +111,6 @@ async function verifyTurnstile(token, ip) {
   return data.success === true;
 }
 
-/* ── Email via Web3Forms ───────────────────────────────────── */
-async function sendEmail(fields) {
-  const res = await fetch('https://api.web3forms.com/submit', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      access_key:   '36dd0cf7-2431-418d-ad89-f3b7ea53cf84',
-      subject:      `Enquiry: ${fields.eventType} — ${fields.firstName} ${fields.lastName}`,
-      from_name:    'Adelaide Pavilion Website',
-      replyto:      fields.email,
-      name:         `${fields.firstName} ${fields.lastName}`,
-      email:        fields.email,
-      phone:        fields.phone || 'Not provided',
-      event_type:   fields.eventType,
-      event_date:   fields.eventDate || 'Not specified',
-      guests:       fields.guestCount,
-      newsletter:   fields.newsletter ? 'Yes — opted in' : 'No',
-      message:      fields.message,
-    }),
-  });
-
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`Web3Forms error: ${res.status} ${err}`);
-  }
-
-  const data = await res.json();
-  if (!data.success) {
-    throw new Error(`Web3Forms rejected: ${data.message}`);
-  }
-}
-
 /* ── Main handler ──────────────────────────────────────────── */
 module.exports = async (req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -203,13 +171,6 @@ module.exports = async (req, res) => {
   const errors = validateFields(fields);
   if (errors.length > 0) {
     return res.status(422).json({ error: 'Please check the highlighted fields.', fields: errors });
-  }
-
-  /* ── Send email ──────────────────────────────────────────── */
-  try {
-    await sendEmail(fields);
-  } catch (err) {
-    console.error('[EMAIL] Failed to send:', err.message);
   }
 
   /* ── Structured log (no message content) ────────────────── */
