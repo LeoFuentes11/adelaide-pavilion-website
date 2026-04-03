@@ -27,29 +27,6 @@ site trial/
 
 ---
 
-## Deployment
-
-### Netlify
-
-1. Go to [netlify.com](https://netlify.com) and sign in
-2. Click **"Add new site" → "Deploy manually"**
-3. Drag the entire `site trial` folder onto the deploy zone
-4. Your site is live instantly at a `*.netlify.app` URL
-5. Add your custom domain under **Site settings → Domain management**
-
-**For the contact form on Netlify:**
-- Add `name="contact"` to the `<form>` tag in `contact.html`
-- Add `<input type="hidden" name="form-name" value="contact" />` inside the form
-- Netlify will automatically detect and handle form submissions (free, up to 100/month)
-
-### other option - Traditional Web Hosting (cPanel, etc.)
-
-1. Compress the project folder into a ZIP
-2. Upload via FTP or cPanel File Manager to `public_html`
-3. Unzip in place
-
----
-
 ## Image Replacement Guide
 
 All images use the path `images/` from the site root. Replace the placeholder files with real photography. Recommended dimensions are listed for optimal performance.
@@ -112,7 +89,7 @@ All images use the path `images/` from the site root. Replace the placeholder fi
 | `gardens-ceremony-1.jpg` | Gardens | Ceremony site |
 | `gardens-pergola-1.jpg` | Gardens | Wisteria Pergola |
 
-**Tip:** All images can be named anything — just update the `src` attribute in the HTML. For best performance, compress images to ≤300KB using [Squoosh](https://squoosh.app) or [TinyPNG](https://tinypng.com).
+compress images to ≤300KB using [Squoosh](https://squoosh.app) or [TinyPNG](https://tinypng.com).
 
 ---
 
@@ -120,13 +97,7 @@ All images use the path `images/` from the site root. Replace the placeholder fi
 
 The form in `contact.html` currently shows a success message on submit (client-side only). For real email delivery:
 
-### Option 1: Netlify Forms (easiest)
-Add to the `<form>` tag:
-```html
-<form id="enquiryForm" name="contact" method="POST" data-netlify="true">
-  <input type="hidden" name="form-name" value="contact" />
-```
-Remove the `e.preventDefault()` from `js/main.js` submit handler.
+### Option 1: MailerSend - 100 emails per day
 
 ### Option 2: Formspree (free tier, any host)
 1. Sign up at [formspree.io](https://formspree.io)
