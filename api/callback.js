@@ -29,12 +29,14 @@ module.exports = async (req, res) => {
     return res.status(500).send('Failed to exchange token with GitHub');
   }
 
+  const EXPECTED_ORIGIN = process.env.ALLOWED_ORIGIN || 'https://adelaide-pavilion-website.vercel.app';
+
   if (tokenData.error) {
     res.setHeader('Content-Type', 'text/html');
     return res.send(`<!DOCTYPE html><html><body><script>
       window.opener && window.opener.postMessage(
         'authorization:github:error:' + ${JSON.stringify(JSON.stringify({ error: tokenData.error }))},
-        '*'
+        ${JSON.stringify(EXPECTED_ORIGIN)}
       );
       window.close();
     </script></body></html>`);
@@ -46,13 +48,14 @@ module.exports = async (req, res) => {
   res.send(`<!DOCTYPE html><html><body><script>
     (function () {
       function receiveMessage(e) {
+        if (e.origin !== ${JSON.stringify(EXPECTED_ORIGIN)}) return;
         window.opener.postMessage(
           'authorization:github:success:' + ${JSON.stringify(content)},
-          e.origin
+          ${JSON.stringify(EXPECTED_ORIGIN)}
         );
       }
       window.addEventListener('message', receiveMessage, false);
-      window.opener.postMessage('authorizing:github', '*');
+      window.opener.postMessage('authorizing:github', ${JSON.stringify(EXPECTED_ORIGIN)});
     })();
   </script></body></html>`);
 };

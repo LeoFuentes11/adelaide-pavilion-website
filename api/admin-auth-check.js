@@ -7,8 +7,13 @@
 
 'use strict';
 
+const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
+
+function makeSessionToken(password) {
+  return crypto.createHmac('sha256', password).update('admin_session').digest('hex');
+}
 
 module.exports = async function handler(req, res) {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
@@ -25,7 +30,7 @@ module.exports = async function handler(req, res) {
   const cookieMatch = cookies.match(new RegExp(`${COOKIE_NAME}=([^;]+)`));
   const token = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
 
-  if (token === ADMIN_PASSWORD) {
+  if (token === makeSessionToken(ADMIN_PASSWORD)) {
     return serveAdminPage(res);
   }
 

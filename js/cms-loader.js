@@ -147,10 +147,14 @@
     });
 
     // href attributes (phone links, email links, social URLs)
+    const SAFE_HREF_PREFIXES = ['tel:', 'mailto:', 'https://', 'http://'];
     document.querySelectorAll('[data-cms-href]').forEach(el => {
       const key = el.dataset.cmsHref;
       if (Object.prototype.hasOwnProperty.call(data, key)) {
-        el.setAttribute('href', String(data[key]));
+        const val = String(data[key]);
+        if (SAFE_HREF_PREFIXES.some(p => val.startsWith(p))) {
+          el.setAttribute('href', val);
+        }
       }
     });
   }

@@ -162,8 +162,11 @@ module.exports = async (req, res) => {
   /* ── CSRF: validate Origin ───────────────────────────────── */
   const origin = req.headers['origin'] || req.headers['referer'] || '';
   const allowedOrigin = process.env.ALLOWED_ORIGIN || '';
-  const isLocalDev = !allowedOrigin || origin.includes('localhost') || origin.includes('127.0.0.1') || origin === '';
-  const isAllowed  = isLocalDev || origin.startsWith(allowedOrigin);
+  if (!allowedOrigin) {
+    console.error('[SECURITY] ALLOWED_ORIGIN not set — CSRF protection disabled!');
+  }
+  const isLocalDev = origin.includes('localhost') || origin.includes('127.0.0.1');
+  const isAllowed  = isLocalDev || (allowedOrigin && origin.startsWith(allowedOrigin));
 
   if (!isAllowed) {
     console.warn(`[CSRF] Blocked origin: ${origin}`);
@@ -217,6 +220,7 @@ module.exports = async (req, res) => {
     await sendEmail(fields);
   } catch (err) {
     console.error('[EMAIL] Failed to send:', err.message);
+    return res.status(500).json({ error: 'Unable to send your enquiry. Please call us on 08 8212 7444.' });
   }
 
   /* ── Structured log (no message content) ────────────────── */
