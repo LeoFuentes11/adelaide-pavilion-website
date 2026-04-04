@@ -16,6 +16,11 @@ Thumbs.db
 # Netlify Functions dependencies (if any are added later)
 netlify/functions/node_modules/
 
+# Sanity CMS
+sanity/node_modules/
+sanity/.env.local
+sanity/package-lock.json
+
 # ── Secrets & credentials (NEVER commit these) ──────────────
 .env
 .env.*

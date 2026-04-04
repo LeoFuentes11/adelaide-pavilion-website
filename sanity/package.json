@@ -1,0 +1,14 @@
+{
+  "name": "adelaide-pavilion-sanity",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev --port 3333",
+    "deploy": "sanity deploy"
+  },
+  "dependencies": {
+    "@sanity/cli": "^6.3.1",
+    "@sanity/client": "^7.20.0",
+    "dotenv": "^17.0.0"
+  }
+}
