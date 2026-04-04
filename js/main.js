@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!item || !lightbox || !lightboxImg) return;
     lightboxImg.src = item.src;
     lightboxImg.alt = item.alt || '';
+    if (lightboxCaption) lightboxCaption.textContent = item.caption || '';
     lightbox.classList.add('active');
     document.body.style.overflow = 'hidden';
   };
