@@ -5,7 +5,7 @@ backend:
   base_url: https://adelaide-pavilion-website.vercel.app
   auth_endpoint: api/auth
 
-publish_mode: editorial_workflow
+publish_mode: simple
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
