@@ -29,13 +29,21 @@ module.exports = async function handler(req, res) {
 
   // No password configured — allow through
   if (!ADMIN_PASSWORD) {
-    const redirect = req.body?.redirect || '/admin/';
-    return res.redirect(new URL(redirect, origin).toString());
+    return res.redirect(new URL('/admin/', origin).toString());
   }
 
-  // Get password from request body
-  const password = req.body?.password || '';
-  const redirect = req.body?.redirect || '/admin/';
+  // Parse body - handle both string and object formats
+  let body = req.body;
+  if (typeof body === 'string') {
+    try {
+      body = JSON.parse(body);
+    } catch {
+      body = {};
+    }
+  }
+
+  const password = body?.password || '';
+  const redirect = body?.redirect || '/admin/';
 
   if (password !== ADMIN_PASSWORD) {
     return redirectWithError(redirect, 'invalid');
@@ -44,7 +52,7 @@ module.exports = async function handler(req, res) {
   // Success — set cookie and redirect
   res.setHeader(
     'Set-Cookie',
-    `${COOKIE_NAME}=${encodeURIComponent(ADMIN_PASSWORD)}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Strict`
+    `admin_auth=${encodeURIComponent(ADMIN_PASSWORD)}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Strict`
   );
 
   return res.redirect(new URL(redirect, origin).toString());
