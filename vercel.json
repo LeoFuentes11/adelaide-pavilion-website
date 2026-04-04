@@ -2,8 +2,7 @@
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/admin-login.html", "dest": "/admin-login.html" },
-    { "src": "/admin", "dest": "/api/admin-auth-check", "status": 302 },
-    { "src": "/admin/(.*)", "dest": "/api/admin-auth-check", "status": 302 },
+    { "src": "/admin$", "dest": "/api/admin-auth-check", "status": 302 },
     { "src": "/admin/", "dest": "/admin/index.html" },
     { "src": "/admin/(.*)", "dest": "/admin/$1" }
   ],

@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
   const COOKIE_NAME = 'admin_auth';
   const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
-  const origin = req.headers.origin || 'https://adelaidepavilion.com.au';
+  const origin = req.headers.origin || 'https://adelaide-pavilion-website.vercel.app';
   const LOGIN_URL = new URL('/admin-login.html', origin).toString();
 
   function redirectWithError(redirectPath, error) {

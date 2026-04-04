@@ -13,7 +13,7 @@ const path = require('path');
 module.exports = async function handler(req, res) {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
   const COOKIE_NAME = 'admin_auth';
-  const origin = req.headers.origin || 'https://adelaidepavilion.com.au';
+  const origin = req.headers.origin || 'https://adelaide-pavilion-website.vercel.app';
 
   // No password configured — serve admin directly
   if (!ADMIN_PASSWORD) {
