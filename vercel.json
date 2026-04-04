@@ -1,8 +1,8 @@
 {
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/$1" },
-    { "src": "/admin", "dest": "https://adelaide-pavilion-studio.vercel.app" },
-    { "src": "/admin/(.*)", "dest": "https://adelaide-pavilion-studio.vercel.app/$1" }
+    { "src": "/admin", "dest": "https://adelaide-pavilion-website.vercel.app.sanity.studio" },
+    { "src": "/admin/(.*)", "dest": "https://adelaide-pavilion-website.vercel.app.sanity.studio/$1" }
   ],
   "headers": [
     {
