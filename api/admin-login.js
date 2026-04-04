@@ -19,7 +19,6 @@ module.exports = async function handler(req, res) {
   const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
   const origin = req.headers.origin || 'https://adelaide-pavilion-website.vercel.app';
-  const LOGIN_URL = new URL('/admin-login.html', origin).toString();
 
   function redirectWithError(redirectPath, error) {
     const url = new URL('/admin-login.html', origin);
@@ -30,49 +29,23 @@ module.exports = async function handler(req, res) {
 
   // No password configured — allow through
   if (!ADMIN_PASSWORD) {
-    const body = req.body || {};
-    const redirect = typeof body.redirect === 'string' && body.redirect.startsWith('/')
-      ? body.redirect
-      : '/admin/';
+    const redirect = req.body?.redirect || '/admin/';
     return res.redirect(new URL(redirect, origin).toString());
   }
 
-  // Parse body — handles both JSON and form-encoded
-  const rawBody = req.body || {};
-  let password = '';
-  let rawRedirect = '/admin/';
-
-  if (typeof rawBody === 'object') {
-    password = rawBody.password || '';
-    rawRedirect = rawBody.redirect || '/admin/';
-  } else if (typeof rawBody === 'string' && rawBody) {
-    try {
-      const parsed = JSON.parse(rawBody);
-      password = parsed.password || '';
-      rawRedirect = parsed.redirect || '/admin/';
-    } catch {
-      // Not JSON — try form-encoded key=value&key=value
-      rawBody.split('&').forEach(pair => {
-        const [k, v] = pair.split('=').map(d => decodeURIComponent(d || ''));
-        if (k === 'password') password = v;
-        if (k === 'redirect') rawRedirect = v;
-      });
-    }
-  }
-
-  const safeRedirect = typeof rawRedirect === 'string' && rawRedirect.startsWith('/')
-    ? rawRedirect
-    : '/admin/';
+  // Get password from request body
+  const password = req.body?.password || '';
+  const redirect = req.body?.redirect || '/admin/';
 
   if (password !== ADMIN_PASSWORD) {
-    return redirectWithError(safeRedirect, 'invalid');
+    return redirectWithError(redirect, 'invalid');
   }
 
   // Success — set cookie and redirect
   res.setHeader(
     'Set-Cookie',
-    `${COOKIE_NAME}=${encodeURIComponent(ADMIN_PASSWORD)}; Path=/; Max-Age=${COOKIE_MAX_AGE}; HttpOnly; SameSite=Lax`
+    `${COOKIE_NAME}=${encodeURIComponent(ADMIN_PASSWORD)}; Path=/; Max-Age=${COOKIE_MAX_AGE}; SameSite=Strict`
   );
 
-  return res.redirect(new URL(safeRedirect, origin).toString());
+  return res.redirect(new URL(redirect, origin).toString());
 };

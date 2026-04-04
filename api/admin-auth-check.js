@@ -17,7 +17,7 @@ module.exports = async function handler(req, res) {
 
   // No password configured — serve admin directly
   if (!ADMIN_PASSWORD) {
-    return serveAdminPage(res, origin);
+    return serveAdminPage(res);
   }
 
   // Check for auth cookie
@@ -26,18 +26,14 @@ module.exports = async function handler(req, res) {
   const token = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
 
   if (token === ADMIN_PASSWORD) {
-    return serveAdminPage(res, origin);
+    return serveAdminPage(res);
   }
 
   // Not authenticated — redirect to login
   return res.redirect(new URL(`/admin-login.html?redirect=/admin/`, origin).toString());
 };
 
-function serveAdminPage(res, origin) {
-  const adminIndexPath = path.join(process.cwd(), 'admin', 'index.html');
-  
-  // For Vercel serverless, we need to read from __dirname or similar
-  // Since this is in api/ folder, go up one level
+function serveAdminPage(res) {
   const filePath = path.join(__dirname, '..', 'admin', 'index.html');
   
   if (fs.existsSync(filePath)) {

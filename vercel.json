@@ -5,8 +5,8 @@
     { "src": "/admin-check", "dest": "/api/admin-auth-check", "status": 302 },
     { "src": "/admin/config.yml", "dest": "/admin/config.yml" },
     { "src": "/admin/index.html", "dest": "/admin/index.html" },
-    { "src": "/admin", "dest": "/admin-login.html", "status": 302 },
-    { "src": "/admin/", "dest": "/admin-login.html", "status": 302 },
+    { "src": "/admin", "dest": "/api/admin-auth-check", "status": 302 },
+    { "src": "/admin/", "dest": "/api/admin-auth-check", "status": 302 },
     { "src": "/admin/(.*)", "dest": "/admin/$1" }
   ],
   "headers": [
