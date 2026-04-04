@@ -28,19 +28,26 @@ module.exports = async function handler(req, res) {
     return res.redirect(new URL('/admin/', origin).toString());
   }
 
-  // Parse body
+  // Parse body - handle both JSON and form-encoded
   let body = req.body;
   if (typeof body === 'string') {
+    // Try JSON first
     try {
       body = JSON.parse(body);
     } catch {
-      body = {};
+      // Try form-encoded: password=xxx&redirect=xxx
+      const params = new URLSearchParams(body);
+      body = {
+        password: params.get('password') || '',
+        redirect: params.get('redirect') || '/admin/'
+      };
     }
   }
 
   const password = body?.password || '';
   const redirect = body?.redirect || '/admin/';
   console.log('[admin-login] password match:', password === ADMIN_PASSWORD);
+  console.log('[admin-login] submitted password:', password);
 
   if (password !== ADMIN_PASSWORD) {
     const url = new URL('/admin-login.html', origin);

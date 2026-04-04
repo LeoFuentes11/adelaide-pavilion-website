@@ -1,12 +1,14 @@
 {
   "routes": [
+    { "src": "/api/admin-login", "dest": "/api/admin-login.js" },
+    { "src": "/api/admin-auth-check", "dest": "/api/admin-auth-check.js" },
     { "src": "/api/(.*)", "dest": "/api/$1" },
     { "src": "/admin-login.html", "dest": "/admin-login.html" },
-    { "src": "/admin-check", "dest": "/api/admin-auth-check", "status": 302 },
+    { "src": "/admin-check", "dest": "/api/admin-auth-check.js", "status": 302 },
     { "src": "/admin/config.yml", "dest": "/admin/config.yml" },
     { "src": "/admin/index.html", "dest": "/admin/index.html" },
-    { "src": "/admin", "dest": "/api/admin-auth-check", "status": 302 },
-    { "src": "/admin/", "dest": "/api/admin-auth-check", "status": 302 },
+    { "src": "/admin", "dest": "/api/admin-auth-check.js", "status": 302 },
+    { "src": "/admin/", "dest": "/api/admin-auth-check.js", "status": 302 },
     { "src": "/admin/(.*)", "dest": "/admin/$1" }
   ],
   "headers": [

@@ -96,14 +96,15 @@
 
     <div id="errorMsg" class="error-msg" role="alert"></div>
 
-    <form id="loginForm">
-      <input type="hidden" id="redirectInput" value="" />
+    <form id="loginForm" action="/api/admin-login" method="POST">
+      <input type="hidden" name="redirect" value="/admin/" />
 
       <div class="form-group">
         <label for="password">Password</label>
         <input
           type="password"
           id="password"
+          name="password"
           placeholder="Enter password"
           autocomplete="current-password"
           required
@@ -116,8 +117,10 @@
 
   <script>
     const params = new URLSearchParams(window.location.search);
+    
+    // Set redirect value from URL
     const redirect = params.get('redirect') || '/admin/';
-    document.getElementById('redirectInput').value = redirect;
+    document.querySelector('input[name="redirect"]').value = redirect;
 
     // Show error if returned with error
     const errorParam = params.get('error');
@@ -125,43 +128,6 @@
       document.getElementById('errorMsg').textContent = 'Incorrect password. Please try again.';
       document.getElementById('errorMsg').classList.add('show');
     }
-
-    // If already authenticated, go directly
-    if (params.get('success') === '1') {
-      window.location.href = redirect;
-    }
-
-    // Handle form submit with fetch
-    document.getElementById('loginForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const btn = document.getElementById('submitBtn');
-      btn.disabled = true;
-      btn.textContent = 'Signing in…';
-
-      const password = document.getElementById('password').value;
-      const redirectVal = document.getElementById('redirectInput').value;
-
-      try {
-        const res = await fetch('/api/admin-login', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ password, redirect: redirectVal }),
-        });
-
-        // Follow redirect manually
-        const finalUrl = res.url || res.headers.get('location');
-        if (finalUrl) {
-          window.location.href = finalUrl;
-        } else {
-          throw new Error('No redirect received');
-        }
-      } catch (err) {
-        document.getElementById('errorMsg').textContent = 'Something went wrong. Please try again.';
-        document.getElementById('errorMsg').classList.add('show');
-        btn.disabled = false;
-        btn.textContent = 'Sign In';
-      }
-    });
   </script>
 </body>
 </html>
