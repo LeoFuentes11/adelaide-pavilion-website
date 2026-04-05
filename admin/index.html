@@ -732,18 +732,26 @@ function setActiveNav(id) {
 // Data fetching / saving
 // ──────────────────────────────────────────────
 
+function authHeaders(extra) {
+  var token = (typeof window.__adminToken !== 'undefined') ? window.__adminToken : '';
+  var headers = Object.assign({}, extra || {});
+  if (token) headers['Authorization'] = 'Bearer ' + token;
+  return headers;
+}
+
 function fetchSection(id) {
-  return fetch('/api/admin-content?file=' + encodeURIComponent(id))
-    .then(function(res) {
-      if (!res.ok) throw new Error('HTTP ' + res.status);
-      return res.json();
-    });
+  return fetch('/api/admin-content?file=' + encodeURIComponent(id), {
+    headers: authHeaders()
+  }).then(function(res) {
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return res.json();
+  });
 }
 
 function saveSection(id, data) {
   return fetch('/api/admin-save', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
     body: JSON.stringify({ file: id, data: data })
   }).then(function(res) {
     return res.json().then(function(json) {

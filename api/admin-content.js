@@ -24,10 +24,14 @@ function makeSessionToken(password) {
 function isAuthenticated(req) {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
   if (!ADMIN_PASSWORD) return true; // no password set — open
+  const expected = makeSessionToken(ADMIN_PASSWORD);
+  // Accept token via Authorization header (primary) or cookie (fallback)
+  const authHeader = req.headers.authorization || '';
+  if (authHeader.startsWith('Bearer ') && authHeader.slice(7) === expected) return true;
   const cookies = req.headers.cookie || '';
   const match = cookies.match(/admin_auth=([^;]+)/);
   const token = match ? decodeURIComponent(match[1]) : null;
-  return token === makeSessionToken(ADMIN_PASSWORD);
+  return token === expected;
 }
 
 module.exports = async function handler(req, res) {

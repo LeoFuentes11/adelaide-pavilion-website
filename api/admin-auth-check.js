@@ -18,34 +18,39 @@ function makeSessionToken(password) {
 module.exports = async function handler(req, res) {
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
   const COOKIE_NAME = 'admin_auth';
-  const origin = req.headers.origin || 'https://adelaide-pavilion-website.vercel.app';
 
   // No password configured — serve admin directly
   if (!ADMIN_PASSWORD) {
-    return serveAdminPage(res);
+    return serveAdminPage(res, 'no_password_configured');
   }
+
+  const expectedToken = makeSessionToken(ADMIN_PASSWORD);
 
   // Check for auth cookie
   const cookies = req.headers.cookie || '';
   const cookieMatch = cookies.match(new RegExp(`${COOKIE_NAME}=([^;]+)`));
   const token = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
 
-  if (token === makeSessionToken(ADMIN_PASSWORD)) {
-    return serveAdminPage(res);
+  if (token === expectedToken) {
+    return serveAdminPage(res, expectedToken);
   }
 
   // Not authenticated — redirect to login
-  return res.redirect('/admin-login.html?redirect=/admin/');
+  return res.redirect(302, '/admin-login.html?redirect=/admin/');
 };
 
-function serveAdminPage(res) {
+function serveAdminPage(res, sessionToken) {
   const filePath = path.join(__dirname, '..', 'admin', 'index.html');
-  
+
   if (fs.existsSync(filePath)) {
-    const content = fs.readFileSync(filePath, 'utf8');
+    let content = fs.readFileSync(filePath, 'utf8');
+    // Inject session token so admin panel can authenticate API calls via header
+    const injection = `<script>window.__adminToken=${JSON.stringify(sessionToken || '')};</script>`;
+    content = content.replace('</head>', injection + '</head>');
     res.setHeader('Content-Type', 'text/html');
+    res.setHeader('Cache-Control', 'no-store');
     return res.send(content);
   }
-  
+
   return res.status(404).send('Admin not found');
 }
