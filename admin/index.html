@@ -1,12 +1,1129 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex" />
-  <title>Adelaide Pavilion — Content Manager</title>
+  <title>Adelaide Pavilion — Admin</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:    #1A5FAD;
+      --gold:     #C5972E;
+      --charcoal: #1C2B39;
+      --ivory:    #F9F6F0;
+      --white:    #FFFFFF;
+      --danger:   #c0392b;
+      --success:  #27ae60;
+      --border:   #ddd;
+      --sidebar-w: 220px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #f0f2f5;
+      color: var(--charcoal);
+      min-height: 100vh;
+      display: flex;
+    }
+
+    /* ── Sidebar ── */
+    #sidebar {
+      width: var(--sidebar-w);
+      background: var(--charcoal);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    #sidebar .brand {
+      padding: 20px 16px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    #sidebar .brand h1 {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: .05em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    #sidebar .brand p {
+      font-size: 11px;
+      opacity: .55;
+      margin-top: 2px;
+    }
+
+    #sidebar nav {
+      flex: 1;
+      padding: 12px 0;
+    }
+
+    #sidebar nav a {
+      display: block;
+      padding: 10px 20px;
+      color: rgba(255,255,255,.75);
+      text-decoration: none;
+      font-size: 13.5px;
+      transition: background .15s, color .15s;
+      cursor: pointer;
+    }
+
+    #sidebar nav a:hover,
+    #sidebar nav a.active {
+      background: rgba(255,255,255,.08);
+      color: var(--white);
+    }
+
+    #sidebar nav a.active {
+      border-left: 3px solid var(--gold);
+      padding-left: 17px;
+    }
+
+    #sidebar .logout-btn {
+      display: block;
+      margin: 12px 16px 20px;
+      padding: 9px 14px;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.15);
+      border-radius: 6px;
+      color: rgba(255,255,255,.7);
+      font-size: 12.5px;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .15s;
+    }
+
+    #sidebar .logout-btn:hover { background: rgba(255,255,255,.14); }
+
+    /* ── Main area ── */
+    #main {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    #topbar {
+      background: var(--white);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    #topbar h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--charcoal);
+    }
+
+    #save-btn {
+      padding: 9px 22px;
+      background: var(--green);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity .15s;
+    }
+
+    #save-btn:disabled { opacity: .5; cursor: not-allowed; }
+    #save-btn:not(:disabled):hover { opacity: .88; }
+
+    #content-area {
+      padding: 28px;
+      flex: 1;
+    }
+
+    /* ── Toast ── */
+    #toast {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #fff;
+      box-shadow: 0 4px 18px rgba(0,0,0,.18);
+      z-index: 9999;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .25s, transform .25s;
+      pointer-events: none;
+    }
+
+    #toast.show { opacity: 1; transform: translateY(0); }
+    #toast.success { background: var(--success); }
+    #toast.error   { background: var(--danger); }
+    #toast.warning { background: var(--gold); }
+
+    /* ── Form elements ── */
+    .form-section {
+      background: var(--white);
+      border-radius: 10px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+      margin-bottom: 20px;
+      overflow: hidden;
+    }
+
+    .form-section-header {
+      background: #f7f8fa;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: #666;
+    }
+
+    .form-section-body { padding: 20px; }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 10px 20px;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .field-row:last-child { margin-bottom: 0; }
+
+    .field-label {
+      padding-top: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #444;
+      line-height: 1.35;
+    }
+
+    .field-label .hint {
+      display: block;
+      font-weight: 400;
+      font-size: 11px;
+      color: #888;
+      margin-top: 2px;
+    }
+
+    .field-control input[type="text"],
+    .field-control input[type="number"],
+    .field-control textarea {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-family: inherit;
+      color: var(--charcoal);
+      background: var(--white);
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    .field-control input:focus,
+    .field-control textarea:focus {
+      border-color: var(--green);
+    }
+
+    .field-control textarea { resize: vertical; min-height: 80px; }
+
+    .field-control input[type="checkbox"] {
+      width: 16px; height: 16px; cursor: pointer; margin-top: 9px;
+    }
+
+    /* ── Dynamic string list ── */
+    .string-list { display: flex; flex-direction: column; gap: 8px; }
+
+    .string-list-item {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .string-list-item input { flex: 1; }
+
+    .btn-icon {
+      width: 32px; height: 32px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: var(--white);
+      cursor: pointer;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .15s;
+      flex-shrink: 0;
+    }
+
+    .btn-icon:hover { background: #f0f2f5; }
+    .btn-icon.remove { color: var(--danger); border-color: #f5c6c3; }
+    .btn-icon.remove:hover { background: #fdf0ef; }
+
+    .btn-add {
+      margin-top: 4px;
+      padding: 6px 14px;
+      background: var(--white);
+      border: 1px dashed #aaa;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: #555;
+      cursor: pointer;
+      align-self: flex-start;
+      transition: border-color .15s, color .15s;
+    }
+
+    .btn-add:hover { border-color: var(--green); color: var(--green); }
+
+    /* ── Object card list ── */
+    .card-list { display: flex; flex-direction: column; gap: 14px; }
+
+    .card-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .card-item-header {
+      background: #f7f8fa;
+      border-bottom: 1px solid var(--border);
+      padding: 9px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    .card-item-body { padding: 16px; }
+
+    .card-field-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 16px;
+      align-items: start;
+      margin-bottom: 10px;
+    }
+
+    .card-field-row:last-child { margin-bottom: 0; }
+
+    .card-field-label {
+      padding-top: 7px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #555;
+    }
+
+    #loading-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(255,255,255,.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9000;
+      font-size: 15px;
+      color: #666;
+    }
+
+    .spinner {
+      width: 24px; height: 24px;
+      border: 3px solid #ddd;
+      border-top-color: var(--green);
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin-right: 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 700px) {
+      #sidebar { display: none; }
+      #main { margin-left: 0; }
+      .field-row { grid-template-columns: 1fr; }
+      .card-field-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js"></script>
+
+<div id="loading-overlay">
+  <div class="spinner"></div> Loading…
+</div>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <div class="brand">
+    <h1>Adelaide Pavilion</h1>
+    <p>Content Manager</p>
+  </div>
+  <nav id="nav"></nav>
+  <a class="logout-btn" href="/admin-login.html?logout=1" onclick="return confirmLogout()">Log out</a>
+</aside>
+
+<!-- Main -->
+<div id="main">
+  <div id="topbar">
+    <h2 id="section-title">Loading…</h2>
+    <button id="save-btn" disabled>Save Changes</button>
+  </div>
+  <div id="content-area"></div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+'use strict';
+
+// ──────────────────────────────────────────────
+// Schema — mirrors _data/*.json structure
+// ──────────────────────────────────────────────
+
+var SECTIONS = [
+  {
+    id: 'contact',
+    label: 'Contact Info',
+    groups: [
+      {
+        title: 'Phone & Email',
+        fields: [
+          { key: 'phone_display', label: 'Phone (display)', type: 'string', hint: 'Shown to visitors' },
+          { key: 'phone_tel',     label: 'Phone (tel: link)', type: 'string', hint: 'E.g. +61882127444' },
+          { key: 'email',         label: 'Email address', type: 'string' },
+          { key: 'email_href',    label: 'Email (mailto: link)', type: 'string' }
+        ]
+      },
+      {
+        title: 'Address',
+        fields: [
+          { key: 'address_footer', label: 'Address (footer)', type: 'string' },
+          { key: 'address_full',   label: 'Address (full)',   type: 'string' }
+        ]
+      },
+      {
+        title: 'Social & Maps',
+        fields: [
+          { key: 'facebook_url',  label: 'Facebook URL',    type: 'string' },
+          { key: 'instagram_url', label: 'Instagram URL',   type: 'string' },
+          { key: 'maps_url',      label: 'Google Maps URL', type: 'string' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'homepage',
+    label: 'Home Page',
+    groups: [
+      {
+        title: 'Hero',
+        fields: [
+          { key: 'hero_tagline', label: 'Hero tagline',    type: 'string' },
+          { key: 'hero_sub',     label: 'Hero subheading', type: 'string' },
+          { key: 'hero_cta',     label: 'CTA button text', type: 'string' }
+        ]
+      },
+      {
+        title: 'Welcome Section',
+        fields: [
+          { key: 'welcome_heading', label: 'Heading',    type: 'string' },
+          { key: 'welcome_sub',     label: 'Subheading', type: 'string' },
+          { key: 'welcome_body',    label: 'Body text',  type: 'text' }
+        ]
+      },
+      {
+        title: 'Testimonials',
+        fields: [
+          {
+            key: 'testimonials',
+            label: 'Testimonials',
+            type: 'list-object',
+            itemFields: [
+              { key: 'quote',  label: 'Quote',  type: 'text' },
+              { key: 'author', label: 'Author', type: 'string' },
+              { key: 'event',  label: 'Event',  type: 'string' }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'about',
+    label: 'About Page',
+    groups: [
+      {
+        title: 'Hero',
+        fields: [
+          { key: 'hero_heading', label: 'Heading',    type: 'string' },
+          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+        ]
+      },
+      {
+        title: 'History',
+        fields: [
+          { key: 'history_heading', label: 'Section heading', type: 'string' },
+          { key: 'history_para1',   label: 'Paragraph 1',     type: 'text' },
+          { key: 'history_para2',   label: 'Paragraph 2',     type: 'text' },
+          { key: 'history_para3',   label: 'Paragraph 3',     type: 'text' },
+          { key: 'history_para4',   label: 'Paragraph 4',     type: 'text' },
+          { key: 'history_para5',   label: 'Paragraph 5',     type: 'text' },
+          { key: 'legacy_para',     label: 'Legacy paragraph', type: 'text' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'weddings',
+    label: 'Weddings Page',
+    groups: [
+      {
+        title: 'Hero',
+        fields: [
+          { key: 'hero_heading', label: 'Heading',    type: 'string' },
+          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+        ]
+      },
+      {
+        title: 'Intro',
+        fields: [
+          { key: 'intro_para1', label: 'Paragraph 1', type: 'text' },
+          { key: 'intro_para2', label: 'Paragraph 2', type: 'text' }
+        ]
+      },
+      {
+        title: 'Testimonial',
+        fields: [
+          { key: 'testimonial_quote',  label: 'Quote',  type: 'text' },
+          { key: 'testimonial_author', label: 'Author', type: 'string' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'corporate',
+    label: 'Corporate Page',
+    groups: [
+      {
+        title: 'Hero',
+        fields: [
+          { key: 'hero_heading', label: 'Heading',    type: 'string' },
+          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+        ]
+      },
+      {
+        title: 'Intro',
+        fields: [
+          { key: 'intro_para1', label: 'Paragraph 1', type: 'text' },
+          { key: 'intro_para2', label: 'Paragraph 2', type: 'text' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'social',
+    label: 'Social Page',
+    groups: [
+      {
+        title: 'Hero',
+        fields: [
+          { key: 'hero_heading', label: 'Heading',    type: 'string' },
+          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+        ]
+      },
+      {
+        title: 'Intro',
+        fields: [
+          { key: 'intro_para1', label: 'Paragraph 1', type: 'text' },
+          { key: 'intro_para2', label: 'Paragraph 2', type: 'text' }
+        ]
+      },
+      {
+        title: 'Testimonial',
+        fields: [
+          { key: 'testimonial_quote',  label: 'Quote',  type: 'text' },
+          { key: 'testimonial_author', label: 'Author', type: 'string' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'packages',
+    label: 'Packages & Pricing',
+    groups: [
+      {
+        title: 'Page Header',
+        fields: [
+          { key: 'hero_heading', label: 'Heading',    type: 'string' },
+          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+        ]
+      },
+      {
+        title: 'Seated Dinner',
+        fields: [
+          { key: 'seated_dinner_price', label: 'Price per head', type: 'string' },
+          { key: 'seated_dinner_min',   label: 'Min guests',     type: 'number' },
+          { key: 'seated_dinner_max',   label: 'Max guests',     type: 'number' },
+          { key: 'seated_dinner_note',  label: 'Note',           type: 'string' }
+        ]
+      },
+      {
+        title: 'Cocktail / Standing',
+        fields: [
+          { key: 'cocktail_price', label: 'Price per head', type: 'string' },
+          { key: 'cocktail_min',   label: 'Min guests',     type: 'number' },
+          { key: 'cocktail_max',   label: 'Max guests',     type: 'number' },
+          { key: 'cocktail_note',  label: 'Note',           type: 'string' }
+        ]
+      },
+      {
+        title: 'Ceremony',
+        fields: [
+          { key: 'ceremony_fee',  label: 'Ceremony fee', type: 'string' },
+          { key: 'ceremony_note', label: 'Note',         type: 'string' }
+        ]
+      },
+      {
+        title: 'Beverage Packages',
+        fields: [
+          { key: 'beverage_standard_price', label: 'Standard pkg price', type: 'string' },
+          { key: 'beverage_premium_price',  label: 'Premium pkg price',  type: 'string' },
+          { key: 'beverage_standard_items', label: 'Standard pkg items', type: 'list-string' },
+          { key: 'beverage_premium_items',  label: 'Premium pkg items',  type: 'list-string' }
+        ]
+      }
+    ]
+  },
+  {
+    id: 'menus',
+    label: 'Menus',
+    groups: [
+      {
+        title: 'Entrees',
+        fields: [{
+          key: 'entrees', label: 'Entree items', type: 'list-object',
+          itemFields: [
+            { key: 'name',      label: 'Name',        type: 'string' },
+            { key: 'desc',      label: 'Description', type: 'text' },
+            { key: 'surcharge', label: 'Surcharge (optional)', type: 'string' }
+          ]
+        }]
+      },
+      {
+        title: 'Mains',
+        fields: [{
+          key: 'mains', label: 'Main course items', type: 'list-object',
+          itemFields: [
+            { key: 'name',      label: 'Name',        type: 'string' },
+            { key: 'desc',      label: 'Description', type: 'text' },
+            { key: 'surcharge', label: 'Surcharge (optional)', type: 'string' }
+          ]
+        }]
+      },
+      {
+        title: 'Desserts',
+        fields: [{
+          key: 'desserts', label: 'Dessert items', type: 'list-object',
+          itemFields: [
+            { key: 'name',      label: 'Name',        type: 'string' },
+            { key: 'desc',      label: 'Description', type: 'text' },
+            { key: 'surcharge', label: 'Surcharge (optional)', type: 'string' }
+          ]
+        }]
+      },
+      {
+        title: 'Hot Canapes',
+        fields: [{
+          key: 'canapes_hot', label: 'Hot canape items', type: 'list-object',
+          itemFields: [
+            { key: 'name',      label: 'Name',        type: 'string' },
+            { key: 'desc',      label: 'Description', type: 'text' },
+            { key: 'surcharge', label: 'Surcharge (optional)', type: 'string' }
+          ]
+        }]
+      },
+      {
+        title: 'Cold Canapes',
+        fields: [{
+          key: 'canapes_cold', label: 'Cold canape items', type: 'list-object',
+          itemFields: [
+            { key: 'name',      label: 'Name',        type: 'string' },
+            { key: 'desc',      label: 'Description', type: 'text' },
+            { key: 'surcharge', label: 'Surcharge (optional)', type: 'string' }
+          ]
+        }]
+      }
+    ]
+  }
+];
+
+// ──────────────────────────────────────────────
+// State
+// ──────────────────────────────────────────────
+
+var currentSection = SECTIONS[0];
+var currentData = {};
+
+// ──────────────────────────────────────────────
+// Toast
+// ──────────────────────────────────────────────
+
+var toastTimer;
+function showToast(msg, type) {
+  type = type || 'success';
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function() { el.className = ''; }, 3500);
+}
+
+// ──────────────────────────────────────────────
+// Loading overlay
+// ──────────────────────────────────────────────
+
+function setLoading(on) {
+  document.getElementById('loading-overlay').style.display = on ? 'flex' : 'none';
+}
+
+// ──────────────────────────────────────────────
+// Navigation
+// ──────────────────────────────────────────────
+
+function buildNav() {
+  var nav = document.getElementById('nav');
+  nav.innerHTML = '';
+  SECTIONS.forEach(function(sec) {
+    var a = document.createElement('a');
+    a.textContent = sec.label;
+    a.dataset.id = sec.id;
+    a.addEventListener('click', function() {
+      history.replaceState(null, '', '#' + sec.id);
+      switchSection(sec.id);
+    });
+    nav.appendChild(a);
+  });
+}
+
+function setActiveNav(id) {
+  document.querySelectorAll('#nav a').forEach(function(a) {
+    a.classList.toggle('active', a.dataset.id === id);
+  });
+}
+
+// ──────────────────────────────────────────────
+// Data fetching / saving
+// ──────────────────────────────────────────────
+
+function fetchSection(id) {
+  return fetch('/api/admin-content?file=' + encodeURIComponent(id))
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    });
+}
+
+function saveSection(id, data) {
+  return fetch('/api/admin-save', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ file: id, data: data })
+  }).then(function(res) {
+    return res.json().then(function(json) {
+      if (!res.ok) throw new Error(json.error || 'HTTP ' + res.status);
+      return json;
+    });
+  });
+}
+
+// ──────────────────────────────────────────────
+// Read current form values back into an object
+// ──────────────────────────────────────────────
+
+function collectData(section, original) {
+  var result = Object.assign({}, original);
+
+  section.groups.forEach(function(group) {
+    group.fields.forEach(function(field) {
+      var key = field.key;
+      var type = field.type;
+      var el;
+
+      if (type === 'string' || type === 'text') {
+        el = document.querySelector('[data-field="' + key + '"]');
+        if (el) result[key] = el.value.trim();
+
+      } else if (type === 'number') {
+        el = document.querySelector('[data-field="' + key + '"]');
+        if (el) {
+          var n = parseFloat(el.value);
+          result[key] = isNaN(n) ? el.value.trim() : n;
+        }
+
+      } else if (type === 'boolean') {
+        el = document.querySelector('[data-field="' + key + '"]');
+        if (el) result[key] = el.checked;
+
+      } else if (type === 'list-string') {
+        var container = document.querySelector('[data-list="' + key + '"]');
+        if (container) {
+          result[key] = Array.from(container.querySelectorAll('input'))
+            .map(function(i) { return i.value.trim(); })
+            .filter(Boolean);
+        }
+
+      } else if (type === 'list-object') {
+        var cardList = document.querySelector('[data-card-list="' + key + '"]');
+        if (cardList) {
+          result[key] = Array.from(cardList.querySelectorAll('[data-card-index]')).map(function(card) {
+            var idx = card.dataset.cardIndex;
+            var obj = {};
+            field.itemFields.forEach(function(sf) {
+              var cel = card.querySelector('[data-card-field="' + sf.key + '"][data-card-idx="' + idx + '"]');
+              if (cel) obj[sf.key] = cel.value.trim();
+            });
+            return obj;
+          });
+        }
+      }
+    });
+  });
+
+  return result;
+}
+
+// ──────────────────────────────────────────────
+// Render helpers
+// ──────────────────────────────────────────────
+
+function makeInput(type, key, value) {
+  if (type === 'text') {
+    var ta = document.createElement('textarea');
+    ta.dataset.field = key;
+    ta.value = value != null ? value : '';
+    return ta;
+  }
+  var input = document.createElement('input');
+  if (type === 'number') {
+    input.type = 'number';
+  } else if (type === 'boolean') {
+    input.type = 'checkbox';
+    input.checked = !!value;
+  } else {
+    input.type = 'text';
+  }
+  if (type !== 'boolean') input.value = value != null ? value : '';
+  input.dataset.field = key;
+  return input;
+}
+
+function renderStringList(key, items) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'field-control';
+
+  var list = document.createElement('div');
+  list.className = 'string-list';
+  list.dataset.list = key;
+
+  function addItem(val) {
+    var row = document.createElement('div');
+    row.className = 'string-list-item';
+
+    var inp = document.createElement('input');
+    inp.type = 'text';
+    inp.value = val || '';
+    row.appendChild(inp);
+
+    var remove = document.createElement('button');
+    remove.className = 'btn-icon remove';
+    remove.title = 'Remove';
+    remove.innerHTML = '&times;';
+    remove.type = 'button';
+    remove.addEventListener('click', function() { row.remove(); });
+    row.appendChild(remove);
+
+    list.appendChild(row);
+  }
+
+  (items || []).forEach(function(v) { addItem(v); });
+
+  var addBtn = document.createElement('button');
+  addBtn.className = 'btn-add';
+  addBtn.type = 'button';
+  addBtn.textContent = '+ Add item';
+  addBtn.addEventListener('click', function() { addItem(''); });
+
+  wrapper.appendChild(list);
+  wrapper.appendChild(addBtn);
+  return wrapper;
+}
+
+var cardCounter = 0;
+
+function renderCardList(field, items) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'field-control';
+
+  var list = document.createElement('div');
+  list.className = 'card-list';
+  list.dataset.cardList = field.key;
+
+  function addCard(item) {
+    var idx = cardCounter++;
+    var card = document.createElement('div');
+    card.className = 'card-item';
+    card.dataset.cardIndex = idx;
+
+    var header = document.createElement('div');
+    header.className = 'card-item-header';
+
+    var title = document.createElement('span');
+    var cardNum = list.querySelectorAll('[data-card-index]').length + 1;
+    title.textContent = 'Item ' + cardNum;
+    header.appendChild(title);
+
+    var removeBtn = document.createElement('button');
+    removeBtn.className = 'btn-icon remove';
+    removeBtn.type = 'button';
+    removeBtn.innerHTML = '&times; Remove';
+    removeBtn.style.cssText = 'width:auto;padding:0 10px;font-size:12px;';
+    removeBtn.addEventListener('click', function() {
+      card.remove();
+      Array.from(list.querySelectorAll('[data-card-index]')).forEach(function(c, i) {
+        c.querySelector('.card-item-header span').textContent = 'Item ' + (i + 1);
+      });
+    });
+    header.appendChild(removeBtn);
+    card.appendChild(header);
+
+    var body = document.createElement('div');
+    body.className = 'card-item-body';
+
+    field.itemFields.forEach(function(sf) {
+      var row = document.createElement('div');
+      row.className = 'card-field-row';
+
+      var lbl = document.createElement('div');
+      lbl.className = 'card-field-label';
+      lbl.textContent = sf.label;
+      row.appendChild(lbl);
+
+      var ctrl = document.createElement('div');
+      var val = (item && item[sf.key]) != null ? item[sf.key] : '';
+      if (sf.type === 'text') {
+        var ta = document.createElement('textarea');
+        ta.value = val;
+        ta.dataset.cardField = sf.key;
+        ta.dataset.cardIdx = idx;
+        ctrl.appendChild(ta);
+      } else {
+        var inp = document.createElement('input');
+        inp.type = 'text';
+        inp.value = val;
+        inp.dataset.cardField = sf.key;
+        inp.dataset.cardIdx = idx;
+        ctrl.appendChild(inp);
+      }
+      row.appendChild(ctrl);
+      body.appendChild(row);
+    });
+
+    card.appendChild(body);
+    list.appendChild(card);
+  }
+
+  (items || []).forEach(function(item) { addCard(item); });
+
+  var addBtn = document.createElement('button');
+  addBtn.className = 'btn-add';
+  addBtn.type = 'button';
+  addBtn.textContent = '+ Add item';
+  addBtn.addEventListener('click', function() { addCard(null); });
+
+  wrapper.appendChild(list);
+  wrapper.appendChild(addBtn);
+  return wrapper;
+}
+
+function renderSection(section, data) {
+  var area = document.getElementById('content-area');
+  area.innerHTML = '';
+  cardCounter = 0;
+
+  section.groups.forEach(function(group) {
+    var sec = document.createElement('div');
+    sec.className = 'form-section';
+
+    var hdr = document.createElement('div');
+    hdr.className = 'form-section-header';
+    hdr.textContent = group.title;
+    sec.appendChild(hdr);
+
+    var body = document.createElement('div');
+    body.className = 'form-section-body';
+
+    group.fields.forEach(function(field) {
+      var key = field.key;
+      var label = field.label;
+      var type = field.type;
+      var hint = field.hint;
+      var value = data[key];
+
+      if (type === 'list-string') {
+        var row = document.createElement('div');
+        row.className = 'field-row';
+
+        var lbl = document.createElement('div');
+        lbl.className = 'field-label';
+        lbl.textContent = label;
+        if (hint) {
+          var h = document.createElement('span');
+          h.className = 'hint';
+          h.textContent = hint;
+          lbl.appendChild(h);
+        }
+        row.appendChild(lbl);
+        row.appendChild(renderStringList(key, value));
+        body.appendChild(row);
+
+      } else if (type === 'list-object') {
+        var row2 = document.createElement('div');
+        row2.className = 'field-row';
+
+        var lbl2 = document.createElement('div');
+        lbl2.className = 'field-label';
+        lbl2.textContent = label;
+        row2.appendChild(lbl2);
+        row2.appendChild(renderCardList(field, value));
+        body.appendChild(row2);
+
+      } else {
+        var row3 = document.createElement('div');
+        row3.className = 'field-row';
+
+        var lbl3 = document.createElement('div');
+        lbl3.className = 'field-label';
+        lbl3.textContent = label;
+        if (hint) {
+          var h3 = document.createElement('span');
+          h3.className = 'hint';
+          h3.textContent = hint;
+          lbl3.appendChild(h3);
+        }
+        row3.appendChild(lbl3);
+
+        var ctrl = document.createElement('div');
+        ctrl.className = 'field-control';
+        ctrl.appendChild(makeInput(type, key, value));
+        row3.appendChild(ctrl);
+        body.appendChild(row3);
+      }
+    });
+
+    sec.appendChild(body);
+    area.appendChild(sec);
+  });
+}
+
+// ──────────────────────────────────────────────
+// Switch section
+// ──────────────────────────────────────────────
+
+function switchSection(id) {
+  var section = null;
+  for (var i = 0; i < SECTIONS.length; i++) {
+    if (SECTIONS[i].id === id) { section = SECTIONS[i]; break; }
+  }
+  if (!section) return Promise.resolve();
+
+  setLoading(true);
+  document.getElementById('save-btn').disabled = true;
+
+  return fetchSection(id)
+    .then(function(data) {
+      currentSection = section;
+      currentData = data;
+      document.getElementById('section-title').textContent = section.label;
+      setActiveNav(id);
+      renderSection(section, data);
+      document.getElementById('save-btn').disabled = false;
+    })
+    .catch(function(err) {
+      showToast('Failed to load ' + section.label + ': ' + err.message, 'error');
+    })
+    .finally(function() {
+      setLoading(false);
+    });
+}
+
+// ──────────────────────────────────────────────
+// Save handler
+// ──────────────────────────────────────────────
+
+document.getElementById('save-btn').addEventListener('click', function() {
+  var btn = document.getElementById('save-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving\u2026';
+
+  var newData = collectData(currentSection, currentData);
+
+  saveSection(currentSection.id, newData)
+    .then(function(result) {
+      currentData = newData;
+      if (result.warning) {
+        showToast(result.warning, 'warning');
+      } else {
+        showToast('Changes saved successfully!', 'success');
+      }
+    })
+    .catch(function(err) {
+      showToast('Save failed: ' + err.message, 'error');
+    })
+    .finally(function() {
+      btn.disabled = false;
+      btn.textContent = 'Save Changes';
+    });
+});
+
+// ──────────────────────────────────────────────
+// Logout
+// ──────────────────────────────────────────────
+
+function confirmLogout() {
+  return confirm('Log out of the admin panel?');
+}
+
+// ──────────────────────────────────────────────
+// Init
+// ──────────────────────────────────────────────
+
+(function init() {
+  buildNav();
+  var hash = window.location.hash.replace('#', '') || '';
+  var initial = '';
+  for (var i = 0; i < SECTIONS.length; i++) {
+    if (SECTIONS[i].id === hash) { initial = hash; break; }
+  }
+  if (!initial) initial = SECTIONS[0].id;
+  switchSection(initial);
+})();
+</script>
 </body>
 </html>
