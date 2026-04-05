@@ -9,7 +9,7 @@
   "welcome_para2": "Our team of dedicated coordinators ensure a seamless, personalised experience — whether you're celebrating your wedding day, hosting a corporate gala, or gathering family and friends for a milestone celebration.",
   "testimonials": [
     {
-      "quote": "What a fantastic venue for functions and events! The garden that envelops it is absolutely stunning, further enhancing the charm of the place. We had a corporate event here recently and it was done very well. The food served was amazing.dd",
+      "quote": "What a fantastic venue for functions and events! The garden that envelops it is absolutely stunning, further enhancing the charm of the place. We had a corporate event here recently and it was done very well. The food served was amazing. CMS TEST",
       "author": "Roanna dd",
       "event": "Corporate Client"
     },
@@ -23,5 +23,11 @@
       "author": "Julia E dd",
       "event": "Corporate Client"
     }
-  ]
+  ],
+  "hero_tagline": "",
+  "hero_sub": "",
+  "hero_cta": "",
+  "welcome_heading": "",
+  "welcome_sub": "",
+  "welcome_body": ""
 }
