@@ -192,9 +192,34 @@
       text-transform: uppercase;
       letter-spacing: .06em;
       color: #666;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
     }
 
-    .form-section-body { padding: 20px; }
+    .form-section-header:hover { background: #eef0f3; }
+
+    .form-section-header .collapse-icon {
+      font-style: normal;
+      font-size: 16px;
+      line-height: 1;
+      color: #aaa;
+      transition: transform .2s;
+    }
+
+    .form-section.collapsed .collapse-icon { transform: rotate(-90deg); }
+
+    .form-section-body {
+      padding: 20px;
+      overflow: hidden;
+      transition: padding .2s;
+    }
+
+    .form-section.collapsed .form-section-body {
+      display: none;
+    }
 
     .field-row {
       display: grid;
@@ -1054,7 +1079,20 @@ function renderSection(section, data) {
 
     var hdr = document.createElement('div');
     hdr.className = 'form-section-header';
-    hdr.textContent = group.title;
+
+    var titleSpan = document.createElement('span');
+    titleSpan.textContent = group.title;
+    hdr.appendChild(titleSpan);
+
+    var icon = document.createElement('i');
+    icon.className = 'collapse-icon';
+    icon.textContent = '▾';
+    hdr.appendChild(icon);
+
+    hdr.addEventListener('click', function() {
+      sec.classList.toggle('collapsed');
+    });
+
     sec.appendChild(hdr);
 
     var body = document.createElement('div');
