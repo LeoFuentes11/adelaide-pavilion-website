@@ -113,25 +113,31 @@ module.exports = async function handler(req, res) {
 
   const jsonContent = JSON.stringify(data, null, 2) + '\n';
 
-  // Write local file
+  // Try local write (works in dev; Vercel filesystem is read-only so this will fail there — that's OK)
   const filePath = path.join(__dirname, '..', '_data', `${file}.json`);
   try {
     fs.writeFileSync(filePath, jsonContent, 'utf8');
   } catch (err) {
-    console.error(`[admin-save] Failed to write ${file}.json locally:`, err.message);
-    return res.status(500).json({ error: 'Failed to save content' });
+    console.warn(`[admin-save] Local write skipped (read-only filesystem): ${err.message}`);
   }
 
-  // Commit to GitHub
+  // Commit to GitHub — this is the production persistence mechanism
+  const token = process.env.GITHUB_TOKEN;
+  const repo = process.env.GITHUB_REPO;
+
+  if (!token || !repo) {
+    console.warn('[admin-save] GITHUB_TOKEN/GITHUB_REPO not set — changes will not persist after redeploy');
+    return res.status(200).json({
+      ok: true,
+      warning: 'GitHub not configured. Changes saved locally only and will not persist after redeploy.'
+    });
+  }
+
   try {
     await commitToGitHub(file, jsonContent);
   } catch (err) {
     console.error('[admin-save] GitHub commit failed:', err.message);
-    // Local write succeeded; warn but don't fail the request
-    return res.status(200).json({
-      ok: true,
-      warning: 'Saved locally but GitHub commit failed. Changes may not persist after redeploy.'
-    });
+    return res.status(500).json({ error: 'Failed to save content: ' + err.message });
   }
 
   return res.status(200).json({ ok: true });
