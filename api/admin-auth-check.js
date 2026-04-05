@@ -35,7 +35,7 @@ module.exports = async function handler(req, res) {
   }
 
   // Not authenticated — redirect to login
-  return res.redirect(new URL(`/admin-login.html?redirect=/admin/`, origin).toString());
+  return res.redirect('/admin-login.html?redirect=/admin/');
 };
 
 function serveAdminPage(res) {
