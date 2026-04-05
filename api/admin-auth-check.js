@@ -45,8 +45,14 @@ function serveAdminPage(res, sessionToken) {
   if (fs.existsSync(filePath)) {
     let content = fs.readFileSync(filePath, 'utf8');
     // Inject session token so admin panel can authenticate API calls via header
-    const injection = `<script>window.__adminToken=${JSON.stringify(sessionToken || '')};</script>`;
-    content = content.replace('</head>', injection + '</head>');
+    const tokenJson = JSON.stringify(sessionToken || '');
+    const injection = `<script>window.__adminToken=${tokenJson};</script>`;
+    if (content.includes('</head>')) {
+      content = content.replace('</head>', injection + '</head>');
+    } else {
+      // Fallback: prepend to body
+      content = content.replace('<body', injection + '<body');
+    }
     res.setHeader('Content-Type', 'text/html');
     res.setHeader('Cache-Control', 'no-store');
     return res.send(content);
