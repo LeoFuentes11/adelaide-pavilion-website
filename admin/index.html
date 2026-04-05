@@ -405,8 +405,8 @@ var SECTIONS = [
       {
         title: 'Phone & Email',
         fields: [
-          { key: 'phone_display', label: 'Phone (display)', type: 'string', hint: 'Shown to visitors' },
-          { key: 'phone_tel',     label: 'Phone (tel: link)', type: 'string', hint: 'E.g. +61882127444' },
+          { key: 'phone_display', label: 'Phone (display)', type: 'string' },
+          { key: 'phone_tel',     label: 'Phone (tel: link)', type: 'string', hint: 'E.g. tel:0882127444' },
           { key: 'email',         label: 'Email address', type: 'string' },
           { key: 'email_href',    label: 'Email (mailto: link)', type: 'string' }
         ]
@@ -435,17 +435,19 @@ var SECTIONS = [
       {
         title: 'Hero',
         fields: [
-          { key: 'hero_tagline', label: 'Hero tagline',    type: 'string' },
-          { key: 'hero_sub',     label: 'Hero subheading', type: 'string' },
-          { key: 'hero_cta',     label: 'CTA button text', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' },
+          { key: 'hero_desc',     label: 'Description paragraph',   type: 'text' }
         ]
       },
       {
         title: 'Welcome Section',
         fields: [
-          { key: 'welcome_heading', label: 'Heading',    type: 'string' },
-          { key: 'welcome_sub',     label: 'Subheading', type: 'string' },
-          { key: 'welcome_body',    label: 'Body text',  type: 'text' }
+          { key: 'welcome_subtitle', label: 'Section label',  type: 'string' },
+          { key: 'welcome_title',    label: 'Heading',         type: 'string' },
+          { key: 'welcome_para1',    label: 'Paragraph 1',     type: 'text' },
+          { key: 'welcome_para2',    label: 'Paragraph 2',     type: 'text' }
         ]
       },
       {
@@ -472,20 +474,21 @@ var SECTIONS = [
       {
         title: 'Hero',
         fields: [
-          { key: 'hero_heading', label: 'Heading',    type: 'string' },
-          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' }
         ]
       },
       {
         title: 'History',
         fields: [
-          { key: 'history_heading', label: 'Section heading', type: 'string' },
-          { key: 'history_para1',   label: 'Paragraph 1',     type: 'text' },
-          { key: 'history_para2',   label: 'Paragraph 2',     type: 'text' },
-          { key: 'history_para3',   label: 'Paragraph 3',     type: 'text' },
-          { key: 'history_para4',   label: 'Paragraph 4',     type: 'text' },
-          { key: 'history_para5',   label: 'Paragraph 5',     type: 'text' },
-          { key: 'legacy_para',     label: 'Legacy paragraph', type: 'text' }
+          { key: 'history_subtitle', label: 'Section label',   type: 'string' },
+          { key: 'history_title',    label: 'Section heading', type: 'string' },
+          { key: 'history_para1',    label: 'Paragraph 1',     type: 'text' },
+          { key: 'history_para2',    label: 'Paragraph 2',     type: 'text' },
+          { key: 'history_para3',    label: 'Paragraph 3',     type: 'text' },
+          { key: 'history_para4',    label: 'Paragraph 4',     type: 'text' },
+          { key: 'legacy_para',      label: 'Legacy paragraph', type: 'text' }
         ]
       }
     ]
@@ -497,8 +500,10 @@ var SECTIONS = [
       {
         title: 'Hero',
         fields: [
-          { key: 'hero_heading', label: 'Heading',    type: 'string' },
-          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' },
+          { key: 'hero_desc',     label: 'Description paragraph',   type: 'text' }
         ]
       },
       {
@@ -524,8 +529,9 @@ var SECTIONS = [
       {
         title: 'Hero',
         fields: [
-          { key: 'hero_heading', label: 'Heading',    type: 'string' },
-          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' }
         ]
       },
       {
@@ -544,8 +550,9 @@ var SECTIONS = [
       {
         title: 'Hero',
         fields: [
-          { key: 'hero_heading', label: 'Heading',    type: 'string' },
-          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' }
         ]
       },
       {
@@ -571,42 +578,108 @@ var SECTIONS = [
       {
         title: 'Page Header',
         fields: [
-          { key: 'hero_heading', label: 'Heading',    type: 'string' },
-          { key: 'hero_sub',     label: 'Subheading', type: 'string' }
+          { key: 'hero_script',   label: 'Script (italic tagline)', type: 'string' },
+          { key: 'hero_title',    label: 'Main heading',            type: 'string' },
+          { key: 'hero_subtitle', label: 'Subtitle',                type: 'string' }
         ]
       },
       {
-        title: 'Seated Dinner',
+        title: 'Wedding — Signature Package',
         fields: [
-          { key: 'seated_dinner_price', label: 'Price per head', type: 'string' },
-          { key: 'seated_dinner_min',   label: 'Min guests',     type: 'number' },
-          { key: 'seated_dinner_max',   label: 'Max guests',     type: 'number' },
-          { key: 'seated_dinner_note',  label: 'Note',           type: 'string' }
+          { key: 'wedding_signature_price_2026', label: 'Price 2026 (per person)', type: 'number' },
+          { key: 'wedding_signature_price_2027', label: 'Price 2027 (per person)', type: 'number' },
+          { key: 'wedding_signature_price_2028', label: 'Price 2028 (per person)', type: 'number' },
+          { key: 'wedding_signature_price_label', label: 'Price label text', type: 'string' }
         ]
       },
       {
-        title: 'Cocktail / Standing',
+        title: 'Wedding — Pavilion Package',
         fields: [
-          { key: 'cocktail_price', label: 'Price per head', type: 'string' },
-          { key: 'cocktail_min',   label: 'Min guests',     type: 'number' },
-          { key: 'cocktail_max',   label: 'Max guests',     type: 'number' },
-          { key: 'cocktail_note',  label: 'Note',           type: 'string' }
+          { key: 'wedding_pavilion_price_2026', label: 'Price 2026 (per person)', type: 'number' },
+          { key: 'wedding_pavilion_price_2027', label: 'Price 2027 (per person)', type: 'number' },
+          { key: 'wedding_pavilion_price_2028', label: 'Price 2028 (per person)', type: 'number' },
+          { key: 'wedding_pavilion_price_label', label: 'Price label text', type: 'string' }
         ]
       },
       {
-        title: 'Ceremony',
+        title: 'Wedding — Cocktail',
         fields: [
-          { key: 'ceremony_fee',  label: 'Ceremony fee', type: 'string' },
-          { key: 'ceremony_note', label: 'Note',         type: 'string' }
+          { key: 'wedding_cocktail_price', label: 'Price per person', type: 'number' }
         ]
       },
       {
-        title: 'Beverage Packages',
+        title: 'Social Events Pricing',
         fields: [
-          { key: 'beverage_standard_price', label: 'Standard pkg price', type: 'string' },
-          { key: 'beverage_premium_price',  label: 'Premium pkg price',  type: 'string' },
-          { key: 'beverage_standard_items', label: 'Standard pkg items', type: 'list-string' },
-          { key: 'beverage_premium_items',  label: 'Premium pkg items',  type: 'list-string' }
+          { key: 'social_two_course_main_dessert',  label: '2-course (main + dessert)',   type: 'number' },
+          { key: 'social_two_course_entree_main',   label: '2-course (entrée + main)',     type: 'number' },
+          { key: 'social_three_course_set',         label: '3-course set menu',            type: 'number' },
+          { key: 'social_three_course_alternate',   label: '3-course alternate drop',      type: 'number' },
+          { key: 'social_cocktail',                 label: 'Cocktail / standing',          type: 'number' },
+          { key: 'social_street_eats',              label: 'Street Eats',                  type: 'number' }
+        ]
+      },
+      {
+        title: 'Corporate Pricing',
+        fields: [
+          { key: 'corporate_breakfast_continental', label: 'Breakfast (continental)', type: 'number' },
+          { key: 'corporate_breakfast_hot',         label: 'Breakfast (hot)',         type: 'number' },
+          { key: 'corporate_networking',            label: 'Networking event',        type: 'number' },
+          { key: 'corporate_cocktail',              label: 'Cocktail / gala dinner',  type: 'number' }
+        ]
+      },
+      {
+        title: 'Children\'s Menu Pricing',
+        fields: [
+          { key: 'children_menu1',   label: 'Menu 1 price', type: 'number' },
+          { key: 'children_menu2',   label: 'Menu 2 price', type: 'number' },
+          { key: 'children_cocktail', label: 'Cocktail price', type: 'number' }
+        ]
+      },
+      {
+        title: 'Beverage — Standard Package',
+        fields: [
+          { key: 'bev_standard_2hr', label: '2-hour price', type: 'string' },
+          { key: 'bev_standard_3hr', label: '3-hour price', type: 'string' },
+          { key: 'bev_standard_4hr', label: '4-hour price', type: 'string' },
+          { key: 'bev_standard_5hr', label: '5-hour price', type: 'string' },
+          { key: 'bev_standard_includes', label: 'Included items', type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Beverage — Premium Package',
+        fields: [
+          { key: 'bev_premium_surcharge', label: 'Surcharge',   type: 'string' },
+          { key: 'bev_premium_reds',      label: 'Red wines',    type: 'list-string' },
+          { key: 'bev_premium_whites',    label: 'White wines',  type: 'list-string' },
+          { key: 'bev_premium_extras',    label: 'Extras',       type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Beverage — Deluxe Package',
+        fields: [
+          { key: 'bev_deluxe_surcharge', label: 'Surcharge',   type: 'string' },
+          { key: 'bev_deluxe_reds',      label: 'Red wines',    type: 'list-string' },
+          { key: 'bev_deluxe_whites',    label: 'White wines',  type: 'list-string' },
+          { key: 'bev_deluxe_extras',    label: 'Extras',       type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Beverage — Non-Alcoholic',
+        fields: [
+          { key: 'bev_nonalcoholic_price',    label: 'Price',           type: 'string' },
+          { key: 'bev_nonalcoholic_includes', label: 'Included items',  type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Beverage — Additional Rates',
+        fields: [
+          { key: 'bev_extension_rate',    label: 'Extension rate',       type: 'string' },
+          { key: 'bev_bottled_beer_rate', label: 'Bottled beer rate',    type: 'string' },
+          { key: 'bev_cider_rate',        label: 'Cider rate',           type: 'string' },
+          { key: 'bev_moscato_rate',      label: 'Moscato rate',         type: 'string' },
+          { key: 'bev_spirits_rate',      label: 'Spirits rate',         type: 'string' },
+          { key: 'bev_byo_label',         label: 'BYO description',      type: 'string' },
+          { key: 'bev_byo_rate',          label: 'BYO corkage rate',     type: 'string' }
         ]
       }
     ]
