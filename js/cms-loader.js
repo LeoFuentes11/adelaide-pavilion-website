@@ -31,9 +31,7 @@
 
   async function fetchJSON(url) {
     try {
-      const res = await fetch(url + '?t=' + Date.now(), {
-        cache: 'no-store',
-      });
+      const res = await fetch(url);
       if (!res.ok) return null;
       return await res.json();
     } catch (_) {
@@ -163,26 +161,27 @@
     if (initialized) return;
     initialized = true;
 
-    // Always load contact info — used in every footer
-    const contact = await fetchJSON('_data/contact.json');
-    if (contact) applyData(contact);
-
-    // Load page-specific content
     const pageKey = document.body.dataset.page;
-    if (pageKey && PAGE_MAP[pageKey]) {
-      const pageData = await fetchJSON(PAGE_MAP[pageKey]);
-      if (pageData) {
-        applyData(pageData);
-        renderTestimonials(pageData);
-        renderBeverages(pageData);
-      }
-    }
+    const hasMenus = !!document.querySelector('[data-menu]');
 
-    // Load menu data if any [data-menu] containers exist on this page
-    if (document.querySelector('[data-menu]')) {
-      const menus = await fetchJSON('_data/menus.json');
-      if (menus) renderMenus(menus);
+    // Fetch all needed JSON in parallel
+    const urls = ['_data/contact.json'];
+    if (pageKey && PAGE_MAP[pageKey]) urls.push(PAGE_MAP[pageKey]);
+    if (hasMenus) urls.push('_data/menus.json');
+
+    const results = await Promise.all(urls.map(fetchJSON));
+
+    const contact  = results[0];
+    const pageData = pageKey && PAGE_MAP[pageKey] ? results[1] : null;
+    const menus    = hasMenus ? results[results.length - 1] : null;
+
+    if (contact)  applyData(contact);
+    if (pageData) {
+      applyData(pageData);
+      renderTestimonials(pageData);
+      renderBeverages(pageData);
     }
+    if (menus) renderMenus(menus);
   }
 
   if (document.readyState === 'loading') {
