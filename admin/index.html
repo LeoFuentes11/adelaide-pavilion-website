@@ -831,7 +831,8 @@ function setActiveNav(id) {
 // ──────────────────────────────────────────────
 
 function authHeaders(extra) {
-  var token = (typeof window.__adminToken !== 'undefined') ? window.__adminToken : '';
+  var meta = document.querySelector('meta[name="admin-token"]');
+  var token = meta ? meta.getAttribute('content') : '';
   var headers = Object.assign({}, extra || {});
   if (token) headers['Authorization'] = 'Bearer ' + token;
   return headers;

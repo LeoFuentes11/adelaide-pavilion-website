@@ -72,7 +72,7 @@ module.exports = async function handler(req, res) {
                   (req.headers.host || '').includes('vercel.app') ||
                   (req.headers.host || '').includes('netlify');
   const secureAttr = isHttps ? '; Secure' : '';
-  const COOKIE_ATTRS = `Path=/; Max-Age=${COOKIE_MAX_AGE}; HttpOnly${secureAttr}; SameSite=Lax`;
+  const COOKIE_ATTRS = `Path=/; Max-Age=${COOKIE_MAX_AGE}; HttpOnly${secureAttr}; SameSite=Strict`;
 
   const origin = req.headers.origin || `http${isHttps ? 's' : ''}://${req.headers.host || 'localhost:3000'}`;
   const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
@@ -81,10 +81,10 @@ module.exports = async function handler(req, res) {
     return res.redirect('/admin-login.html');
   }
 
-  // No password configured — allow through
+  // No password configured — deny; ADMIN_PASSWORD must be set in Vercel env vars
   if (!ADMIN_PASSWORD) {
-    res.setHeader('Set-Cookie', `${COOKIE_NAME}=no_password_configured; ${COOKIE_ATTRS}`);
-    return res.redirect('/admin/');
+    console.error('[admin-login] ADMIN_PASSWORD not set — access denied');
+    return res.redirect('/admin-login.html?error=misconfigured');
   }
 
   // Rate limit check

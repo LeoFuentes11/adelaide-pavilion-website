@@ -16,12 +16,13 @@ function makeSessionToken(password) {
 }
 
 module.exports = async function handler(req, res) {
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
   const COOKIE_NAME = 'admin_auth';
 
-  // No password configured — serve admin directly
+  // No password configured — deny; ADMIN_PASSWORD must be set in Vercel env vars
   if (!ADMIN_PASSWORD) {
-    return serveAdminPage(res, 'no_password_configured');
+    console.error('[admin-auth-check] ADMIN_PASSWORD not set — redirecting to login');
+    return res.redirect(302, '/admin-login.html?error=misconfigured');
   }
 
   const expectedToken = makeSessionToken(ADMIN_PASSWORD);
@@ -44,13 +45,12 @@ function serveAdminPage(res, sessionToken) {
 
   if (fs.existsSync(filePath)) {
     let content = fs.readFileSync(filePath, 'utf8');
-    // Inject session token so admin panel can authenticate API calls via header
-    const tokenJson = JSON.stringify(sessionToken || '');
-    const injection = `<script>window.__adminToken=${tokenJson};</script>`;
+    // Inject session token via <meta> tag — avoids inline script execution context
+    // Token is HMAC-SHA256 hex ([0-9a-f]{64}) so safe as an attribute value
+    const injection = `<meta name="admin-token" content="${sessionToken || ''}">`;
     if (content.includes('</head>')) {
       content = content.replace('</head>', injection + '</head>');
     } else {
-      // Fallback: prepend to body
       content = content.replace('<body', injection + '<body');
     }
     res.setHeader('Content-Type', 'text/html');

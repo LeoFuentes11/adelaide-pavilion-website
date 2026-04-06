@@ -29,8 +29,8 @@ function makeSessionToken(password) {
 }
 
 function isAuthenticated(req) {
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || '';
-  if (!ADMIN_PASSWORD) return true;
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
+  if (!ADMIN_PASSWORD) return false; // misconfigured — deny rather than open
   const expected = makeSessionToken(ADMIN_PASSWORD);
   // Accept token via Authorization header (primary) or cookie (fallback)
   const authHeader = req.headers.authorization || '';

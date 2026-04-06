@@ -147,7 +147,7 @@
     });
 
     // href attributes (phone links, email links, social URLs)
-    const SAFE_HREF_PREFIXES = ['tel:', 'mailto:', 'https://', 'http://'];
+    const SAFE_HREF_PREFIXES = ['tel:', 'mailto:', 'https://'];
     document.querySelectorAll('[data-cms-href]').forEach(el => {
       const key = el.dataset.cmsHref;
       if (Object.prototype.hasOwnProperty.call(data, key)) {
