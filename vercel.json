@@ -6,6 +6,7 @@
     { "src": "/api/admin-save",          "dest": "/api/admin-save.js" },
     { "src": "/api/admin-upload",        "dest": "/api/admin-upload.js" },
     { "src": "/api/admin-delete-photo",  "dest": "/api/admin-delete-photo.js" },
+    { "src": "/api/admin-replace-image", "dest": "/api/admin-replace-image.js" },
     { "src": "/api/(.*)",               "dest": "/api/$1" },
     { "src": "/admin-login.html",       "dest": "/admin-login.html" },
     { "src": "/admin-check",            "dest": "/api/admin-auth-check.js" },

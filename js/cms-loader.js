@@ -11,6 +11,8 @@
  *   data-cms="key"       → sets element.textContent
  *   data-cms-html="key"  → sets element.innerHTML (for address <br> etc.)
  *   data-cms-href="key"  → sets element.href
+ *   data-cms-bg="key"    → sets element.style.backgroundImage (from images.json)
+ *   data-cms-src="key"   → sets element.src (from images.json)
  */
 
 (function () {
@@ -125,6 +127,22 @@
     });
   }
 
+  function applyImages(images) {
+    if (!images || typeof images !== 'object') return;
+    document.querySelectorAll('[data-cms-bg]').forEach(el => {
+      const key = el.dataset.cmsBg;
+      if (images[key] && images[key].src) {
+        el.style.backgroundImage = "url('" + images[key].src + "')";
+      }
+    });
+    document.querySelectorAll('[data-cms-src]').forEach(el => {
+      const key = el.dataset.cmsSrc;
+      if (images[key] && images[key].src) {
+        el.src = images[key].src;
+      }
+    });
+  }
+
   function applyData(data) {
     if (!data || typeof data !== 'object') return;
 
@@ -165,17 +183,19 @@
     const hasMenus = !!document.querySelector('[data-menu]');
 
     // Fetch all needed JSON in parallel
-    const urls = ['_data/contact.json'];
+    const urls = ['_data/contact.json', '_data/images.json'];
     if (pageKey && PAGE_MAP[pageKey]) urls.push(PAGE_MAP[pageKey]);
     if (hasMenus) urls.push('_data/menus.json');
 
     const results = await Promise.all(urls.map(fetchJSON));
 
     const contact  = results[0];
-    const pageData = pageKey && PAGE_MAP[pageKey] ? results[1] : null;
+    const images   = results[1];
+    const pageData = pageKey && PAGE_MAP[pageKey] ? results[2] : null;
     const menus    = hasMenus ? results[results.length - 1] : null;
 
     if (contact)  applyData(contact);
+    if (images)   applyImages(images);
     if (pageData) {
       applyData(pageData);
       renderTestimonials(pageData);
