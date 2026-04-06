@@ -2,8 +2,10 @@
   "routes": [
     { "src": "/api/admin-login",        "dest": "/api/admin-login.js" },
     { "src": "/api/admin-auth-check",   "dest": "/api/admin-auth-check.js" },
-    { "src": "/api/admin-content",      "dest": "/api/admin-content.js" },
-    { "src": "/api/admin-save",         "dest": "/api/admin-save.js" },
+    { "src": "/api/admin-content",       "dest": "/api/admin-content.js" },
+    { "src": "/api/admin-save",          "dest": "/api/admin-save.js" },
+    { "src": "/api/admin-upload",        "dest": "/api/admin-upload.js" },
+    { "src": "/api/admin-delete-photo",  "dest": "/api/admin-delete-photo.js" },
     { "src": "/api/(.*)",               "dest": "/api/$1" },
     { "src": "/admin-login.html",       "dest": "/admin-login.html" },
     { "src": "/admin-check",            "dest": "/api/admin-auth-check.js" },
