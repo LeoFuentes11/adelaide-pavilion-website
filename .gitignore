@@ -1,7 +1,13 @@
-# Claude Code local settings
+# Claude Code / AI tooling (local dev only, not for collaborators)
 .claude/
+.claude-flow/
+.agents/
+.opencode/
 CLAUDE.md
 AGENTS.md
+skills/
+skills-lock.json
+.mcp.json
 
 # Original PDFs (large files, not needed on GitHub)
 additonal info/
