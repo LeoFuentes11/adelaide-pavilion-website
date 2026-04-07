@@ -124,6 +124,26 @@
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';
           }
+
+          function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = '';
+          }
+
+          document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+          document.getElementById('lightboxPrev').addEventListener('click', function() {
+            openLightbox((currentIndex - 1 + lightboxItems.length) % lightboxItems.length);
+          });
+          document.getElementById('lightboxNext').addEventListener('click', function() {
+            openLightbox((currentIndex + 1) % lightboxItems.length);
+          });
+          lightbox.addEventListener('click', function(e) { if (e.target === lightbox) closeLightbox(); });
+          document.addEventListener('keydown', function(e) {
+            if (!lightbox.classList.contains('active')) return;
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') openLightbox((currentIndex - 1 + lightboxItems.length) % lightboxItems.length);
+            if (e.key === 'ArrowRight') openLightbox((currentIndex + 1) % lightboxItems.length);
+          });
         })
         .catch(function() {
           grid.innerHTML = '<p style="text-align:center;color:#888;padding:40px 0">Gallery unavailable — please try again shortly.</p>';
