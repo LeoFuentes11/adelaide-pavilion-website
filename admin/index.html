@@ -380,11 +380,51 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
+    /* ── Mobile sidebar toggle ── */
+    #sidebar-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      flex-direction: column;
+      gap: 5px;
+      margin-right: 12px;
+    }
+    #sidebar-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--charcoal);
+      border-radius: 2px;
+      transition: 0.25s;
+    }
+
+    #sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 99;
+    }
+    #sidebar-overlay.visible { display: block; }
+
     @media (max-width: 700px) {
-      #sidebar { display: none; }
+      #sidebar-toggle { display: flex; }
+
+      #sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.28s ease;
+        z-index: 200;
+      }
+      #sidebar.open { transform: translateX(0); }
+
       #main { margin-left: 0; }
       .field-row { grid-template-columns: 1fr; }
       .card-field-row { grid-template-columns: 1fr; }
+      #topbar { padding: 14px 16px; }
+      #content-area { padding: 16px; }
+      #toast { bottom: 16px; right: 16px; left: 16px; right: 16px; }
     }
 
     /* ── Photo Manager ── */
@@ -583,10 +623,18 @@
   <a class="logout-btn" href="/admin-login.html?logout=1" onclick="return confirmLogout()">Log out</a>
 </aside>
 
+<!-- Sidebar overlay (mobile) -->
+<div id="sidebar-overlay"></div>
+
 <!-- Main -->
 <div id="main">
   <div id="topbar">
-    <h2 id="section-title">Loading…</h2>
+    <div style="display:flex;align-items:center;">
+      <button id="sidebar-toggle" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+      <h2 id="section-title">Loading…</h2>
+    </div>
     <button id="save-btn" disabled>Save Changes</button>
   </div>
   <div id="content-area"></div>
@@ -1849,6 +1897,36 @@ function confirmLogout() {
   }
   if (!initial) initial = SECTIONS[0].id;
   switchSection(initial);
+})();
+
+// ── Mobile sidebar toggle ──
+(function() {
+  var toggle = document.getElementById('sidebar-toggle');
+  var sidebar = document.getElementById('sidebar');
+  var overlay = document.getElementById('sidebar-overlay');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('visible');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    document.body.style.overflow = '';
+  }
+
+  toggle.addEventListener('click', openSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // Close sidebar when a nav link is tapped on mobile
+  var navEl = document.getElementById('nav');
+  navEl.addEventListener('click', function(e) {
+    if (e.target.tagName === 'A' && window.innerWidth <= 700) {
+      closeSidebar();
+    }
+  });
 })();
 </script>
 </body>

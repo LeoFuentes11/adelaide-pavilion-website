@@ -703,6 +703,37 @@ select.form-control { cursor: pointer; }
   h2 { font-size: clamp(1.4rem, 5vw, 2rem); }
   .awards-bar { gap: 10px; }
   .award-card { min-width: 0; }
+
+  /* Fix: background-attachment:fixed is broken on iOS Safari */
+  .hero-bg, .hero-sub .hero-bg, .cta-banner-bg { background-attachment: scroll; }
+
+  /* Room panels */
+  .room-panel { min-height: 340px; }
+  .room-panel-content { padding: 24px; }
+  .room-panel-title { font-size: 1.5rem; }
+
+  /* Lightbox — bigger touch targets */
+  .lightbox-nav { padding: 14px 20px; font-size: 2.2rem; }
+  .lightbox-prev { left: 6px; }
+  .lightbox-next { right: 6px; }
+  .lightbox-close { top: 12px; right: 14px; font-size: 1.8rem; padding: 8px; }
+
+  /* Feature strip */
+  .feature-strip { grid-template-columns: 1fr 1fr; }
+  .feature-strip-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding: 28px 20px; }
+  .feature-strip-item:nth-child(odd) { border-right: 1px solid rgba(255,255,255,0.1); }
+  .feature-strip-item:last-child { border-bottom: none; }
+
+  /* Price table — horizontal scroll on small screens */
+  .price-table { min-width: 480px; }
+  .price-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+  /* Nav logo smaller on mobile */
+  .nav-logo-img { height: 60px; }
+  #navbar.scrolled .nav-logo-img { height: 44px; }
+
+  /* CTA banner tighter */
+  .cta-banner { padding: 56px 20px; }
 }
 
 @media(max-width:480px){
@@ -710,6 +741,16 @@ select.form-control { cursor: pointer; }
   .container { padding-left: 12px; padding-right: 12px; }
   .tab-buttons { gap: 2px; }
   .tab-btn { font-size: 0.75rem; padding: 8px 12px; }
+  .feature-strip { grid-template-columns: 1fr; }
+  .feature-strip-item { border-right: none !important; }
+  .room-panel { min-height: 280px; }
+}
+
+/* Touch devices — gallery overlay always partially visible so it's tappable */
+@media(hover: none){
+  .gallery-overlay { opacity: 1; background: rgba(11,45,90,0.28); }
+  .gallery-overlay-icon { opacity: 0.85; }
+  .gallery-item:active .gallery-overlay { background: rgba(11,45,90,0.55); }
 }
 
 /* ---------- Placeholder images (colored backgrounds) ---------- */
