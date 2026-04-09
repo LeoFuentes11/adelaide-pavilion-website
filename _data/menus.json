@@ -84,6 +84,11 @@
       "name": "Pork Belly",
       "desc": "SA roasted pork belly, pumpkin & sweet potato purée, warm honey balsamic glaze",
       "surcharge": ""
+    },
+    {
+      "name": "Nick's Special Soup",
+      "desc": "yummy food",
+      "surcharge": ""
     }
   ],
   "mains": [
