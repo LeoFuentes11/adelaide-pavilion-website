@@ -22,11 +22,12 @@
   --charcoal:     #1A2A3D;   /* dark navy text    */
   --white:        #ffffff;
   --shadow:       0 4px 24px rgba(26,95,173,0.12);
+  --navbar-h:     110px;     /* logo 86px + 10px padding × 2 + 4px buffer */
 }
 
 /* ---------- Base ---------- */
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--navbar-h); }
 body {
   font-family: 'Cormorant Garamond', Georgia, serif;
   background: var(--ivory);
@@ -202,7 +203,7 @@ h1,h2,h3,h4,h5 {
 .hero {
   position: relative;
   min-height: 100vh;
-  padding-top: 80px; /* clear fixed navbar */
+  padding-top: var(--navbar-h); /* clear fixed navbar */
   display: flex; align-items: center; justify-content: center;
   overflow: hidden;
   background: var(--green);
@@ -227,7 +228,7 @@ h1,h2,h3,h4,h5 {
   position: relative; z-index: 2;
   text-align: center;
   color: var(--white);
-  padding: 0 24px;
+  padding: 60px 24px;
   max-width: 860px;
 }
 .hero-script { font-family: 'Great Vibes', cursive; font-size: clamp(2.5rem, 6vw, 4.5rem); color: var(--gold); line-height: 1; margin-bottom: 12px; }
@@ -240,7 +241,7 @@ h1,h2,h3,h4,h5 {
 /* Hero sub (inner pages) */
 .hero-sub {
   position: relative;
-  padding-top: 80px; /* clear fixed navbar */
+  padding-top: var(--navbar-h); /* clear fixed navbar */
   min-height: 55vh;
   display: flex; align-items: flex-end;
   overflow: hidden;
@@ -696,6 +697,7 @@ select.form-control { cursor: pointer; }
 
 /* ---------- Responsive helpers ---------- */
 @media(max-width:768px){
+  :root { --navbar-h: 82px; } /* mobile logo 60px + 10px×2 padding + 2px buffer */
   .section-pad { padding: 56px 0; }
   .hero-buttons { flex-direction: column; align-items: center; }
   .container { padding-left: 16px; padding-right: 16px; }
