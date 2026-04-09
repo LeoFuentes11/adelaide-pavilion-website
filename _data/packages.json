@@ -28,8 +28,15 @@
   "corporate_cocktail": 83,
 
   "children_menu1": 40,
+  "children_menu1_label": "Option 1 — $40 per child (under 12)",
+  "children_menu1_items": ["Crumbed Chicken Tenderloins & Chips", "Ice Cream", "Soft Drinks & Orange Juice"],
   "children_menu2": 48,
+  "children_menu2_label": "Option 2 — $48 per child (under 12)",
+  "children_menu2_items": ["Pasta Napolitana", "Crumbed Chicken Tenderloins & Chips", "Ice Cream", "Soft Drinks & Orange Juice"],
   "children_cocktail": 35,
+  "children_cocktail_label": "Cocktail Kids Menu — $35 per child (under 12)",
+  "children_cocktail_items": ["Chicken Strips & Chips", "Ice Cream", "Soft Drinks & Orange Juice"],
+  "children_note": "Older children and young adults (9–17 years) may prefer to have the main menu. Supplier meals (main course from menu) are available at $50 per person.",
 
   "bev_standard_2hr": "$24pp",
   "bev_standard_3hr": "$28pp",

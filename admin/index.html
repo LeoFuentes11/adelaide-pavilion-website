@@ -895,11 +895,18 @@ var SECTIONS = [
         ]
       },
       {
-        title: 'Children\'s Menu Pricing',
+        title: 'Children\'s Menu',
         fields: [
-          { key: 'children_menu1',   label: 'Menu 1 price', type: 'number' },
-          { key: 'children_menu2',   label: 'Menu 2 price', type: 'number' },
-          { key: 'children_cocktail', label: 'Cocktail price', type: 'number' }
+          { key: 'children_menu1_label',    label: 'Option 1 — heading',  type: 'string' },
+          { key: 'children_menu1',          label: 'Option 1 — price',    type: 'number' },
+          { key: 'children_menu1_items',    label: 'Option 1 — items',    type: 'list-string' },
+          { key: 'children_menu2_label',    label: 'Option 2 — heading',  type: 'string' },
+          { key: 'children_menu2',          label: 'Option 2 — price',    type: 'number' },
+          { key: 'children_menu2_items',    label: 'Option 2 — items',    type: 'list-string' },
+          { key: 'children_cocktail_label', label: 'Cocktail — heading',  type: 'string' },
+          { key: 'children_cocktail',       label: 'Cocktail — price',    type: 'number' },
+          { key: 'children_cocktail_items', label: 'Cocktail — items',    type: 'list-string' },
+          { key: 'children_note',           label: 'Footer note',         type: 'text' }
         ]
       },
       {
