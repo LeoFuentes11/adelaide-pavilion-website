@@ -29,5 +29,15 @@
   "hero_cta": "",
   "welcome_heading": "",
   "welcome_sub": "",
-  "welcome_body": ""
+  "welcome_body": "",
+  "strip_guests_label": "Guests Catered",
+  "strip_guests_value": "10 — 300",
+  "strip_rooms_label": "Function Rooms",
+  "strip_rooms_value": "2 Elegant Spaces",
+  "strip_established_label": "Established",
+  "strip_established_value": "Since 2003",
+  "strip_cuisine_label": "Cuisine",
+  "strip_cuisine_value": "French & Mediterranean",
+  "strip_awards_label": "Awards",
+  "strip_awards_value": "Multiple ABIA"
 }
