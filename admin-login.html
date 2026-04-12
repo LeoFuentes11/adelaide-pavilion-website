@@ -46,6 +46,7 @@
       color: #1A5FAD;
       margin-bottom: 6px;
     }
+    input[type="text"],
     input[type="password"] {
       width: 100%;
       padding: 12px 14px;
@@ -56,6 +57,7 @@
       outline: none;
       transition: border-color 0.2s;
     }
+    input[type="text"]:focus,
     input[type="password"]:focus {
       border-color: #3EAEE0;
       box-shadow: 0 0 0 3px rgba(62,174,224,0.18);
@@ -92,12 +94,24 @@
 <body>
   <div class="login-box">
     <h1>Adelaide Pavilion</h1>
-    <p>Enter your admin password to access the CMS</p>
+    <p>Enter your credentials to access the CMS</p>
 
     <div id="errorMsg" class="error-msg" role="alert"></div>
 
     <form id="loginForm" action="/api/admin-login" method="POST">
       <input type="hidden" name="redirect" value="/admin/" />
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="Enter username"
+          autocomplete="username"
+          required
+        />
+      </div>
 
       <div class="form-group">
         <label for="password">Password</label>
@@ -125,7 +139,7 @@
     // Show error if returned with error
     const errorParam = params.get('error');
     if (errorParam === 'invalid') {
-      document.getElementById('errorMsg').textContent = 'Incorrect password. Please try again.';
+      document.getElementById('errorMsg').textContent = 'Incorrect username or password. Please try again.';
       document.getElementById('errorMsg').classList.add('show');
     }
   </script>

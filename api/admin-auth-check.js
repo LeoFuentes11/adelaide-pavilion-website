@@ -11,21 +11,22 @@ const crypto = require('crypto');
 const fs = require('fs');
 const path = require('path');
 
-function makeSessionToken(password) {
-  return crypto.createHmac('sha256', password).update('admin_session').digest('hex');
+function makeSessionToken(username, password) {
+  return crypto.createHmac('sha256', password).update('admin_session_' + username).digest('hex');
 }
 
 module.exports = async function handler(req, res) {
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
   const COOKIE_NAME = 'admin_auth';
 
-  // No password configured — deny; ADMIN_PASSWORD must be set in Vercel env vars
-  if (!ADMIN_PASSWORD) {
-    console.error('[admin-auth-check] ADMIN_PASSWORD not set — redirecting to login');
+  // No credentials configured — deny; ADMIN_USERNAME and ADMIN_PASSWORD must be set in Vercel env vars
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+    console.error('[admin-auth-check] ADMIN_USERNAME or ADMIN_PASSWORD not set — redirecting to login');
     return res.redirect(302, '/admin-login.html?error=misconfigured');
   }
 
-  const expectedToken = makeSessionToken(ADMIN_PASSWORD);
+  const expectedToken = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
 
   // Check for auth cookie
   const cookies = req.headers.cookie || '';

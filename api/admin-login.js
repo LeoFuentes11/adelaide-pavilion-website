@@ -38,8 +38,8 @@ function safeRedirect(redirect, origin) {
   }
 }
 
-function makeSessionToken(password) {
-  return crypto.createHmac('sha256', password).update('admin_session').digest('hex');
+function makeSessionToken(username, password) {
+  return crypto.createHmac('sha256', password).update('admin_session_' + username).digest('hex');
 }
 
 /**
@@ -64,6 +64,7 @@ function readRawBody(req) {
 }
 
 module.exports = async function handler(req, res) {
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
   const COOKIE_NAME = 'admin_auth';
   const COOKIE_MAX_AGE = 60 * 60 * 24 * 7; // 7 days
@@ -81,9 +82,9 @@ module.exports = async function handler(req, res) {
     return res.redirect('/admin-login.html');
   }
 
-  // No password configured — deny; ADMIN_PASSWORD must be set in Vercel env vars
-  if (!ADMIN_PASSWORD) {
-    console.error('[admin-login] ADMIN_PASSWORD not set — access denied');
+  // No credentials configured — deny; ADMIN_USERNAME and ADMIN_PASSWORD must be set in Vercel env vars
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+    console.error('[admin-login] ADMIN_USERNAME or ADMIN_PASSWORD not set — access denied');
     return res.redirect('/admin-login.html?error=misconfigured');
   }
 
@@ -94,11 +95,13 @@ module.exports = async function handler(req, res) {
   }
 
   // Parse body — handle Vercel pre-parsed object, raw string, or stream
+  let username = '';
   let password = '';
   let redirect = '/admin/';
 
   if (req.body && typeof req.body === 'object') {
     // Vercel pre-parsed (JSON or form-encoded)
+    username = String(req.body.username || '');
     password = String(req.body.password || '');
     redirect = String(req.body.redirect || '/admin/');
   } else {
@@ -107,23 +110,25 @@ module.exports = async function handler(req, res) {
       // Try JSON first, fall back to URL-encoded
       try {
         const parsed = JSON.parse(raw);
+        username = String(parsed.username || '');
         password = String(parsed.password || '');
         redirect = String(parsed.redirect || '/admin/');
       } catch {
         const params = new URLSearchParams(raw);
+        username = params.get('username') || '';
         password = params.get('password') || '';
         redirect = params.get('redirect') || '/admin/';
       }
     }
   }
 
-  if (password !== ADMIN_PASSWORD) {
+  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
     const safeDest = safeRedirect(redirect, origin);
     return res.redirect(`/admin-login.html?redirect=${encodeURIComponent(safeDest)}&error=invalid`);
   }
 
-  // Success — set signed session token cookie (not the password itself)
-  const sessionToken = makeSessionToken(ADMIN_PASSWORD);
+  // Success — set signed session token cookie (not the credentials themselves)
+  const sessionToken = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
   res.setHeader('Set-Cookie', `${COOKIE_NAME}=${sessionToken}; ${COOKIE_ATTRS}`);
   return res.redirect(safeRedirect(redirect, origin));
 };
