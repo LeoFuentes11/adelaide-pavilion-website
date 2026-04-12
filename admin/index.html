@@ -975,6 +975,131 @@ var SECTIONS = [
           { key: 'bev_byo_label',         label: 'BYO description',      type: 'string' },
           { key: 'bev_byo_rate',          label: 'BYO corkage rate',     type: 'string' }
         ]
+      },
+      {
+        title: 'Wedding — Signature Package Content',
+        fields: [
+          { key: 'wedding_signature_menu',       label: 'Menu items',       type: 'list-string' },
+          { key: 'wedding_signature_bev',        label: 'Beverages',        type: 'list-string' },
+          { key: 'wedding_signature_inclusions', label: 'Inclusions',       type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Wedding — Pavilion Package Content',
+        fields: [
+          { key: 'wedding_pavilion_menu',    label: 'Menu items',  type: 'list-string' },
+          { key: 'wedding_pavilion_bev',     label: 'Beverages',   type: 'list-string' },
+          { key: 'wedding_pavilion_extras',  label: 'Extras',      type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Wedding — Cocktail Package Content',
+        fields: [
+          { key: 'wedding_cocktail_canapes',    label: 'Canapés',     type: 'list-string' },
+          { key: 'wedding_cocktail_bev',        label: 'Beverages',   type: 'list-string' },
+          { key: 'wedding_cocktail_inclusions', label: 'Inclusions',  type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Social Events — Banquet Options Content',
+        fields: [
+          { key: 'social_banquet1_items', label: 'Banquet Option 1 items', type: 'list-string' },
+          { key: 'social_banquet2_items', label: 'Banquet Option 2 items', type: 'list-string' },
+          { key: 'social_banquet3_items', label: 'Banquet Option 3 items', type: 'list-string' },
+          { key: 'social_banquet4_items', label: 'Banquet Option 4 items', type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Social Events — Cocktail & Street Eats Content',
+        fields: [
+          { key: 'social_cocktail_items',    label: 'Cocktail package items', type: 'list-string' },
+          { key: 'social_street_eats_items', label: 'Street Eats items',      type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Corporate — Breakfast Content',
+        fields: [
+          { key: 'corp_continental_items', label: 'Continental items',       type: 'list-string' },
+          { key: 'corp_hot_options',        label: 'Hot Plated options',      type: 'list-string' },
+          { key: 'corp_hot_bev',            label: 'Hot Plated beverages',    type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Corporate — Cocktail & Networking Content',
+        fields: [
+          { key: 'corp_networking_items', label: 'Networking items',  type: 'list-string' },
+          { key: 'corp_cocktail_items',   label: 'Cocktail items',    type: 'list-string' }
+        ]
+      },
+      {
+        title: 'Lunch Options Table',
+        fields: [
+          { key: 'lunch_r1_name',  label: 'Row 1 — Name',        type: 'string' },
+          { key: 'lunch_r1_desc',  label: 'Row 1 — Description', type: 'string' },
+          { key: 'lunch_r1_price', label: 'Row 1 — Price',       type: 'string' },
+          { key: 'lunch_r2_name',  label: 'Row 2 — Name',        type: 'string' },
+          { key: 'lunch_r2_desc',  label: 'Row 2 — Description', type: 'string' },
+          { key: 'lunch_r2_price', label: 'Row 2 — Price',       type: 'string' },
+          { key: 'lunch_r3_name',  label: 'Row 3 — Name',        type: 'string' },
+          { key: 'lunch_r3_desc',  label: 'Row 3 — Description', type: 'string' },
+          { key: 'lunch_r3_price', label: 'Row 3 — Price',       type: 'string' },
+          { key: 'lunch_r4_name',  label: 'Row 4 — Name',        type: 'string' },
+          { key: 'lunch_r4_desc',  label: 'Row 4 — Description', type: 'string' },
+          { key: 'lunch_r4_price', label: 'Row 4 — Price',       type: 'string' },
+          { key: 'lunch_r5_name',  label: 'Row 5 — Name',        type: 'string' },
+          { key: 'lunch_r5_desc',  label: 'Row 5 — Description', type: 'string' },
+          { key: 'lunch_r5_price', label: 'Row 5 — Price',       type: 'string' }
+        ]
+      },
+      {
+        title: 'Morning / Afternoon Tea — Beverages Table',
+        fields: [
+          { key: 'tea_bev_r1_name',  label: 'Row 1 — Name',  type: 'string' },
+          { key: 'tea_bev_r1_price', label: 'Row 1 — Price', type: 'string' },
+          { key: 'tea_bev_r2_name',  label: 'Row 2 — Name',  type: 'string' },
+          { key: 'tea_bev_r2_price', label: 'Row 2 — Price', type: 'string' },
+          { key: 'tea_bev_r3_name',  label: 'Row 3 — Name',  type: 'string' },
+          { key: 'tea_bev_r3_price', label: 'Row 3 — Price', type: 'string' }
+        ]
+      },
+      {
+        title: 'Morning / Afternoon Tea — Baked Selections Table',
+        fields: [
+          { key: 'tea_food_r1_name',  label: 'Row 1 — Name',  type: 'string' },
+          { key: 'tea_food_r1_price', label: 'Row 1 — Price', type: 'string' },
+          { key: 'tea_food_r2_name',  label: 'Row 2 — Name',  type: 'string' },
+          { key: 'tea_food_r2_price', label: 'Row 2 — Price', type: 'string' },
+          { key: 'tea_food_r3_name',  label: 'Row 3 — Name',  type: 'string' },
+          { key: 'tea_food_r3_price', label: 'Row 3 — Price', type: 'string' },
+          { key: 'tea_food_r4_name',  label: 'Row 4 — Name',  type: 'string' },
+          { key: 'tea_food_r4_price', label: 'Row 4 — Price', type: 'string' },
+          { key: 'tea_food_r5_name',  label: 'Row 5 — Name',  type: 'string' },
+          { key: 'tea_food_r5_price', label: 'Row 5 — Price', type: 'string' }
+        ]
+      },
+      {
+        title: 'Room Configurations — Parkview Room',
+        fields: [
+          { key: 'room_parkview_banquet',   label: 'Banquet capacity',   type: 'string' },
+          { key: 'room_parkview_cabaret',   label: 'Cabaret capacity',   type: 'string' },
+          { key: 'room_parkview_cocktail',  label: 'Cocktail capacity',  type: 'string' },
+          { key: 'room_parkview_theatre',   label: 'Theatre capacity',   type: 'string' },
+          { key: 'room_parkview_ushape',    label: 'U-Shape capacity',   type: 'string' },
+          { key: 'room_parkview_boardroom', label: 'Boardroom capacity', type: 'string' },
+          { key: 'room_parkview_classroom', label: 'Classroom capacity', type: 'string' }
+        ]
+      },
+      {
+        title: 'Room Configurations — Terrace Room',
+        fields: [
+          { key: 'room_terrace_banquet',   label: 'Banquet capacity',   type: 'string' },
+          { key: 'room_terrace_cabaret',   label: 'Cabaret capacity',   type: 'string' },
+          { key: 'room_terrace_cocktail',  label: 'Cocktail capacity',  type: 'string' },
+          { key: 'room_terrace_theatre',   label: 'Theatre capacity',   type: 'string' },
+          { key: 'room_terrace_ushape',    label: 'U-Shape capacity',   type: 'string' },
+          { key: 'room_terrace_boardroom', label: 'Boardroom capacity', type: 'string' },
+          { key: 'room_terrace_classroom', label: 'Classroom capacity', type: 'string' }
+        ]
       }
     ]
   },
