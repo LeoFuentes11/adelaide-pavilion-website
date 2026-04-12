@@ -79,19 +79,19 @@ module.exports = async function handler(req, res) {
   const ip = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
 
   if (req.method !== 'POST') {
-    return res.redirect('/admin-login.html');
+    return res.status(302).setHeader('Location', '/admin-login.html').end();
   }
 
   // No credentials configured — deny; ADMIN_USERNAME and ADMIN_PASSWORD must be set in Vercel env vars
   if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
     console.error('[admin-login] ADMIN_USERNAME or ADMIN_PASSWORD not set — access denied');
-    return res.redirect('/admin-login.html?error=misconfigured');
+    return res.status(302).setHeader('Location', '/admin-login.html?error=misconfigured').end();
   }
 
   // Rate limit check
   if (isLoginRateLimited(ip)) {
     console.warn('[admin-login] Rate limit exceeded for IP:', ip);
-    return res.redirect('/admin-login.html?error=ratelimit');
+    return res.status(302).setHeader('Location', '/admin-login.html?error=ratelimit').end();
   }
 
   // Parse body — handle Vercel pre-parsed object, raw string, or stream
@@ -124,11 +124,11 @@ module.exports = async function handler(req, res) {
 
   if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
     const safeDest = safeRedirect(redirect, origin);
-    return res.redirect(`/admin-login.html?redirect=${encodeURIComponent(safeDest)}&error=invalid`);
+    return res.status(302).setHeader('Location', `/admin-login.html?redirect=${encodeURIComponent(safeDest)}&error=invalid`).end();
   }
 
   // Success — set signed session token cookie (not the credentials themselves)
   const sessionToken = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
   res.setHeader('Set-Cookie', `${COOKIE_NAME}=${sessionToken}; ${COOKIE_ATTRS}`);
-  return res.redirect(safeRedirect(redirect, origin));
+  return res.status(302).setHeader('Location', safeRedirect(redirect, origin)).end();
 };

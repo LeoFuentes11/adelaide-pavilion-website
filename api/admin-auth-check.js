@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
   // No credentials configured — deny; ADMIN_USERNAME and ADMIN_PASSWORD must be set in Vercel env vars
   if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
     console.error('[admin-auth-check] ADMIN_USERNAME or ADMIN_PASSWORD not set — redirecting to login');
-    return res.redirect(302, '/admin-login.html?error=misconfigured');
+    return res.status(302).setHeader('Location', '/admin-login.html?error=misconfigured').end();
   }
 
   const expectedToken = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
@@ -38,7 +38,7 @@ module.exports = async function handler(req, res) {
   }
 
   // Not authenticated — redirect to login
-  return res.redirect(302, '/admin-login.html?redirect=/admin/');
+  return res.status(302).setHeader('Location', '/admin-login.html?redirect=/admin/').end();
 };
 
 function serveAdminPage(res, sessionToken) {
