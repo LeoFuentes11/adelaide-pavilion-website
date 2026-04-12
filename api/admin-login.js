@@ -42,6 +42,27 @@ function makeSessionToken(username, password) {
   return crypto.createHmac('sha256', password).update('admin_session_' + username).digest('hex');
 }
 
+async function verifyTurnstile(token, ip) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) {
+    // Skip in local dev where the env var isn't set
+    console.warn('[admin-login] TURNSTILE_SECRET_KEY not set — skipping Turnstile check');
+    return true;
+  }
+  if (!token) return false;
+  try {
+    const res = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ secret, response: token, remoteip: ip }).toString()
+    });
+    const data = await res.json();
+    return data.success === true;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Read the raw request body as a string (handles cases where req.body is not pre-parsed).
  */
@@ -98,12 +119,14 @@ module.exports = async function handler(req, res) {
   let username = '';
   let password = '';
   let redirect = '/admin/';
+  let turnstileToken = '';
 
   if (req.body && typeof req.body === 'object') {
     // Vercel pre-parsed (JSON or form-encoded)
     username = String(req.body.username || '');
     password = String(req.body.password || '');
     redirect = String(req.body.redirect || '/admin/');
+    turnstileToken = String(req.body['cf-turnstile-response'] || '');
   } else {
     const raw = await readRawBody(req);
     if (raw) {
@@ -113,13 +136,23 @@ module.exports = async function handler(req, res) {
         username = String(parsed.username || '');
         password = String(parsed.password || '');
         redirect = String(parsed.redirect || '/admin/');
+        turnstileToken = String(parsed['cf-turnstile-response'] || '');
       } catch {
         const params = new URLSearchParams(raw);
         username = params.get('username') || '';
         password = params.get('password') || '';
         redirect = params.get('redirect') || '/admin/';
+        turnstileToken = params.get('cf-turnstile-response') || '';
       }
     }
+  }
+
+  // Verify Turnstile bot challenge before checking credentials
+  const turnstileOk = await verifyTurnstile(turnstileToken, ip);
+  if (!turnstileOk) {
+    console.warn('[admin-login] Turnstile verification failed for IP:', ip);
+    const safeDest = safeRedirect(redirect, origin);
+    return res.status(302).setHeader('Location', `/admin-login.html?redirect=${encodeURIComponent(safeDest)}&error=bot`).end();
   }
 
   if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {

@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Login — Adelaide Pavilion</title>
+  <!-- Cloudflare Turnstile — bot protection -->
+  <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; }
     body {
@@ -125,6 +127,8 @@
         />
       </div>
 
+      <div class="cf-turnstile" data-sitekey="0x4AAAAAACyriY73UOg5Es11" data-theme="light" style="margin-bottom: 18px;"></div>
+
       <button type="submit" id="submitBtn">Sign In</button>
     </form>
   </div>
@@ -138,8 +142,14 @@
 
     // Show error if returned with error
     const errorParam = params.get('error');
-    if (errorParam === 'invalid') {
-      document.getElementById('errorMsg').textContent = 'Incorrect username or password. Please try again.';
+    const errorMessages = {
+      invalid: 'Incorrect username or password. Please try again.',
+      bot: 'Security check failed. Please complete the challenge and try again.',
+      ratelimit: 'Too many login attempts. Please wait 15 minutes and try again.',
+      misconfigured: 'Login is not configured. Contact the site administrator.'
+    };
+    if (errorParam && errorMessages[errorParam]) {
+      document.getElementById('errorMsg').textContent = errorMessages[errorParam];
       document.getElementById('errorMsg').classList.add('show');
     }
   </script>
