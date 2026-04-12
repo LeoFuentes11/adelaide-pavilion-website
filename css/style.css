@@ -63,10 +63,8 @@ h1,h2,h3,h4,h5 {
   line-height: 1.25;
   color: var(--green);
 }
-.font-body { font-family: 'Lato', 'Open Sans', sans-serif; }
 .text-gold { color: var(--gold); }
 .text-green { color: var(--green); }
-.text-brown { color: var(--brown); }
 .text-ivory { color: var(--ivory); }
 
 /* Script/decorative accent */
@@ -340,7 +338,6 @@ h1,h2,h3,h4,h5 {
 .panel-green { background: var(--green); color: var(--white); }
 .panel-green h1,.panel-green h2,.panel-green h3 { color: var(--white); }
 .panel-green .section-subtitle { color: var(--gold); }
-.panel-cream { background: var(--cream); }
 .panel-ivory { background: var(--ivory); }
 .panel-white { background: var(--white); }
 
@@ -583,18 +580,6 @@ select.form-control { cursor: pointer; }
 .award-stat-label { font-family: 'Lato', sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
 .award-stat-divider { width: 28px; height: 1px; background: rgba(255,255,255,0.35); }
 
-/* ---------- Timeline (About) ---------- */
-.timeline { position: relative; padding-left: 32px; }
-.timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: rgba(62,174,224,0.45); }
-.timeline-item { position: relative; padding: 0 0 40px 28px; }
-.timeline-item::before {
-  content: ''; position: absolute; left: -7px; top: 6px;
-  width: 14px; height: 14px; border-radius: 50%;
-  background: var(--gold); border: 3px solid var(--ivory);
-}
-.timeline-year { font-family: 'Lato', sans-serif; font-size: 0.75rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); font-weight: 700; margin-bottom: 6px; }
-.timeline-title { font-family: 'Playfair Display', serif; font-size: 1.25rem; color: var(--green); margin-bottom: 6px; }
-.timeline-text { font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.7; }
 
 /* ---------- CTA Banner ---------- */
 .cta-banner {
@@ -724,8 +709,6 @@ select.form-control { cursor: pointer; }
   h1 { font-size: clamp(1.6rem, 6vw, 2.4rem); }
   h2 { font-size: clamp(1.4rem, 5vw, 2rem); }
   .awards-bar { gap: 10px; }
-  .award-card { min-width: 0; }
-
   /* Fix: background-attachment:fixed is broken on iOS Safari */
   .hero-bg, .hero-sub .hero-bg, .cta-banner-bg { background-attachment: scroll; }
 
