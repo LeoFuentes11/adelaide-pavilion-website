@@ -118,7 +118,6 @@
   "bev_spirits_rate": "Enquire",
   "bev_byo_label": "BYO Spirits (weddings only, max 1 bottle/10 adults)",
   "bev_byo_rate": "No corkage",
-
   "wedding_signature_menu": [
     "Entrée — One selection from the entrée menu",
     "Main — One selection from the main menu",
@@ -143,7 +142,6 @@
     "Printed Menus (2 per table), Table Numbers",
     "Onsite Parking (subject to availability)"
   ],
-
   "wedding_pavilion_menu": [
     "Entrée — Choice of two selections",
     "Main — Choice of two selections",
@@ -161,7 +159,6 @@
     "More menu choice — perfect for diverse tastes",
     "Alternate-serve option available"
   ],
-
   "wedding_cocktail_canapes": [
     "7 Hot Canapés — your selection",
     "6 Cold Canapés — your selection",
@@ -177,7 +174,6 @@
     "All standard wedding inclusions",
     "Upgrades available (minimum spend applies)"
   ],
-
   "social_banquet1_items": [
     "Main — One selection",
     "Dessert — One selection",
@@ -217,7 +213,6 @@
     "Banh Mi Bao Buns — pork belly, pickled carrot, kewpie mayo",
     "Chicken Yiros Plate — spiced chicken, pita, tomato, tzatziki"
   ],
-
   "corp_continental_items": [
     "Sliced Fresh Fruit",
     "Assorted Sweet Muffins",
@@ -246,8 +241,7 @@
     "Dedicated Event Coordinator",
     "AV Equipment included"
   ],
-
-  "lunch_r1_name": "Focaccia Lunch",
+  "lunch_r1_name": "Focaccia Lunch TESTING !!",
   "lunch_r1_desc": "Focaccia with meat & vegetable fillings, plus cocktail-sized savoury pastry",
   "lunch_r1_price": "$18.90pp",
   "lunch_r2_name": "Gourmet Salad Lunch",
@@ -262,14 +256,12 @@
   "lunch_r5_name": "Hot Working Lunch",
   "lunch_r5_desc": "Two pre-selected main courses (alternately served), bread rolls, soup or frittata, seasonal veg, gourmet salad",
   "lunch_r5_price": "$40.00pp",
-
   "tea_bev_r1_name": "Coffee & teas — ½ hour service",
   "tea_bev_r1_price": "$6.50pp",
   "tea_bev_r2_name": "Coffee & teas — all-day continuous",
   "tea_bev_r2_price": "$17.50pp",
   "tea_bev_r3_name": "Orange juice or soft drinks",
   "tea_bev_r3_price": "$4.50pp",
-
   "tea_food_r1_name": "Muffins / Banana & Date Loaf / Chocolate Brownies / Carrot Cake",
   "tea_food_r1_price": "$5.50pp",
   "tea_food_r2_name": "Scones with preserves & cream / Spinach & Ricotta Triangles / Ham & Cheese Croissants",
@@ -280,7 +272,6 @@
   "tea_food_r4_price": "$5.50pp",
   "tea_food_r5_name": "Sliced fresh seasonal fruit platters",
   "tea_food_r5_price": "$6.50pp",
-
   "room_parkview_banquet": "230",
   "room_parkview_cabaret": "180",
   "room_parkview_cocktail": "260",
@@ -288,7 +279,6 @@
   "room_parkview_ushape": "45",
   "room_parkview_boardroom": "55",
   "room_parkview_classroom": "100",
-
   "room_terrace_banquet": "100",
   "room_terrace_cabaret": "80",
   "room_terrace_cocktail": "150",
