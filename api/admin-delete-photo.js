@@ -14,14 +14,15 @@
 
 const crypto = require('crypto');
 
-function makeSessionToken(password) {
-  return crypto.createHmac('sha256', password).update('admin_session').digest('hex');
+function makeSessionToken(username, password) {
+  return crypto.createHmac('sha256', password).update('admin_session_' + username).digest('hex');
 }
 
 function isAuthenticated(req) {
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-  if (!ADMIN_PASSWORD) return false;
-  const expected = makeSessionToken(ADMIN_PASSWORD);
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) return false;
+  const expected = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
   const authHeader = req.headers.authorization || '';
   if (authHeader.startsWith('Bearer ') && authHeader.slice(7) === expected) return true;
   const cookies = req.headers.cookie || '';

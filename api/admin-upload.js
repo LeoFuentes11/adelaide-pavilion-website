@@ -22,14 +22,15 @@ const ALLOWED_TYPES = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'im
 const ALLOWED_EXTENSIONS = { 'image/jpeg': 'jpg', 'image/jpg': 'jpg', 'image/png': 'png', 'image/webp': 'webp', 'image/gif': 'gif' };
 const MAX_BYTES = 4 * 1024 * 1024; // 4 MB (after decompression)
 
-function makeSessionToken(password) {
-  return crypto.createHmac('sha256', password).update('admin_session').digest('hex');
+function makeSessionToken(username, password) {
+  return crypto.createHmac('sha256', password).update('admin_session_' + username).digest('hex');
 }
 
 function isAuthenticated(req) {
+  const ADMIN_USERNAME = process.env.ADMIN_USERNAME;
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD;
-  if (!ADMIN_PASSWORD) return false;
-  const expected = makeSessionToken(ADMIN_PASSWORD);
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) return false;
+  const expected = makeSessionToken(ADMIN_USERNAME, ADMIN_PASSWORD);
   const authHeader = req.headers.authorization || '';
   if (authHeader.startsWith('Bearer ') && authHeader.slice(7) === expected) return true;
   const cookies = req.headers.cookie || '';
