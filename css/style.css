@@ -708,11 +708,12 @@ select.form-control { cursor: pointer; }
   text-align: left;
 }
 .accordion-header:hover { color: var(--gold-dark); }
-.accordion-icon { font-size: 1.2rem; transition: transform 0.3s; flex-shrink: 0; color: var(--gold); }
+.accordion-icon { font-size: 1.2rem; transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; color: var(--gold); }
 .accordion-item.open .accordion-icon { transform: rotate(45deg); }
-.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
-.accordion-item.open .accordion-body { max-height: 600px; }
-.accordion-body-inner { padding: 0 4px 24px; font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; }
+.accordion-body { max-height: 0; overflow: hidden; transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.accordion-item.open .accordion-body { max-height: 400px; }
+.accordion-body-inner { padding: 0 4px 24px; font-family: 'Lato', sans-serif; font-size: 0.9rem; color: var(--text-muted); line-height: 1.75; opacity: 0; transform: translateY(-6px); transition: opacity 0.3s ease 0.05s, transform 0.3s ease 0.05s; }
+.accordion-item.open .accordion-body-inner { opacity: 1; transform: translateY(0); }
 
 /* ---------- Responsive helpers ---------- */
 @media(max-width:768px){
