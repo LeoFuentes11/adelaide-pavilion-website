@@ -317,4 +317,40 @@ document.addEventListener('DOMContentLoaded', () => {
     el.textContent = new Date().getFullYear();
   });
 
+  /* ---------- Equalise pkg-header heights per row ---------- */
+  function equalisePackageHeaders() {
+    document.querySelectorAll('.pkg-grid').forEach(grid => {
+      const headers = Array.from(grid.querySelectorAll('.pkg-card .pkg-header'));
+
+      // Reset so we measure natural heights
+      headers.forEach(h => { h.style.minHeight = ''; });
+
+      // Group headers by the top offset of their parent card (= same row)
+      const rows = new Map();
+      headers.forEach(h => {
+        const card = h.closest('.pkg-card');
+        const top  = card ? card.getBoundingClientRect().top + window.scrollY : 0;
+        const key  = Math.round(top); // round to avoid sub-pixel drift
+        if (!rows.has(key)) rows.set(key, []);
+        rows.get(key).push(h);
+      });
+
+      // Set every header in a row to the tallest in that row
+      rows.forEach(rowHeaders => {
+        const maxH = Math.max(...rowHeaders.map(h => h.offsetHeight));
+        rowHeaders.forEach(h => { h.style.minHeight = maxH + 'px'; });
+      });
+    });
+  }
+
+  // Run after fonts/images have loaded, and again on resize
+  window.addEventListener('load', equalisePackageHeaders);
+  window.addEventListener('resize', () => {
+    // Debounce slightly so it doesn't fire on every px during drag
+    clearTimeout(window._eqTimer);
+    window._eqTimer = setTimeout(equalisePackageHeaders, 120);
+  });
+  // Also run now in case load already fired
+  equalisePackageHeaders();
+
 });
