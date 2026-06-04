@@ -122,11 +122,32 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Activate tab from URL hash (e.g. packages.html#menus)
-  const hash = window.location.hash.replace('#', '');
-  if (hash) {
-    const matchBtn = document.querySelector(`.tab-btn[data-tab="${hash}"]`);
-    if (matchBtn) matchBtn.click();
+  // Activate tab from URL hash — supports section hashes (#weddings) and element hashes (#pkg-wedding-signature)
+  const initHash = window.location.hash.slice(1);
+  if (initHash) {
+    const tabBtn = document.querySelector(`.tab-btn[data-tab="${initHash}"]`);
+    if (tabBtn) {
+      tabBtn.click();
+    } else {
+      const target = document.getElementById(initHash);
+      if (target) {
+        const panel = target.closest('[data-tab-content]');
+        if (panel) {
+          const tabContainer = panel.closest('[data-tabs]');
+          tabContainer?.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+          tabContainer?.querySelector(`.tab-btn[data-tab="${panel.dataset.tabContent}"]`)?.classList.add('active');
+          tabContainer?.querySelectorAll('.tab-content').forEach(c => {
+            c.classList.toggle('active', c === panel);
+          });
+          requestAnimationFrame(() => {
+            const navH = document.getElementById('navbar')?.offsetHeight || 80;
+            const tabBarH = document.querySelector('[data-tabs] > div')?.offsetHeight || 52;
+            const top = target.getBoundingClientRect().top + window.scrollY - navH - tabBarH - 12;
+            window.scrollTo({ top, behavior: 'smooth' });
+          });
+        }
+      }
+    }
   }
 
   /* ---------- Accordion ---------- */

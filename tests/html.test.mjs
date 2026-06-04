@@ -36,8 +36,16 @@ assert(
   'wedding-packages.pdf appears exactly once (bottom CTA only, not in cards)'
 );
 assert(
-  (w.match(/href="packages\.html#weddings"/g) || []).length >= 3,
-  'each card links to packages.html#weddings'
+  w.includes('href="packages.html#pkg-wedding-signature"'),
+  'Signature card links to #pkg-wedding-signature'
+);
+assert(
+  w.includes('href="packages.html#pkg-wedding-pavilion"'),
+  'Pavilion card links to #pkg-wedding-pavilion'
+);
+assert(
+  w.includes('href="packages.html#pkg-wedding-cocktail"'),
+  'Cocktail Celebration card links to #pkg-wedding-cocktail'
 );
 assert(
   w.includes('View Package') && !w.includes('>View Packages<'),
@@ -66,8 +74,28 @@ assert(
   'no Download PDF inside individual pkg-footer cards'
 );
 assert(
-  (s.match(/href="packages\.html#social" class="btn btn-outline-green"/g) || []).length === 6,
-  'each of 6 cards links to packages.html#social'
+  s.includes('href="packages.html#pkg-social-banquet-1"'),
+  'Banquet 1 card links to #pkg-social-banquet-1'
+);
+assert(
+  s.includes('href="packages.html#pkg-social-banquet-2"'),
+  'Banquet 2 card links to #pkg-social-banquet-2'
+);
+assert(
+  s.includes('href="packages.html#pkg-social-banquet-3"'),
+  'Banquet 3 card links to #pkg-social-banquet-3'
+);
+assert(
+  s.includes('href="packages.html#pkg-social-banquet-4"'),
+  'Banquet 4 card links to #pkg-social-banquet-4'
+);
+assert(
+  s.includes('href="packages.html#pkg-social-cocktail"'),
+  'Cocktail Celebration card links to #pkg-social-cocktail'
+);
+assert(
+  s.includes('href="packages.html#pkg-social-street-eats"'),
+  'Street Eats card links to #pkg-social-street-eats'
 );
 assert(
   s.includes('href="packages.html#social" class="btn btn-green"'),
@@ -91,8 +119,20 @@ assert(
   'green PDF CTA heading removed'
 );
 assert(
-  (c.match(/href="packages\.html#corporate" class="btn btn-outline-green"/g) || []).length === 4,
-  '4 View Package buttons each linking to packages.html#corporate'
+  c.includes('href="packages.html#pkg-corporate-breakfast"'),
+  'Breakfast tile links to #pkg-corporate-breakfast'
+);
+assert(
+  c.includes('href="packages.html#pkg-corporate-fullday"'),
+  'Full Day tile links to #pkg-corporate-fullday'
+);
+assert(
+  c.includes('href="packages.html#pkg-corporate-networking"'),
+  'Networking tile links to #pkg-corporate-networking'
+);
+assert(
+  c.includes('href="packages.html#pkg-corporate-evening"'),
+  'Evening tile links to #pkg-corporate-evening'
 );
 assert(
   c.includes('display:flex;flex-direction:column;'),
@@ -109,6 +149,37 @@ assert(
 assert(
   c.includes('_docs/corporate-packages.pdf" class="btn btn-gold"'),
   'Download PDF present in bottom CTA as btn-gold'
+);
+
+// ── packages.html (deep-link IDs) ────────────────────────────────────────────
+console.log('\npackages.html');
+const p = read('packages.html');
+
+assert(p.includes('id="pkg-wedding-signature"'), 'wedding Signature has deep-link ID');
+assert(p.includes('id="pkg-wedding-pavilion"'), 'wedding Pavilion has deep-link ID');
+assert(p.includes('id="pkg-wedding-cocktail"'), 'wedding Cocktail has deep-link ID');
+assert(p.includes('id="pkg-social-banquet-1"'), 'social banquet-1 has deep-link ID');
+assert(p.includes('id="pkg-social-banquet-2"'), 'social banquet-2 has deep-link ID');
+assert(p.includes('id="pkg-social-banquet-3"'), 'social banquet-3 has deep-link ID');
+assert(p.includes('id="pkg-social-banquet-4"'), 'social banquet-4 has deep-link ID');
+assert(p.includes('id="pkg-social-cocktail"'), 'social cocktail has deep-link ID');
+assert(p.includes('id="pkg-social-street-eats"'), 'social street-eats has deep-link ID');
+assert(p.includes('id="pkg-corporate-breakfast"'), 'corporate breakfast has deep-link ID');
+assert(p.includes('id="pkg-corporate-fullday"'), 'corporate fullday has deep-link ID');
+assert(p.includes('id="pkg-corporate-networking"'), 'corporate networking has deep-link ID');
+assert(p.includes('id="pkg-corporate-evening"'), 'corporate evening has deep-link ID');
+
+// ── main.js (hash handler) ───────────────────────────────────────────────────
+console.log('\nmain.js');
+const js = read('js/main.js');
+
+assert(
+  js.includes('closest(\'[data-tab-content]\')'),
+  'main.js hash handler supports element-level anchors within tabs'
+);
+assert(
+  js.includes('requestAnimationFrame'),
+  'main.js uses requestAnimationFrame for post-tab-switch scroll'
 );
 
 // ── Summary ──────────────────────────────────────────────────────────────────
