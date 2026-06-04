@@ -2075,6 +2075,48 @@ function renderPdfs() {
     desc.textContent = slot.desc;
     body.appendChild(desc);
 
+    // Current file row (shown when a PDF already exists)
+    var currentFileRow = document.createElement('div');
+    currentFileRow.id = 'pdf-current-' + slot.id;
+    currentFileRow.style.cssText = 'display:none;align-items:center;gap:12px;background:#f0f7ff;border:1px solid #c8dff5;border-radius:8px;padding:12px 16px;margin-bottom:16px;flex-wrap:wrap;';
+
+    var pdfIcon = document.createElement('span');
+    pdfIcon.style.cssText = 'font-size:22px;flex-shrink:0;';
+    pdfIcon.textContent = '📄';
+    currentFileRow.appendChild(pdfIcon);
+
+    var fileInfoWrap = document.createElement('div');
+    fileInfoWrap.style.cssText = 'flex:1;min-width:0;';
+
+    var fileLink = document.createElement('a');
+    fileLink.id = 'pdf-link-' + slot.id;
+    fileLink.href = '/_docs/' + slot.file;
+    fileLink.target = '_blank';
+    fileLink.rel = 'noopener';
+    fileLink.style.cssText = 'font-size:13.5px;font-weight:600;color:var(--green);text-decoration:none;word-break:break-all;';
+    fileLink.textContent = slot.file;
+    fileInfoWrap.appendChild(fileLink);
+
+    var fileSubtext = document.createElement('div');
+    fileSubtext.style.cssText = 'font-size:11.5px;color:#888;margin-top:2px;';
+    fileSubtext.textContent = 'Currently live — click to open';
+    fileInfoWrap.appendChild(fileSubtext);
+
+    currentFileRow.appendChild(fileInfoWrap);
+
+    var removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.textContent = 'Remove';
+    removeBtn.style.cssText = 'padding:7px 16px;background:#fff;color:#c0392b;border:1.5px solid #c0392b;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;flex-shrink:0;transition:background .15s,color .15s;';
+    removeBtn.addEventListener('mouseover', function() { removeBtn.style.background = '#c0392b'; removeBtn.style.color = '#fff'; });
+    removeBtn.addEventListener('mouseout',  function() { removeBtn.style.background = '#fff';    removeBtn.style.color = '#c0392b'; });
+    removeBtn.addEventListener('click', function() {
+      handlePdfRemove(slot.id, slot.file, badge, currentFileRow, statusEl);
+    });
+    currentFileRow.appendChild(removeBtn);
+
+    body.appendChild(currentFileRow);
+
     // Drop zone
     var dropZone = document.createElement('div');
     dropZone.style.cssText = 'border:2px dashed #ccc;border-radius:8px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;margin-bottom:14px;';
@@ -2082,7 +2124,7 @@ function renderPdfs() {
       '<input type="file" id="pdf-input-' + slot.id + '" accept="application/pdf,.pdf" style="display:none;">' +
       '<div style="font-size:14px;color:#888;pointer-events:none;">' +
         '<strong style="color:var(--green);">Click to choose</strong> or drag &amp; drop a PDF<br>' +
-        '<small style="display:block;margin-top:5px;font-size:11.5px;">PDF only · Max 20 MB</small>' +
+        '<small style="display:block;margin-top:5px;font-size:11.5px;">PDF only · Max 20 MB · Replaces existing file</small>' +
       '</div>';
 
     var fileInput = dropZone.querySelector('#pdf-input-' + slot.id);
@@ -2093,7 +2135,7 @@ function renderPdfs() {
       e.preventDefault();
       dropZone.style.borderColor = '#ccc'; dropZone.style.background = '';
       var file = e.dataTransfer.files && e.dataTransfer.files[0];
-      if (file) handlePdfSelected(slot.id, file, fileInput, uploadBtn, statusEl, badge);
+      if (file) handlePdfSelected(slot.id, file, fileInput, uploadBtn, statusEl, badge, currentFileRow);
     });
     dropZone.addEventListener('click', function(e) {
       if (e.target !== fileInput) fileInput.click();
@@ -2122,37 +2164,70 @@ function renderPdfs() {
 
     fileInput.addEventListener('change', function() {
       var file = fileInput.files && fileInput.files[0];
-      if (file) handlePdfSelected(slot.id, file, fileInput, uploadBtn, statusEl, badge);
+      if (file) handlePdfSelected(slot.id, file, fileInput, uploadBtn, statusEl, badge, currentFileRow);
     });
 
     uploadBtn.addEventListener('mouseover', function() { if (!uploadBtn.disabled) uploadBtn.style.opacity = '0.88'; });
     uploadBtn.addEventListener('mouseout',  function() { if (!uploadBtn.disabled) uploadBtn.style.opacity = '1'; });
 
-    checkPdfExists(slot.id, slot.file, badge);
+    checkPdfExists(slot.id, slot.file, badge, currentFileRow);
   });
 }
 
-function checkPdfExists(slotId, filename, badge) {
-  fetch('/_docs/' + filename, { method: 'HEAD' })
+function checkPdfExists(slotId, filename, badge, currentFileRow) {
+  fetch('/_docs/' + filename + '?_=' + Date.now(), { method: 'HEAD' })
     .then(function(res) {
       if (res.ok) {
-        badge.textContent = 'File uploaded';
-        badge.style.background = '#e8f5e9';
-        badge.style.color = '#27ae60';
+        setPdfExists(badge, currentFileRow, true);
       } else {
-        badge.textContent = 'No file yet';
-        badge.style.background = '#fff3e0';
-        badge.style.color = '#e67e22';
+        setPdfExists(badge, currentFileRow, false);
       }
     })
     .catch(function() {
-      badge.textContent = 'No file yet';
-      badge.style.background = '#fff3e0';
-      badge.style.color = '#e67e22';
+      setPdfExists(badge, currentFileRow, false);
     });
 }
 
-function handlePdfSelected(slotId, file, fileInput, uploadBtn, statusEl, badge) {
+function setPdfExists(badge, currentFileRow, exists) {
+  if (exists) {
+    badge.textContent = 'File uploaded';
+    badge.style.background = '#e8f5e9';
+    badge.style.color = '#27ae60';
+    currentFileRow.style.display = 'flex';
+  } else {
+    badge.textContent = 'No file yet';
+    badge.style.background = '#fff3e0';
+    badge.style.color = '#e67e22';
+    currentFileRow.style.display = 'none';
+  }
+}
+
+function handlePdfRemove(slotId, filename, badge, currentFileRow, statusEl) {
+  if (!confirm('Remove ' + filename + '? The download button on the website will no longer work until a new PDF is uploaded.')) return;
+
+  statusEl.style.color = '#555';
+  statusEl.textContent = 'Removing…';
+
+  fetch('/api/admin-delete-pdf', {
+    method: 'POST',
+    headers: authHeaders({ 'Content-Type': 'application/json' }),
+    body: JSON.stringify({ slot: slotId })
+  })
+  .then(function(res) { return res.json().then(function(j) { return { ok: res.ok, body: j }; }); })
+  .then(function(r) {
+    if (!r.ok) throw new Error(r.body.error || 'Delete failed');
+    setPdfExists(badge, currentFileRow, false);
+    statusEl.style.color = '#888';
+    statusEl.textContent = 'File removed.';
+    showToast(filename + ' removed.', 'success');
+  })
+  .catch(function(err) {
+    statusEl.style.color = '#c00';
+    statusEl.textContent = 'Error: ' + err.message;
+  });
+}
+
+function handlePdfSelected(slotId, file, fileInput, uploadBtn, statusEl, badge, currentFileRow) {
   if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
     statusEl.style.color = '#c00';
     statusEl.textContent = 'Please select a PDF file.';
@@ -2189,10 +2264,11 @@ function handlePdfSelected(slotId, file, fileInput, uploadBtn, statusEl, badge) 
       .then(function(r) {
         if (!r.ok) throw new Error(r.body.error || 'Upload failed');
         statusEl.style.color = '#27ae60';
-        statusEl.textContent = '✓ Uploaded successfully — ' + r.body.sizeKb + ' KB. Customers will now download the new PDF.';
-        badge.textContent = 'File uploaded';
-        badge.style.background = '#e8f5e9';
-        badge.style.color = '#27ae60';
+        statusEl.textContent = '✓ ' + r.body.sizeKb + ' KB uploaded. Customers will now download the new PDF.';
+        setPdfExists(badge, currentFileRow, true);
+        // Force the link to bust cache so it reflects the new file
+        var link = document.getElementById('pdf-link-' + slotId);
+        if (link) link.href = '/_docs/' + r.body.filename + '?_=' + Date.now();
         uploadBtn.disabled = true;
         uploadBtn.style.opacity = '0.5';
         fileInput.value = '';
