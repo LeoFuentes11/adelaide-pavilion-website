@@ -21,7 +21,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ALLOWED_FILES = [
-  'contact', 'homepage', 'about', 'weddings', 'corporate', 'social', 'packages', 'menus'
+  'contact', 'homepage', 'about', 'weddings', 'corporate', 'social', 'packages', 'menus', 'privacy'
 ];
 
 function makeSessionToken(username, password) {
